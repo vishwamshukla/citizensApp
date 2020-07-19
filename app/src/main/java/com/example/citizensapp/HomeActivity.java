@@ -65,13 +65,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.logout){
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
-        if (id==R.id.account_settings){
-            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+        switch (item.getItemId()) {
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                break;
+            case R.id.account_settings:
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                break;
+            case R.id.about_us:
+                startActivity(new Intent(HomeActivity.this, AboutUs.class));
+                break;
         }
         return false;
     }
