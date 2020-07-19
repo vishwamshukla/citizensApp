@@ -12,11 +12,11 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_header_imageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@drawable/ic_baseline_person_24" />
+        android:src="@drawable/profile1" />
 
     <TextView
         android:id="@+id/nav_header_textView"
