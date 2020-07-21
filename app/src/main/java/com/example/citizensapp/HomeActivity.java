@@ -5,23 +5,47 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActionBarDrawerToggle nToggle;
     NavigationView navigationView;
+
+    private RecyclerView mRecyclerView;
+    private ImageAdapter mImageAdapter;
+
+    private ProgressBar mProgressCircle;
+
+    private FirebaseStorage mStorage;
+    private DatabaseReference mDatabaseRef;
+    private ValueEventListener mDBListener;
+    private List<Upload> mUploads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +75,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mProgressCircle = findViewById(R.id.progress_circle);
+
+        mUploads = new ArrayList<>();
+        mImageAdapter = new ImageAdapter(HomeActivity.this,mUploads);
+        mRecyclerView.setAdapter(mImageAdapter);
+        mImageAdapter.setOnItemClickListener(HomeActivity.this);
+
+        mStorage = FirebaseStorage.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                mUploads.clear();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                    Upload upload = postSnapshot.getValue(Upload.class);
+                    upload.setKey(postSnapshot.getKey());
+                    mUploads.add(upload);
+                }
+
+                mImageAdapter.notifyDataSetChanged();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
 
 
@@ -79,4 +141,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
+
+    public void onItemClick(int position) {
+        Toast.makeText(this, "Report No "+ position , Toast.LENGTH_SHORT).show();
+    }
+
+    public void onDeleteClick(int position) {
+        Upload selectedItem = mUploads.get(position);
+        final String selectedKey = selectedItem.getKey();
+
+        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImageUrl());
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mDatabaseRef.child(selectedKey).removeValue();
+                Toast.makeText(HomeActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDatabaseRef.removeEventListener(mDBListener);
+    }
+
 }

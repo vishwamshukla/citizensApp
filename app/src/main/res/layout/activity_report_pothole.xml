@@ -26,11 +26,10 @@
         android:src="@drawable/circlet" />
 
 
-
     <RelativeLayout
         android:id="@+id/rlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="757dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp">
 
@@ -51,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="35dp">
+
                     <TextView
                         android:id="@+id/pothole_image_textview"
                         android:layout_width="wrap_content"
@@ -61,51 +61,51 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <ImageButton
-                        android:layout_marginHorizontal="15dp"
-                        android:id="@+id/pothole_image_button"
+                    <ImageView
+                        android:id="@+id/image_upload_view"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:src="@drawable/ic_image_black_24dp"
                         android:layout_below="@id/pothole_image_textview"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="13dp"
                         android:scaleType="fitCenter"
-                        />
+                        android:src="@drawable/ic_image_black_24dp" />
 
                     <Button
-                        android:layout_margin="15dp"
-                        android:id="@+id/pothole_camera_button"
-                        android:layout_below="@id/pothole_image_button"
+                        android:id="@+id/Open_Camera_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/image_upload_view"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/bt_uisquare"
+                        android:paddingHorizontal="20dp"
                         android:text="Open camera"
                         android:textColor="@color/White"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="12sp"
-                        android:background="@drawable/bt_uisquare"/>
+                        android:textSize="12sp" />
 
                     <Button
-                        android:layout_marginVertical="15dp"
-                        android:layout_toEndOf="@id/pothole_camera_button"
-                        android:id="@+id/pothole_upload_file"
-                        android:layout_below="@id/pothole_image_button"
+                        android:id="@+id/pothole_Select_file"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/image_upload_view"
+                        android:layout_marginVertical="15dp"
+                        android:layout_toEndOf="@id/Open_Camera_button"
+                        android:background="@drawable/bt_uisquare"
+                        android:paddingHorizontal="20dp"
                         android:text="Upload File"
                         android:textColor="@color/White"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="12sp"
-                        android:background="@drawable/bt_uisquare"/>
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/pothole_type_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
+                        android:layout_below="@id/pothole_Select_file"
                         android:layout_marginStart="15dp"
+                        android:layout_marginBottom="15dp"
                         android:text="Type of Pothole"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
-                        android:layout_below="@id/pothole_upload_file"
                         android:textStyle="bold" />
 
                     <EditText
@@ -186,6 +186,7 @@
                         android:drawablePadding="30dp"
                         android:inputType="text"
                         android:padding="10dp" />
+
                     <TextView
                         android:id="@+id/potholes_comments_textview"
                         android:layout_width="wrap_content"

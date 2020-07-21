@@ -25,6 +25,23 @@
             android:layout_height="wrap_content"
             android:text="home"/>
 
+        <ProgressBar
+            android:id="@+id/progress_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        </ProgressBar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="100dp"
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/report_pothole_add_button"
             android:layout_width="wrap_content"
