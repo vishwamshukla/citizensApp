@@ -233,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:background="@drawable/bt_uisquare"
-                android:text="Continue"
+                android:text="Submit"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>

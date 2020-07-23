@@ -82,6 +82,8 @@ public class ReportPotholeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_pothole);
 
+        mProgressBar=findViewById(R.id.progress_bar);
+
         OpenCamera = findViewById(R.id.Open_Camera_button);
         SelectFileBtn = findViewById(R.id.pothole_Select_file);
         mButtonUpload = findViewById(R.id.p_button_continue);
@@ -240,6 +242,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
     private void uploadFile(){
         if (mImageUri != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
             final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
             mUploadTask = fileReference.putFile(mImageUri)
@@ -250,7 +253,9 @@ public class ReportPotholeActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Toast.makeText(ReportPotholeActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                                    mProgressBar.setVisibility(View.INVISIBLE);
+                                    Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
 
                                     Upload upload1 = new Upload(mEditTextPothole_Type.getText().toString().trim(),
                                             uri.toString());
