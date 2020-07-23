@@ -1,65 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="20dp"
-    android:padding="20dp"
+    app:cardCornerRadius="10dp"
     android:outlineAmbientShadowColor="@android:color/darker_gray"
     android:layout_margin="10dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
-
+        android:padding="10dp">
 
         <ImageView
-            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:id="@+id/image_view_upload"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:elevation="20dp">
-
         </ImageView>
-        <LinearLayout
+
+        <!--TODO: link this with actual DB and remove the hardcoded text-->
+        <TextView
+            android:layout_below="@id/text_view_pothole_type"
+            android:layout_toRightOf="@id/image_view_upload"
+            android:textSize="12.5sp"
+            android:id="@+id/text_view_pothole_landmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Hadapsar">
+        </TextView>
+
+        <TextView
+            android:layout_toEndOf="@id/image_view_upload"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:id="@+id/text_view_pothole_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <!--TODO: link this with actual DB and remove the hardcoded text-->
+        <TextView
+            android:layout_alignParentEnd="true"
+            android:id="@+id/text_view_pothole_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24 Jul"
+            android:textSize="15sp">
+        </TextView>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/image_view_upload">
+
+            <!--TODO: link this with actual DB and remove the hardcoded text-->
             <TextView
-                android:id="@+id/text_view_pothole_type"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@id/progress_bar_pothole"
+                android:id="@+id/text_view_pothole_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pothole Type"
-                android:layout_marginLeft="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-            </TextView>
-            <TextView
-                android:id="@+id/text_view_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Coment"
-                android:layout_marginLeft="20dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:text="Completed"
+                android:textSize="12sp"/>
 
 
-            </TextView>
+            <!--TODO: link this with actual DB and remove the hardcoded progress-->
+            <ProgressBar
+                android:scaleY="1.5"
+                android:progress="50"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/progress_bar_pothole"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
+        <!--TODO: Safe remove this textview-->
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/text_view_comment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Comment"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+        </TextView>
 
-
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
