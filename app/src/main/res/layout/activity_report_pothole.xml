@@ -61,48 +61,53 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/image_upload_view"
+                    <RelativeLayout
+                        android:id="@+id/pothole_image_layout"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_below="@id/pothole_image_textview"
                         android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="13dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_image_black_24dp" />
+                        android:layout_marginTop="13dp">
+
+                        <View
+                            android:id="@+id/pothole_image_layout_tint"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#BBBBBB"/>
+
+                        <TextView
+                            android:id="@+id/upload_image_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textAlignment="center"
+                            android:text="Capture image | Choose from gallery"/>
+
+                        <ImageView
+                            android:id="@+id/pothole_image_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:src="@null"/>
+
+                    </RelativeLayout>
 
                     <Button
-                        android:id="@+id/Open_Camera_button"
+                        android:id="@+id/pothole_remove_image_button"
+                        android:visibility="visible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/image_upload_view"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/bt_uisquare"
-                        android:paddingHorizontal="20dp"
-                        android:text="Open camera"
-                        android:textColor="@color/White"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/pothole_Select_file"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/image_upload_view"
-                        android:layout_marginVertical="15dp"
-                        android:layout_toEndOf="@id/Open_Camera_button"
-                        android:background="@drawable/bt_uisquare"
-                        android:paddingHorizontal="20dp"
-                        android:text="Upload File"
-                        android:textColor="@color/White"
-                        android:textSize="12sp" />
+                        android:layout_marginEnd="15dp"
+                        android:layout_below="@id/pothole_image_layout"
+                        android:layout_alignParentEnd="true"
+                        android:text="Remove Image"/>
 
                     <TextView
                         android:id="@+id/pothole_type_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/pothole_Select_file"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_below="@id/pothole_remove_image_button"
+                        android:layout_margin="15dp"
                         android:text="Type of Pothole"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
@@ -233,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:background="@drawable/bt_uisquare"
-                android:text="Submit"
+                android:text="Continue"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite" />
         </RelativeLayout>
