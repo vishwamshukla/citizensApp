@@ -122,7 +122,8 @@ public class LoginActivity extends AppCompatActivity {
         LoginwithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignInGoogle();
+                startActivity(new Intent(LoginActivity.this, loginListActivity.class));
+                //SignInGoogle();
             }
         });
 

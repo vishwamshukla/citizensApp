@@ -56,4 +56,10 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
+    //facebook and twitter
+    implementation 'com.facebook.android:facebook-login:6.1.0'
+    implementation('com.twitter.sdk.android:twitter:2.3.2') {
+        transitive = true
+    }
+
 }

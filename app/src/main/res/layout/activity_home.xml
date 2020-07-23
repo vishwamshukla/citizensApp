@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             layout="@layout/action_bar"/>
 
-        <TextView
-            android:layout_below="@id/actionBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="home"/>
+<!--        <TextView-->
+<!--            android:layout_below="@id/actionBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="home"/>-->
 
         <ProgressBar
             android:id="@+id/progress_circle"
