@@ -10,16 +10,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.CircularPropagation;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,10 +33,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +48,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private RecyclerView mRecyclerView;
     private ImageAdapter mImageAdapter;
+    private DatabaseReference UserRef;
 
     private ProgressBar mProgressCircle;
 
@@ -47,10 +57,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ValueEventListener mDBListener;
     private List<Upload> mUploads;
 
+    private FirebaseAuth mAuth;
+    String currentUserID;
+
+    private CircleImageView profileImage;
+    private TextView nametextview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+//        currentUserID= mAuth.getCurrentUser().getUid();
 
         Toolbar my_toolbar = findViewById(R.id.actionBar);
         my_toolbar.setTitle("");
@@ -87,8 +104,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mRecyclerView.setAdapter(mImageAdapter);
         mImageAdapter.setOnItemClickListener(HomeActivity.this);
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        Log.i("image", String.valueOf(mAuth.getCurrentUser().getPhotoUrl()));
+        Log.i("name", String.valueOf(mAuth.getCurrentUser().getDisplayName()));
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        final TextView userNameTextView = headerView.findViewById(R.id.nav_header_textView1);
+        final CircleImageView profileImageView = headerView.findViewById(R.id.nav_header_imageView1);
+        UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+
+        DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.exists())
+                {
+                    if (dataSnapshot.child("image").exists())
+                    {
+                        String image = String.valueOf(dataSnapshot.child("image").getValue());
+                        String name = String.valueOf(dataSnapshot.child("name").getValue());
+
+                        Picasso.get().load(image).into(profileImageView);
+                        userNameTextView.setText(name);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
 

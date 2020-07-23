@@ -110,9 +110,9 @@ public class ProfileActivity extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
 
         HashMap<String, Object> userMap = new HashMap<>();
-        userMap. put("name", fullNameEditText.getText().toString());
-        userMap. put("email", emailEditText.getText().toString());
-        userMap. put("phone", userPhoneEditText.getText().toString());
+        userMap.put("name", fullNameEditText.getText().toString());
+        userMap.put("email", emailEditText.getText().toString());
+        userMap.put("phone", userPhoneEditText.getText().toString());
         ref.child(currentUserID).updateChildren(userMap);
 
         //startActivity(new Intent(ReceptionProfileActivity.this, ReceptionProfileActivity.class));
@@ -208,7 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 //progressDialog.dismiss();
                                 progressBar.setVisibility(View.INVISIBLE);
 
-                                startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
+                                //startActivity(new Intent(ProfileActivity.this, ProfileActivity.class));
                                 Toast.makeText(ProfileActivity.this, "Profile saved", Toast.LENGTH_SHORT).show();
                                 finish();
                             }

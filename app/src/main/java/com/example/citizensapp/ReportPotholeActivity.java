@@ -31,6 +31,8 @@ import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -76,6 +78,8 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
 
     Button button_remove_image;
+    private FirebaseAuth mAuth;
+    String currentUserID;
 
 
 
@@ -95,9 +99,15 @@ public class ReportPotholeActivity extends AppCompatActivity {
         mEditTextComments = findViewById(R.id.pothole_comments_edittext);
         mEditTextDimensions = findViewById(R.id.pothole_dimensions_edittext);
         mEditTextLandmark = findViewById(R.id.pothole_landmark_edittext);
+        mAuth = FirebaseAuth.getInstance();
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        currentUserID = mAuth.getCurrentUser().getUid();
+
+
+        mStorageRef = FirebaseStorage.getInstance().getReference("Reported Potholes");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
+
+
 
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
