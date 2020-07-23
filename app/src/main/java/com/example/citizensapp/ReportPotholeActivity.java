@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -50,8 +51,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
 
-    private Button OpenCamera;
-    private Button SelectFileBtn;
     private Button mButtonUpload;
     private EditText mEditTextPothole_Type;
     private EditText mEditTextAddress;
@@ -76,6 +75,9 @@ public class ReportPotholeActivity extends AppCompatActivity {
     private StorageTask mUploadTask;
 
 
+    Button button_remove_image;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +85,10 @@ public class ReportPotholeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_report_pothole);
 
         mProgressBar=findViewById(R.id.progress_bar);
+        button_remove_image = findViewById(R.id.pothole_remove_image_button);
 
-        OpenCamera = findViewById(R.id.Open_Camera_button);
-        SelectFileBtn = findViewById(R.id.pothole_Select_file);
         mButtonUpload = findViewById(R.id.p_button_continue);
-        mImageView = findViewById(R.id.image_upload_view);
+        mImageView = findViewById(R.id.pothole_image_view);
         mProgressBar = findViewById(R.id.progress_bar);
         mEditTextPothole_Type = findViewById(R.id.pothole_type_edittext);
         mEditTextAddress = findViewById(R.id.pothole_address_edittext);
@@ -95,40 +96,8 @@ public class ReportPotholeActivity extends AppCompatActivity {
         mEditTextDimensions = findViewById(R.id.pothole_dimensions_edittext);
         mEditTextLandmark = findViewById(R.id.pothole_landmark_edittext);
 
-
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
-
-        Button open_camera = findViewById(R.id.Open_Camera_button);
-        open_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                askCameraPermissions();
-            }
-        });
-
-        Button upload_file = findViewById(R.id.pothole_Select_file);
-        upload_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final CharSequence[] items ={"Upload Image","Upload Video"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReportPotholeActivity.this);
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (items[i].equals("Upload Image")){
-                            OpenImageFileChooser();
-                        }
-
-                        else if (items[i].equals("Upload Video")){
-                            //TODO: Write code for uploading Video
-                        }
-                    }
-                });
-                builder.show();
-            }
-        });
-
 
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +112,56 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        RelativeLayout image_layout = findViewById(R.id.pothole_image_layout);
+        image_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final CharSequence[] items ={"Open Camera","Upload from Gallery"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReportPotholeActivity.this);
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (items[i].equals("Open Camera")){
+                            askCameraPermissions();
+                            update_imageView_layout(true);
+                        }
+                        else if (items[i].equals("Upload from Gallery")){
+                            OpenImageFileChooser();
+                            update_imageView_layout(true);
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+    }
+
+    private void initiate_remove_image_button(){
+        button_remove_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Delete image from the view when this button is clicked.
+                update_imageView_layout(false);
+            }
+        });
+    }
+
+    private void update_imageView_layout(Boolean isImageLoaded){
+        View tint = findViewById(R.id.pothole_image_layout_tint);
+        TextView text = findViewById(R.id.upload_image_text);
+        if (isImageLoaded){
+            tint.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+            button_remove_image.setVisibility(View.VISIBLE);
+            initiate_remove_image_button();
+        }
+        else{
+            tint.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            button_remove_image.setVisibility(View.GONE);
+            mImageView.setImageResource(0);
+        }
     }
 
     private void askCameraPermissions() {
