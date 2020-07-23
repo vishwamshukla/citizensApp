@@ -222,10 +222,10 @@
                 android:layout_alignRight="@+id/cv"
                 android:layout_margin="10dp"
                 android:background="@drawable/bt_uiborder"
-                android:drawableLeft="@drawable/google3"
+
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Login with Google"
+                android:text="Login with more options"
                 android:textColor="@color/colorPurple" />
 
         </RelativeLayout>
