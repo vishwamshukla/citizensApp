@@ -254,27 +254,23 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     mProgressBar.setVisibility(View.INVISIBLE);
+
+
+                                    String mPotholeType = mEditTextPothole_Type.getText().toString();
+                                    String mAddress = mEditTextAddress.getText().toString();
+                                    String mLandmark = mEditTextLandmark.getText().toString();
+                                    String mDimension = mEditTextDimensions.getText().toString().trim();
+                                    String mComment = mEditTextComments.getText().toString();
+
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment);
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    assert uploadId != null;
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+
                                     Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
 
-                                    Upload upload1 = new Upload(mEditTextPothole_Type.getText().toString().trim(),
-                                            uri.toString());
-                                    Upload upload2 = new Upload(mEditTextAddress.getText().toString().trim(),
-                                            uri.toString());
-
-                                    Upload upload3 = new Upload(mEditTextLandmark.getText().toString().trim(),
-                                            uri.toString());
-                                    Upload upload4 = new Upload(mEditTextDimensions.getText().toString().trim(),
-                                            uri.toString());
-                                    Upload upload5 = new Upload(mEditTextComments.getText().toString().trim(),
-                                            uri.toString());
-                                    String uploadId = mDatabaseRef.push().getKey();
-                                    assert uploadId != null;
-                                    mDatabaseRef.child(uploadId).setValue(upload1);
-                                    mDatabaseRef.child(uploadId).setValue(upload2);
-                                    mDatabaseRef.child(uploadId).setValue(upload3);
-                                    mDatabaseRef.child(uploadId).setValue(upload4);
-                                    mDatabaseRef.child(uploadId).setValue(upload5);
                                 }
                             });
                             /*Toast.makeText(Image_video_upload.this, "Upload Successful", Toast.LENGTH_SHORT).show();

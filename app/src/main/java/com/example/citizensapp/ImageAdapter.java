@@ -38,8 +38,8 @@ import java.util.List;
         @Override
         public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
             Upload uploadCurrent = mUploads.get(position);
-            holder.textViewPotholeType.setText(uploadCurrent.getName());
-            holder.textViewComment.setText(uploadCurrent.getName());
+            holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
+            holder.textViewComment.setText(uploadCurrent.getmLandmark());
             Picasso.get()
                     .load(uploadCurrent.getImageUrl())
                     .fit()
