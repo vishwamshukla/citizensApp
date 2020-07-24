@@ -106,10 +106,12 @@ public class Google extends BaseActivity implements GoogleApiClient.OnConnection
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                startActivity(new Intent(Google.this, HomeActivity.class));
+                //startActivity(new Intent(Google.this, HomeActivity.class));
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
+                Toast.makeText(this, "Please close the app and open again", Toast.LENGTH_SHORT).show();
             } else {
                 // Google Sign In failed, update UI appropriately
                 updateUI(null);
@@ -127,9 +129,9 @@ public class Google extends BaseActivity implements GoogleApiClient.OnConnection
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
                 if (!task.isSuccessful()) {
-                    startActivity(new Intent(Google.this, HomeActivity.class));
-                    mTextViewProfile.setTextColor(Color.RED);
-                    mTextViewProfile.setText(task.getException().getMessage());
+                    //startActivity(new Intent(Google.this, HomeActivity.class));
+//                    mTextViewProfile.setTextColor(Color.RED);
+//                    mTextViewProfile.setText(task.getException().getMessage());
                 } else {
                     mTextViewProfile.setTextColor(Color.DKGRAY);
                 }
