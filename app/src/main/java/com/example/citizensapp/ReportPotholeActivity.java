@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +56,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
 
+    private ImageView backButton;
     private Button mButtonUpload;
     private EditText mEditTextPothole_Type;
     private EditText mEditTextAddress;
@@ -60,6 +64,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
     private EditText mEditTextDimensions;
     private EditText mEditTextComments;
     private ImageView mImageView;
+    private TextView button_remove_image;
     Integer REQUEST_CAMERA = 0;
     private VideoView mVideoView;
     String currentPhotoPath;
@@ -76,8 +81,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
     private StorageTask mUploadTask;
 
-
-    Button button_remove_image;
     private FirebaseAuth mAuth;
     String currentUserID;
 
@@ -123,7 +126,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout image_layout = findViewById(R.id.pothole_image_layout);
+        CardView image_layout = findViewById(R.id.pothole_image_layout);
         image_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,6 +148,14 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReportPotholeActivity.this.finish();
+            }
+        });
     }
 
     private void initiate_remove_image_button(){
@@ -158,17 +169,14 @@ public class ReportPotholeActivity extends AppCompatActivity {
     }
 
     private void update_imageView_layout(Boolean isImageLoaded){
-        View tint = findViewById(R.id.pothole_image_layout_tint);
-        TextView text = findViewById(R.id.upload_image_text);
+        LinearLayout hint_view = findViewById(R.id.upload_image_hint_view);
         if (isImageLoaded){
-            tint.setVisibility(View.GONE);
-            text.setVisibility(View.GONE);
+            hint_view.setVisibility(View.GONE);
             button_remove_image.setVisibility(View.VISIBLE);
             initiate_remove_image_button();
         }
         else{
-            tint.setVisibility(View.VISIBLE);
-            text.setVisibility(View.VISIBLE);
+            hint_view.setVisibility(View.VISIBLE);
             button_remove_image.setVisibility(View.GONE);
             mImageView.setImageResource(0);
         }
