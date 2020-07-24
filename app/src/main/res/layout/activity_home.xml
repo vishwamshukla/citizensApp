@@ -19,12 +19,6 @@
             android:layout_height="wrap_content"
             layout="@layout/action_bar"/>
 
-<!--        <TextView-->
-<!--            android:layout_below="@id/actionBar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="home"/>-->
-
         <ProgressBar
             android:id="@+id/progress_circle"
             android:layout_width="wrap_content"
@@ -39,8 +33,6 @@
             android:layout_height="match_parent">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/report_pothole_add_button"
