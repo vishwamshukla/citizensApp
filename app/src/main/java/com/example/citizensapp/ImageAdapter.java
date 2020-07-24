@@ -1,6 +1,8 @@
 package com.example.citizensapp;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -8,11 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +24,14 @@ import java.util.List;
         private Context mContext;
         private List<Upload> mUploads;
         private HomeActivity mListener;
+        public int prog = 0;
+
+        public enum Progress {
+            Reported,
+            Processing,
+            Midway,
+            Completed
+        }
 
         public ImageAdapter(Context context,List<Upload> uploads){
             mContext = context;
@@ -45,7 +55,31 @@ import java.util.List;
                     .fit()
                     .centerInside()
                     .into(holder.imageView);
+            //TODO: change "Processing" with the actual status of that pothole form database.
+            setProgressBar(Progress.Processing, holder.mprogressBar, holder.potholeStaus);
         }
+
+        public void setProgressBar(Progress progress, ProgressBar mprogressBar, TextView potholeStaus){
+            switch (progress) {
+                case Reported:
+                    mprogressBar.setProgress(25);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFf44336));
+                    break;
+                case Processing:
+                    mprogressBar.setProgress(50);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFff9800));
+                    break;
+                case Midway:
+                    mprogressBar.setProgress(75);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFffeb3b));
+                    break;
+                default:
+                    mprogressBar.setProgress(100);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFF4caf50));
+                    break;
+            }
+            potholeStaus.setText(progress.toString());
+     }
 
         @Override
         public int getItemCount() {
@@ -56,6 +90,8 @@ import java.util.List;
             public TextView textViewPotholeType;
             public TextView textViewComment;
             public ImageView imageView;
+            public ProgressBar mprogressBar;
+            public TextView potholeStaus;
 
             public ImageViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -63,6 +99,8 @@ import java.util.List;
                 textViewPotholeType = itemView.findViewById(R.id.text_view_pothole_type);
                 textViewComment = itemView.findViewById(R.id.text_view_comment);
                 imageView = itemView.findViewById(R.id.image_view_upload);
+                mprogressBar = itemView.findViewById(R.id.progress_bar_pothole);
+                potholeStaus = itemView.findViewById(R.id.text_view_pothole_status);
 
                 itemView.setOnClickListener(this);
                 itemView.setOnCreateContextMenuListener(this);
