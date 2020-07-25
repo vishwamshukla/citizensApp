@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.CircularPropagation;
@@ -69,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 //        currentUserID= mAuth.getCurrentUser().getUid();
 
-        Toolbar my_toolbar = findViewById(R.id.actionBar);
+        @SuppressLint("WrongViewCast") Toolbar my_toolbar = findViewById(R.id.actionBar);
         my_toolbar.setTitle("");
         setSupportActionBar(my_toolbar);
 
@@ -186,7 +187,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                startActivity(new Intent(HomeActivity.this, LoginActivity2.class));
                 break;
             case R.id.account_settings:
                 startActivity(new Intent(HomeActivity.this, ProfileActivity.class));

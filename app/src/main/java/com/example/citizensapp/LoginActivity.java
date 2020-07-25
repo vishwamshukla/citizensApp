@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvLogin;
     private ImageButton btRegister;
     private FirebaseAuth mAuth;
+    String currentuser;
     private static final String TAG = "LoginActivity";
 
     private static final int RC_SIGN_IN = 123;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        currentuser = mAuth.getCurrentUser().getUid();
 
         btRegister = findViewById(R.id.btRegister);
         progressBar = findViewById(R.id.progress_bar);
