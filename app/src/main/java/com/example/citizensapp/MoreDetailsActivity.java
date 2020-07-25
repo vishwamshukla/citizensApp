@@ -73,7 +73,7 @@ public class MoreDetailsActivity extends AppCompatActivity {
         else if(phone.isEmpty()){
             phone3.setError("Field can't be empty");
         }
-        else if (!username.matches(noWhiteSpaces)){
+        else if (username.matches(noWhiteSpaces)){
             username3.setError("White spaces are not allowed");
         }
         else if (username.length() > 15){

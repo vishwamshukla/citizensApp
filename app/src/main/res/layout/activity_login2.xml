@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:text="Sign in to continue"
-
         android:transitionName="logo_desc"
         android:textSize="18sp" />
     
@@ -104,11 +103,10 @@
         android:transitionName="button1_tran"
         android:textColor="#000" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

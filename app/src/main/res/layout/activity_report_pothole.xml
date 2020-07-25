@@ -159,32 +159,11 @@
                         android:inputType="text"
                         android:padding="10dp" />
 
-
-                    <TextView
-                        android:id="@+id/pothole_address_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/pothole_type_edittext"
-                        android:layout_marginTop="15dp"
-                        android:text="Address"
-                        android:textColor="@color/colorPurple"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/pothole_address_edittext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/pothole_address_textView"
-                        android:drawablePadding="30dp"
-                        android:inputType="text"
-                        android:padding="10dp" />
-
                     <TextView
                         android:id="@+id/pothole_landmark_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/pothole_address_edittext"
+                        android:layout_below="@+id/pothole_type_edittext"
                         android:layout_marginTop="15dp"
                         android:text="Landmark"
                         android:textColor="@color/colorPurple"
@@ -200,13 +179,52 @@
                         android:inputType="text"
                         android:padding="10dp" />
 
+
                     <TextView
-                        android:id="@+id/pothole_dimension_textview"
+                        android:id="@+id/pothole_address_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pothole_landmark_edittext"
                         android:layout_marginTop="15dp"
-                        android:text="Dimensions(Optional)"
+                        android:text="Location"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/map_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/pothole_address_textView"
+                        app:cardCornerRadius="10dp">
+
+                        <!-- TODO: Replace this ImagaView with MapView -->
+                        <ImageView
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/map"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                        <TextView
+                            android:alpha="0.7"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tap here to Modify"
+                            android:layout_gravity="bottom"
+                            android:textAlignment="center"
+                            tools:ignore="RtlCompat" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/pothole_dimension_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/map_card_view"
+                        android:layout_marginTop="15dp"
+                        android:text="Dimensions (Optional)"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -226,7 +244,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pothole_dimensions_edittext"
                         android:layout_marginTop="15dp"
-                        android:text="Comments"
+                        android:text="Comments (Optional)"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
                         android:textStyle="bold" />
