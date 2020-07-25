@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -49,5 +49,7 @@
     <style name="ThemeOverlay.MyDarkButton" parent="Base.ThemeOverlay.AppCompat.Dark">
         <item name="colorButtonNormal">@color/colorBlue</item>
         <item name="android:textColor">@android:color/white</item>
+
+        <item name="android:windowContentTransitions">true</item>
     </style>
 </resources>
