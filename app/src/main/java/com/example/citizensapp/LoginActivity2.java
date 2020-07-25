@@ -115,11 +115,15 @@ public class LoginActivity2 extends AppCompatActivity {
     private void LoginUser() {
         String email1 = email2.getEditText().getText().toString();
         String password1 = password2.getEditText().getText().toString();
-
-        if (TextUtils.isEmpty(email1)) {
-            Toast.makeText(this, "Enter Phone Number!", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(password1)) {
-            Toast.makeText(this, "Enter Password!", Toast.LENGTH_SHORT).show();
+        String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(email1.isEmpty()){
+            email2.setError("Field can't be empty");
+        }
+        else if(!email1.matches(emailpattern)){
+            email2.setError("Email address is not valid");
+        }
+        else if(password1.isEmpty()){
+            password2.setError("Field can't be empty");
         } else {
             progressBar.setVisibility(View.VISIBLE);
 

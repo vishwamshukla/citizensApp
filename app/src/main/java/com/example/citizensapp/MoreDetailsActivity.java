@@ -58,11 +58,35 @@ public class MoreDetailsActivity extends AppCompatActivity {
     }
 
     private void userInfoSaved() {
+        String name = name3.getEditText().getText().toString();
+        String username = username3.getEditText().getText().toString();
+        String phone = phone3.getEditText().getText().toString();
+
+        String noWhiteSpaces = "(?=\\s+$)";
+        String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(name.isEmpty()){
+            name3.setError("Field can't be empty");
+        }
+        else if(username.isEmpty()){
+            username3.setError("Field can't be empty");
+        }
+        else if(phone.isEmpty()){
+            phone3.setError("Field can't be empty");
+        }
+        else if (!username.matches(noWhiteSpaces)){
+            username3.setError("White spaces are not allowed");
+        }
+        else if (username.length() > 15){
+            username3.setError("Username is too long");
+        }
+        else if(phone.length() > 10){
+            phone3.setError("Phone number is not valid");
+        }
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
         HashMap<String, Object> userMap = new HashMap<>();
-        userMap.put("name", name3.getEditText().getText().toString());
-        userMap.put("username", username3.getEditText().getText().toString());
-        userMap.put("phone", phone3.getEditText().getText().toString());
+        userMap.put("name", name);
+        userMap.put("username", username);
+        userMap.put("phone", phone);
         ref.child(currentUserID).updateChildren(userMap);
 
 

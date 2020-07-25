@@ -46,8 +46,12 @@ public class ResetPasswordActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String userEmail = email.getEditText().getText().toString();
-                if (TextUtils.isEmpty(userEmail)){
-                    Toast.makeText(ResetPasswordActivity2.this, "Email required", Toast.LENGTH_SHORT).show();
+                String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(userEmail.isEmpty()){
+                    email.setError("Field can't be empty");
+                }
+                else if(userEmail.matches(emailpattern)){
+                    email.setError("Email address is not valid");
                 }
                 else {
                     progressBar.setVisibility(View.VISIBLE);

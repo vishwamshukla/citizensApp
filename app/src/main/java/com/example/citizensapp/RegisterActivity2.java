@@ -71,7 +71,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 //                String phone = phone3.getEditText().getText().toString();
                 String password = password3.getEditText().getText().toString();
                 String confirmPassword = confirmPassword3.getEditText().getText().toString();
-
+                String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 //                if (TextUtils.isEmpty(name)){
 //                    Toast.makeText(RegisterActivity2.this, "Name is required", Toast.LENGTH_SHORT).show();
@@ -79,18 +79,30 @@ public class RegisterActivity2 extends AppCompatActivity {
 //                else if (TextUtils.isEmpty(username)){
 //                    Toast.makeText(RegisterActivity2.this, "Username is required", Toast.LENGTH_SHORT).show();
 //                }
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(RegisterActivity2.this, "Email is required", Toast.LENGTH_SHORT).show();
+                if(email.isEmpty()){
+                    email3.setError("Field can't be empty");
                 }
+                else if(!email.matches(emailpattern)){
+                    email3.setError("Email address is not valid");
+                }
+                else if(password.isEmpty()){
+                    password3.setError("Field can't be empty");
+                }
+                else if(confirmPassword.isEmpty()){
+                    confirmPassword3.setError("Field can't be empty");
+                }
+//                if (TextUtils.isEmpty(email)){
+//                    Toast.makeText(RegisterActivity2.this, "Email is required", Toast.LENGTH_SHORT).show();
+//                }
 //                else if (TextUtils.isEmpty(phone)){
 //                    Toast.makeText(RegisterActivity2.this, "Phone number is required", Toast.LENGTH_SHORT).show();
 //                }
-                else if (TextUtils.isEmpty(password)){
-                    Toast.makeText(RegisterActivity2.this, "Password is required", Toast.LENGTH_SHORT).show();
-                }
-                else if(!password.equals(confirmPassword)){
-                    Toast.makeText(RegisterActivity2.this, "Password do not match", Toast.LENGTH_SHORT).show();
-                }
+//                else if (TextUtils.isEmpty(password)){
+//                    Toast.makeText(RegisterActivity2.this, "Password is required", Toast.LENGTH_SHORT).show();
+//                }
+//                else if(!password.equals(confirmPassword)){
+//                    Toast.makeText(RegisterActivity2.this, "Password do not match", Toast.LENGTH_SHORT).show();
+//                }
                 else{
                     progressBar.setVisibility(View.VISIBLE);
                     mAuth.createUserWithEmailAndPassword(email, password)
