@@ -5,39 +5,51 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    private EditText email;
+    private TextInputLayout email;
     private Button Continue;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+    ImageView image;
+    TextView logoText, slogantext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(R.layout.activity_reset_password2);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        image = findViewById(R.id.logo_image);
+        logoText = findViewById(R.id.logo_name);
+        slogantext = findViewById(R.id.slogan_name);
         mAuth = FirebaseAuth.getInstance();
-        email = (EditText) findViewById(R.id.forgot_email);
-        Continue = (Button) findViewById(R.id.forgot_button);
+        email = findViewById(R.id.email4);
+        Continue = (Button) findViewById(R.id.submit_button_reset);
         progressBar = findViewById(R.id.progress_bar);
-
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userEmail = email.getText().toString();
-                if (TextUtils.isEmpty(userEmail)){
-                    Toast.makeText(ResetPasswordActivity.this, "Email required", Toast.LENGTH_SHORT).show();
+                String userEmail = email.getEditText().getText().toString();
+                String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(userEmail.isEmpty()){
+                    email.setError("Field can't be empty");
+                }
+                else if(userEmail.matches(emailpattern)){
+                    email.setError("Email address is not valid");
                 }
                 else {
                     progressBar.setVisibility(View.VISIBLE);

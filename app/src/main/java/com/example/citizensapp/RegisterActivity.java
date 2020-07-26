@@ -2,128 +2,126 @@ package com.example.citizensapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private RelativeLayout rlayout;
-    private Animation animation;
-    private Menu menu;
 
-    private EditText UserEmail, UserPassword, UserConfirmPassword;
-    private Button CreateAccountButton;
-    //private ProgressDialog loadingBar;
+    TextInputLayout name3, username3, email3, phone3, password3, confirmPassword3;
+    Button registerButton, registerToLoginButton;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference, userRef;
+    FirebaseAuth mAuth;
+    String currentUserId;
     private ProgressBar progressBar;
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register2);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         progressBar = findViewById(R.id.progress_bar);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
-
-        rlayout     = findViewById(R.id.rlayout);
-        animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
-        rlayout.setAnimation(animation);
-
         mAuth = FirebaseAuth.getInstance();
+        //currentUserId = mAuth.getCurrentUser().getUid();
+//        name3 = findViewById(R.id.name3);
+//        username3= findViewById(R.id.username3);
+        email3 = findViewById(R.id.email3);
+//        phone3 = findViewById(R.id.phone3);
+        password3 = findViewById(R.id.passsword3);
+        confirmPassword3 = findViewById(R.id.confirmpasssword3);
 
-        //loadingBar = new ProgressDialog(this);
-
-        UserEmail = findViewById(R.id.doctor_email);
-        UserPassword = findViewById(R.id.doctor_password);
-        UserConfirmPassword =  findViewById(R.id.doctor_confirm_password);
-        CreateAccountButton =  findViewById(R.id.register_create_account);
-
-        CreateAccountButton.setOnClickListener(new View.OnClickListener() {
+        registerButton = findViewById(R.id.register_button);
+        registerToLoginButton = findViewById(R.id.registerToLogin_button);
+        registerToLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateNewAccount();
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
-    }
-    private void CreateNewAccount() {
-        String email = UserEmail.getText().toString();
-        String password = UserPassword.getText().toString();
-        String confirmPassword = UserConfirmPassword.getText().toString();
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rootNode = FirebaseDatabase.getInstance();
+                reference = rootNode.getReference().child("Users").child("Citizens");
 
-        if (TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Email required", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Password required", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(confirmPassword)){
-            Toast.makeText(this, "Confirm the password", Toast.LENGTH_SHORT).show();
-        }
-        else if(!password.equals(confirmPassword)){
-            Toast.makeText(this, "Password do not match", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            progressBar.setVisibility(View.VISIBLE);
-//            loadingBar.setTitle("Creating Account");
-//            loadingBar.setMessage("Please wait...");
-//            loadingBar.show();
-//            loadingBar.setCanceledOnTouchOutside(true);
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                Toast.makeText(RegisterActivity.this, "Account Created...", Toast.LENGTH_SHORT).show();
-                                //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                            else{
-                                String message = task.getException().getMessage();
-                                Toast.makeText(RegisterActivity.this, "Error-> "+message, Toast.LENGTH_SHORT).show();
-                                //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-        }
-    }
+               // String id = currentUserId;
+//                String name = name3.getEditText().getText().toString();
+//                String username = username3.getEditText().getText().toString();
+                String email = email3.getEditText().getText().toString();
+//                String phone = phone3.getEditText().getText().toString();
+                String password = password3.getEditText().getText().toString();
+                String confirmPassword = confirmPassword3.getEditText().getText().toString();
+                String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-//    private void SendUserToSetupActivity() {
-//        Intent intent = new Intent(RegisterActivity.this, DoctorProfileActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-//        finish();
-//    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+//                if (TextUtils.isEmpty(name)){
+//                    Toast.makeText(RegisterActivity2.this, "Name is required", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (TextUtils.isEmpty(username)){
+//                    Toast.makeText(RegisterActivity2.this, "Username is required", Toast.LENGTH_SHORT).show();
+//                }
+                if(email.isEmpty()){
+                    email3.setError("Field can't be empty");
+                }
+                else if(!email.matches(emailpattern)){
+                    email3.setError("Email address is not valid");
+                }
+                else if(password.isEmpty()){
+                    password3.setError("Field can't be empty");
+                }
+                else if(confirmPassword.isEmpty()){
+                    confirmPassword3.setError("Field can't be empty");
+                }
+//                if (TextUtils.isEmpty(email)){
+//                    Toast.makeText(RegisterActivity2.this, "Email is required", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (TextUtils.isEmpty(phone)){
+//                    Toast.makeText(RegisterActivity2.this, "Phone number is required", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (TextUtils.isEmpty(password)){
+//                    Toast.makeText(RegisterActivity2.this, "Password is required", Toast.LENGTH_SHORT).show();
+//                }
+//                else if(!password.equals(confirmPassword)){
+//                    Toast.makeText(RegisterActivity2.this, "Password do not match", Toast.LENGTH_SHORT).show();
+//                }
+                else{
+                    progressBar.setVisibility(View.VISIBLE);
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()){
+                                        startActivity(new Intent(RegisterActivity.this, MoreDetailsActivity.class));
+                                        Toast.makeText(RegisterActivity.this, "Account Created...", Toast.LENGTH_SHORT).show();
+                                        //loadingBar.dismiss();
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                    else{
+                                        String message = task.getException().getMessage();
+                                        Toast.makeText(RegisterActivity.this, "Error-> "+message, Toast.LENGTH_SHORT).show();
+                                        //loadingBar.dismiss();
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                }
+                            });
+                }
+//                UserHelper helper = new UserHelper(name, username, email, phone, password);
+//                reference.child(phone).setValue(helper);
+            }
+        });
     }
 }

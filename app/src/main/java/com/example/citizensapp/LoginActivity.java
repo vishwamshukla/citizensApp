@@ -3,15 +3,13 @@ package com.example.citizensapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
+import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,9 +18,12 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,159 +32,164 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText InputEmail, InputPassword;
-    private TextView forgotPassword;
-    private Button LoginButton, LoginwithGoogle;
-    private ProgressDialog loadingBar;
-    private String parentDbName = "Public";
-    //private android.widget.CheckBox chkBoxRememberMe;
-    private ImageView circle1;
-    TextView tvLogin;
-    private ImageButton btRegister;
-    private FirebaseAuth mAuth;
-    String currentuser;
-    private static final String TAG = "LoginActivity";
+    Button register, login_btn, resetButton;
+    ImageView image;
+    TextView logoText, slogantext;
+    TextInputLayout email2, password2;
+    private static int SPLASH_SCREEN = 5000;
 
-    private static final int RC_SIGN_IN = 123;
     private GoogleSignInClient mGoogleSignInClient;
+    private final static int RC_SIGN_IN = 123;
+    private FirebaseAuth mAuth;
 
+    String currentuser;
     private ProgressBar progressBar;
-
-    // private TextView ForgotPassword;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        mAuth = FirebaseAuth.getInstance();
-        currentuser = mAuth.getCurrentUser().getUid();
-
-        btRegister = findViewById(R.id.btRegister);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_login2);
         progressBar = findViewById(R.id.progress_bar);
 
-        forgotPassword = (TextView) findViewById(R.id.tvForgot);
+        mAuth = FirebaseAuth.getInstance();
+//        currentuser = mAuth.getCurrentUser().getUid();
 
-        LoginButton = (Button) findViewById(R.id.login_btn_doctor);
-        LoginwithGoogle = (Button) findViewById(R.id.login_with_google);
-        InputEmail = (EditText) findViewById(R.id.login_email_input_doctor);
-        InputPassword = (EditText) findViewById(R.id.login_password_input_doctor);
-        loadingBar = new ProgressDialog(this);
-        //chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb_reception);
-        //Paper.init(this);
-
-        //ForgotPassword = (TextView) findViewById(R.id.forgot_password_link_reception);
-
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+        register = findViewById(R.id.new_user);
+        image = findViewById(R.id.logo_image);
+        logoText = findViewById(R.id.logo_name);
+        slogantext = findViewById(R.id.slogan_name);
+        email2 = findViewById(R.id.emaill);
+        password2=findViewById(R.id.passswordd);
+        login_btn = findViewById(R.id.login_btn);
+        resetButton = findViewById(R.id.reset_password_button);
+        login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginUser();
+               LoginUser();
             }
         });
 
-        btRegister.setOnClickListener(new View.OnClickListener() {
-            // @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (v==btRegister){
-//                    Intent a = new Intent(LoginActivity.this, DoctorRegisterActivity.class);
-//                    Pair[] pairs = new Pair[1];
-//                    pairs[0] = new Pair<View,String> (tvLogin,"login");
-//                    ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
-//                    startActivity(a,activityOptions.toBundle());
-//                }
-              startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Pair[] pairs = new Pair[7];
+                pairs[0] = new Pair<View, String>(image, "logo_image");
+                pairs[1] = new Pair<View, String>(logoText, "logo_text");
+                pairs[2] = new Pair<View, String>(slogantext, "logo_desc");
+                pairs[3] = new Pair<View, String>(email2, "email_tran");
+                pairs[4] = new Pair<View, String>(password2, "password_tran");
+                pairs[5] = new Pair<View, String>(login_btn, "button_tran");
+                pairs[6] = new Pair<View, String>(register, "register_tran");
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                startActivity(intent, options.toBundle());
+            }
+        });
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                Pair[] pairs = new Pair[5];
+                pairs[0] = new Pair<View, String>(image, "logo_image");
+                pairs[1] = new Pair<View, String>(logoText, "logo_text");
+                pairs[2] = new Pair<View, String>(slogantext, "logo_desc");
+                pairs[3] = new Pair<View, String>(email2, "email_tran");
+                pairs[4] = new Pair<View, String>(resetButton, "button_tran");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                startActivity(intent, options.toBundle());
+
             }
         });
 
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
+
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        createRequest();
+
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+
+                signIn();
             }
         });
+    }
+
+
+
+    private void createRequest() {
+
 
         // Configure Google Sign In
-//        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
-       // mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
-//        mGoogleSignInClient = new GoogleApiClient.Builder(this)
-//                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-//                    @Override
-//                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//                        Toast.makeText(LoginActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-//                .build();
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        LoginwithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, loginListActivity.class));
-                //SignInGoogle();
-            }
-        });
 
     }
 
-    void SignInGoogle(){
-        progressBar.setVisibility(View.VISIBLE);
+
+    private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-    //    private void signIn() {
-//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleSignInClient);
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            //GoogleSignInResult result = new Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) firebaseAuthWithGoogle(account);
+                firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
                 // ...
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.INVISIBLE);
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                            startActivity(intent);
+
+
                         } else {
-                            progressBar.setVisibility(View.INVISIBLE);
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(LoginActivity.this, LoginActivity.class));
-//                            Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-//                            updateUI(null);
+                            Toast.makeText(LoginActivity.this, "Sorry auth failed.", Toast.LENGTH_SHORT).show();
+
+
                         }
+
 
                         // ...
                     }
@@ -194,32 +200,35 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseUser currentUser1 = mAuth.getCurrentUser();
+        if (currentUser1 !=  null){
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser !=  null){
-            int d = Log.d(TAG, "onStart: "+ currentUser.getDisplayName());
             SendUserToHomeActivity();
         }
     }
-
+    private void SendUserToHomeActivity() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private void LoginUser() {
-        String email = InputEmail.getText().toString();
-        String password = InputPassword.getText().toString();
-
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Enter Phone Number!", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Enter Password!", Toast.LENGTH_SHORT).show();
+        String email1 = email2.getEditText().getText().toString();
+        String password1 = password2.getEditText().getText().toString();
+        String emailpattern = "[a-zA=z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(email1.isEmpty()){
+            email2.setError("Field can't be empty");
+        }
+        else if(!email1.matches(emailpattern)){
+            email2.setError("Email address is not valid");
+        }
+        else if(password1.isEmpty()){
+            password2.setError("Field can't be empty");
         } else {
-//            loadingBar.setTitle("Login in progress");
-//            loadingBar.setMessage("Please wait...");
-//            loadingBar.show();
-//            loadingBar.setCanceledOnTouchOutside(true);
-            progressBar.setVisibility(View.VISIBLE);
+           // progressBar.setVisibility(View.VISIBLE);
 
-            mAuth.signInWithEmailAndPassword(email, password)
+            mAuth.signInWithEmailAndPassword(email1, password1)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -227,75 +236,15 @@ public class LoginActivity extends AppCompatActivity {
                                 SendUserToHomeActivity();
                                 Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                                 //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
+                                //progressBar.setVisibility(View.INVISIBLE);
                             } else {
                                 String message = task.getException().toString();
                                 Toast.makeText(LoginActivity.this, "Error-" + message, Toast.LENGTH_SHORT).show();
                                 //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
+                                //progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     });
         }
     }
-
-    private void SendUserToHomeActivity() {
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
 }
-
-//    private void AllowAccessToAccount(final String email, final String password) {
-//
-////        if (chkBoxRememberMe.isChecked()){
-////            Paper.book().write(Prevalent.UserPhoneKey,phone);
-////            Paper.book().write(Prevalent.UserPasswordKey,password);
-////        }
-//
-//
-//        final DatabaseReference RootRef;
-//        RootRef = FirebaseDatabase.getInstance().getReference();
-//
-//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.child(parentDbName).child(phone).exists()){
-//                    Users usersData = dataSnapshot.child(parentDbName).child(phone).getValue(Users.class);
-//                    if (usersData.getPhone().equals(phone)){
-//                        if (usersData.getPassword().equals(password)){
-////                            if (parentDbName.equals("Admins")){
-////                                Toast.makeText(LoginActivity.this, "Logged in!", Toast.LENGTH_SHORT).show();
-////                                loadingBar.dismiss();
-////
-////                                Intent intent = new Intent(LoginActivity.this,AdminCategoryActivity.class);
-////                                startActivity(intent);
-////                            }
-//                            if (parentDbName.equals("Users")){
-//                                Toast.makeText(LoginActivity.this, "Logged in!", Toast.LENGTH_SHORT).show();
-//                                loadingBar.dismiss();
-//
-//                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-//                                Prevalent.currentOnlineUser = usersData;
-//                                startActivity(intent);
-//                            }                        }
-//                        else {
-//                            loadingBar.dismiss();
-//                            Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }
-//                else {
-//                    Toast.makeText(LoginActivity.this, "Account with this "+phone+" number do not exists", Toast.LENGTH_SHORT).show();
-//                    loadingBar.dismiss();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//}

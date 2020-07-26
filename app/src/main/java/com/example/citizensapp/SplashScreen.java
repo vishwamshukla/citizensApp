@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SplashScreen2 extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity {
     private static int SPLASH_SCREEN = 2000;
 
     Animation topanim, bottomanim;
@@ -41,12 +41,12 @@ public class SplashScreen2 extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen2.this, LoginActivity2.class);
+                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                 Pair[] pairs = new Pair[2];
                 pairs[0] = new Pair<View, String>(image, "logo_image");
                 pairs[1] = new Pair<View, String>(logo, "logo_text");
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen2.this, pairs);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this, pairs);
                 startActivity(intent, options.toBundle());
             }
         }, SPLASH_SCREEN);
