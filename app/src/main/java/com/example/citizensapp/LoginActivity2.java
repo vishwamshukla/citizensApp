@@ -229,7 +229,7 @@ public class LoginActivity2 extends AppCompatActivity {
         else if(password1.isEmpty()){
             password2.setError("Field can't be empty");
         } else {
-            progressBar.setVisibility(View.VISIBLE);
+           // progressBar.setVisibility(View.VISIBLE);
 
             mAuth.signInWithEmailAndPassword(email1, password1)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -239,12 +239,12 @@ public class LoginActivity2 extends AppCompatActivity {
                                 SendUserToHomeActivity();
                                 Toast.makeText(LoginActivity2.this, "Logged in", Toast.LENGTH_SHORT).show();
                                 //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
+                                //progressBar.setVisibility(View.INVISIBLE);
                             } else {
                                 String message = task.getException().toString();
                                 Toast.makeText(LoginActivity2.this, "Error-" + message, Toast.LENGTH_SHORT).show();
                                 //loadingBar.dismiss();
-                                progressBar.setVisibility(View.INVISIBLE);
+                                //progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     });

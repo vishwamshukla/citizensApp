@@ -191,7 +191,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this, LoginActivity2.class));
                 break;
             case R.id.account_settings:
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this, ProfileActivty2.class));
                 break;
             case R.id.about_us:
                 startActivity(new Intent(HomeActivity.this, AboutUs.class));
