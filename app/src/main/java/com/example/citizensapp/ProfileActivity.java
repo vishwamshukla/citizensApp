@@ -8,9 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.TextView;
+
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,12 +38,11 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView profileImageView1;
     TextInputLayout name1, username1, email1, phone1;
     Button update;
-    TextView changeprofile;
+    RelativeLayout changeProfile;
     private Uri imageUri;
     private String myUrl = "";
     private StorageTask uploadTask;
     private StorageReference storageProfilePrictureRef;
-
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
@@ -66,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         email1 = findViewById(R.id.profile_email);
         phone1 = findViewById(R.id.profile_phone_number);
 
-        changeprofile = findViewById(R.id.change_profile);
+        changeProfile = findViewById(R.id.profile_image_layout);
 
         userInfoDisplay(profileImageView1, name1, username1, email1, phone1);
         update.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        changeprofile.setOnClickListener(new View.OnClickListener() {
+        changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
@@ -92,6 +93,13 @@ public class ProfileActivity extends AppCompatActivity {
                 CropImage.activity(imageUri)
                         .setAspectRatio(1, 1)
                         .start(ProfileActivity.this);
+            }
+        });
+
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
