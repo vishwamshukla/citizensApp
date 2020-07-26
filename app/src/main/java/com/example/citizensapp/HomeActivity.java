@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.net.Uri;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -194,6 +195,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.about_us:
                 startActivity(new Intent(HomeActivity.this, AboutUs.class));
+                break;
+            case R.id.help:
+                Intent Getintent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://vishwamshukla.intelaedu.com/"));
+                startActivity(Getintent);
                 break;
         }
         return false;
