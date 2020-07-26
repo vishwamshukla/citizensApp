@@ -126,12 +126,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     if (dataSnapshot.child("image").exists())
                     {
                         String image = String.valueOf(dataSnapshot.child("image").getValue());
-                        String name = String.valueOf(dataSnapshot.child("name").getValue());
+                        //String name = String.valueOf(dataSnapshot.child("name").getValue());
 
                         Picasso.get().load(image).into(profileImageView);
-                        userNameTextView.setText(name);
+                        //userNameTextView.setText(name);
 
                     }
+                    String name = String.valueOf(dataSnapshot.child("name").getValue());
+                    userNameTextView.setText(name);
                 }
             }
 
@@ -224,4 +226,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mDatabaseRef.removeEventListener(mDBListener);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+        finish();
+    }
 }
