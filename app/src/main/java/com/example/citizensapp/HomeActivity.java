@@ -115,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView = navigationView.getHeaderView(0);
-        final TextView userNameTextView = headerView.findViewById(R.id.name_textView);
+        final TextView userNameTextView = headerView.findViewById(R.id.name_textView1);
         final CircleImageView profileImageView = headerView.findViewById(R.id.nav_header_imageView1);
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
 
