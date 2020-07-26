@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#253572</color>
-    <color name="colorPrimaryDark">#253572</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#42a5f5</color>
+    <color name="colorPrimaryDark">#258adb</color>
+    <color name="colorAccent">#fed500</color>
     <color name="colorTransparent">#cccccc</color>
     <color name="colorwhite">#ffffff</color>
     <color name="colorBlue">#28A2CF</color>
@@ -10,7 +10,6 @@
     <color name="colorPurple">#A130FF</color>
     <color name="colorPurpleT">#64a130ff</color>
     <color name="colorWhite">#ffffff</color>
-
     <color name="colorPrimary1">#49BEFF</color>
     <color name="colorPrimaryDark1">#65DCE5</color>
     <color name="SolidCircle">#AAFFFFFF</color>
