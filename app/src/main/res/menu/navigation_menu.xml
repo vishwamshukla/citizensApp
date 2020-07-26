@@ -20,6 +20,10 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="Chats"/>
 
+        <item android:id="@+id/history"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:title="History"/>
+
         <item android:id="@+id/logout"
             android:icon="@drawable/logout"
             android:title="Logout"/>
@@ -27,9 +31,6 @@
 
     <item android:title="Communication">
         <menu>
-            <item android:id="@+id/account_settings"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="Account settings"/>
             <item android:id="@+id/help"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Help"/>
