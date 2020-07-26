@@ -111,8 +111,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         View headerView = navigationView.getHeaderView(0);
-        final TextView userNameTextView = headerView.findViewById(R.id.name_textView1);
-        final CircleImageView profileImageView = headerView.findViewById(R.id.nav_header_imageView1);
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
+        final TextView userNameTextView = headerView.findViewById(R.id.name_textView);
+        final CircleImageView profileImageView = headerView.findViewById(R.id.nav_header_profile_imageView);
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
 
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
@@ -186,10 +192,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                break;
-            case R.id.account_settings:
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this, LoginActivity2.class));
                 break;
             case R.id.about_us:
                 startActivity(new Intent(HomeActivity.this, AboutUs.class));
