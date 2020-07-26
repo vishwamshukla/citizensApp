@@ -132,7 +132,7 @@ import java.util.List;
 
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                MenuItem delete = contextMenu.add(Menu.NONE,1,1,"Delete");
+                MenuItem delete = contextMenu.add(Menu.NONE,1,1,"Cancel this Report");
 
                 delete.setOnMenuItemClickListener(this);
             }

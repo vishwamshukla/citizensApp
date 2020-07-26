@@ -98,7 +98,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.pothole_image_view);
         mProgressBar = findViewById(R.id.progress_bar);
         mEditTextPothole_Type = findViewById(R.id.pothole_type_edittext);
-//        mEditTextAddress = findViewById(R.id.pothole_address_edittext);
+        mEditTextAddress = findViewById(R.id.pothole_address_edittext);
         mEditTextComments = findViewById(R.id.pothole_comments_edittext);
         mEditTextDimensions = findViewById(R.id.pothole_dimensions_edittext);
         mEditTextLandmark = findViewById(R.id.pothole_landmark_edittext);

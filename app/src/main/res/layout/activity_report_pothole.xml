@@ -179,12 +179,31 @@
                         android:inputType="text"
                         android:padding="10dp" />
 
-
                     <TextView
                         android:id="@+id/pothole_address_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pothole_landmark_edittext"
+                        android:layout_marginTop="15dp"
+                        android:text="Address"
+                        android:textColor="@color/colorPurple"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/pothole_address_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pothole_address_textView"
+                        android:drawablePadding="30dp"
+                        android:inputType="text"
+                        android:padding="10dp" />
+
+                    <TextView
+                        android:id="@+id/pothole_location_textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pothole_address_edittext"
                         android:layout_marginTop="15dp"
                         android:text="Location"
                         android:textColor="@color/colorPurple"
@@ -192,14 +211,14 @@
                         android:textStyle="bold" />
 
                     <androidx.cardview.widget.CardView
+                        android:layout_below="@id/pothole_location_textView"
                         android:id="@+id/map_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="15dp"
-                        android:layout_below="@+id/pothole_address_textView"
                         app:cardCornerRadius="10dp">
 
-                        <!-- TODO: Replace this ImagaView with MapView -->
+                        <!-- TODO: Replace this ImageView with MapView -->
                         <ImageView
                             android:scaleType="centerCrop"
                             android:src="@drawable/map"
