@@ -34,6 +34,7 @@ import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -59,11 +60,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
     private ImageView backButton;
     private Button mButtonUpload;
-    private EditText mEditTextPothole_Type;
-    private EditText mEditTextAddress;
-    private EditText mEditTextLandmark;
-    private EditText mEditTextDimensions;
-    private EditText mEditTextComments;
+    private TextInputLayout mEditTextPothole_Type, mEditTextAddress, mEditTextLandmark, mEditTextDimensions, mEditTextComments;
     private ImageView mImageView;
     private TextView button_remove_image;
     Integer REQUEST_CAMERA = 0;
@@ -98,15 +95,14 @@ public class ReportPotholeActivity extends AppCompatActivity {
         mButtonUpload = findViewById(R.id.p_button_continue);
         mImageView = findViewById(R.id.pothole_image_view);
         mProgressBar = findViewById(R.id.progress_bar);
-        mEditTextPothole_Type = findViewById(R.id.pothole_type_edittext);
-        mEditTextAddress = findViewById(R.id.pothole_address_edittext);
-        mEditTextComments = findViewById(R.id.pothole_comments_edittext);
-        mEditTextDimensions = findViewById(R.id.pothole_dimensions_edittext);
-        mEditTextLandmark = findViewById(R.id.pothole_landmark_edittext);
+        mEditTextPothole_Type = findViewById(R.id.pothole_type_textView);
+        mEditTextAddress = findViewById(R.id.pothole_address_textView);
+        mEditTextComments = findViewById(R.id.potholes_comments_textview);
+        mEditTextDimensions = findViewById(R.id.pothole_dimension_textview);
+        mEditTextLandmark = findViewById(R.id.pothole_landmark_textview);
         mAuth = FirebaseAuth.getInstance();
 
         currentUserID = mAuth.getCurrentUser().getUid();
-
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Reported Potholes");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
@@ -300,11 +296,11 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     Date date1 = new Date();
                                     DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
                                     Date time = new Date();
-                                    String mPotholeType = mEditTextPothole_Type.getText().toString();
-                                    String mAddress = mEditTextAddress.getText().toString();
-                                    String mLandmark = mEditTextLandmark.getText().toString();
-                                    String mDimension = mEditTextDimensions.getText().toString().trim();
-                                    String mComment = mEditTextComments.getText().toString();
+                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+                                    String mComment = mEditTextComments.getEditText().getText().toString();
                                     String mDate = dateFormat.format(date).toString();
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
