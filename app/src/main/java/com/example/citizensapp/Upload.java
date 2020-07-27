@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl;
     private String mKey;
     private String VideoDescription;
     private String VideoUri;
@@ -102,6 +102,8 @@ public class Upload {
     public void setmTime(String mTime) {
         this.mTime = mTime;
     }
+
+
 
     @Exclude
 

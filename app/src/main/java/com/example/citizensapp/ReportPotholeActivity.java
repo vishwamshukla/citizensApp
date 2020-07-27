@@ -26,19 +26,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -48,18 +55,20 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ReportPotholeActivity extends AppCompatActivity {
-
+    private static final int PICK_VIDEO_REQUEST=1;
     private static final int PICK_IMAGE_REQUEST = 1;
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;
 
     private ImageView backButton;
-    private Button mButtonUpload;
+    private Button mButtonUpload, videoUploadnew;
     private TextInputLayout mEditTextPothole_Type, mEditTextAddress, mEditTextLandmark, mEditTextDimensions, mEditTextComments;
     private ImageView mImageView;
     private TextView button_remove_image;
@@ -72,7 +81,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
 
     private Uri mImageUri;
-    private Uri mVideoUri;
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -88,6 +96,19 @@ public class ReportPotholeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_pothole);
+
+
+
+        videoUploadnew = findViewById(R.id.video_view_button);
+        videoUploadnew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadFile1();
+                startActivity(new Intent(ReportPotholeActivity.this, UploadVideoActivity.class));
+            }
+        });
+
+
 
         mProgressBar=findViewById(R.id.progress_bar);
         button_remove_image = findViewById(R.id.pothole_remove_image_button);
@@ -119,6 +140,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 }
                 else {
                     uploadFile();
+
                 }
             }
         });
@@ -153,6 +175,13 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 ReportPotholeActivity.this.finish();
             }
         });
+    }
+
+    private void SelectVideo(){
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_VIDEO_REQUEST);
     }
 
     private void initiate_remove_image_button(){
@@ -286,7 +315,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                             mProgressBar.setProgress(0);
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void onSuccess(Uri uri) {
+                                public void onSuccess(final Uri uri) {
                                     mProgressBar.setVisibility(View.INVISIBLE);
 
                                     DateFormat dateFormat = new SimpleDateFormat("dd/MM");
@@ -305,7 +334,53 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
 
-
+//                                    mDatabaseRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                            if(snapshot.exists()){
+//                                                if (snapshot.child("videourl").exists()){
+//                                                    String mVideo = String.valueOf(snapshot.child("videourl").getValue());
+//                                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+//                                                    Date date = new Date();
+//
+//                                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+//                                                    Date date1 = new Date();
+//                                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+//                                                    Date time = new Date();
+//                                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+//                                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+//                                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+//                                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+//                                                    String mComment = mEditTextComments.getEditText().getText().toString();
+//                                                    String mDate = dateFormat.format(date).toString();
+//                                                    String mDateFull = datefull.format(date1).toString();
+//                                                    String mTime = timeformat.format(time).toString();
+//
+//                                                   // DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
+//
+//                                                    HashMap<String, Object> userMap = new HashMap<>();
+//                                                    userMap.put("ImageUrl", uri.toString());
+//                                                    userMap.put("mPotholeType", mPotholeType);
+//                                                    userMap.put("mAddress", mAddress);
+//                                                    userMap.put("mLandmark", mLandmark);
+//                                                    userMap.put("mDimension", mDimension);
+//                                                    userMap.put("mComment", mComment);
+//                                                    userMap.put("mDate", mDate);
+//                                                    userMap.put("mDateFull", mDateFull);
+//                                                    userMap.put("mTime", mTime);
+//                                                    userMap.put("mVideo", mVideo);
+//
+//                                                    mDatabaseRef.child(currentUserID).updateChildren(userMap);
+//
+//                                                }
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                        }
+//                                    });
 
                                     Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
                                     String uploadId = mDatabaseRef.push().getKey();
@@ -370,6 +445,146 @@ public class ReportPotholeActivity extends AppCompatActivity {
             Toast.makeText(this,"No File Selected",Toast.LENGTH_SHORT).show();
         }
     }
+    private void uploadFile1(){
+        if (mImageUri != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));
+            mUploadTask = fileReference.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mProgressBar.setProgress(0);
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(final Uri uri) {
+                                    mProgressBar.setVisibility(View.INVISIBLE);
+
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+                                    Date date = new Date();
+
+                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date date1 = new Date();
+                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+                                    Date time = new Date();
+                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+                                    String mComment = mEditTextComments.getEditText().getText().toString();
+                                    String mDate = dateFormat.format(date).toString();
+                                    String mDateFull = datefull.format(date1).toString();
+                                    String mTime = timeformat.format(time).toString();
+
+//                                    mDatabaseRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                            if(snapshot.exists()){
+//                                                if (snapshot.child("videourl").exists()){
+//                                                    String mVideo = String.valueOf(snapshot.child("videourl").getValue());
+//                                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+//                                                    Date date = new Date();
+//
+//                                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+//                                                    Date date1 = new Date();
+//                                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+//                                                    Date time = new Date();
+//                                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+//                                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+//                                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+//                                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+//                                                    String mComment = mEditTextComments.getEditText().getText().toString();
+//                                                    String mDate = dateFormat.format(date).toString();
+//                                                    String mDateFull = datefull.format(date1).toString();
+//                                                    String mTime = timeformat.format(time).toString();
+//
+//                                                   // DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
+//
+//                                                    HashMap<String, Object> userMap = new HashMap<>();
+//                                                    userMap.put("ImageUrl", uri.toString());
+//                                                    userMap.put("mPotholeType", mPotholeType);
+//                                                    userMap.put("mAddress", mAddress);
+//                                                    userMap.put("mLandmark", mLandmark);
+//                                                    userMap.put("mDimension", mDimension);
+//                                                    userMap.put("mComment", mComment);
+//                                                    userMap.put("mDate", mDate);
+//                                                    userMap.put("mDateFull", mDateFull);
+//                                                    userMap.put("mTime", mTime);
+//                                                    userMap.put("mVideo", mVideo);
+//
+//                                                    mDatabaseRef.child(currentUserID).updateChildren(userMap);
+//
+//                                                }
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                        }
+//                                    });
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    assert uploadId != null;
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+
+                                }
+                            });
+                            /*Toast.makeText(Image_video_upload.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                               Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                               while (!urlTask.isSuccessful()) ;
+                               Uri downloadUrl = urlTask.getResult();
+                               Upload upload = new Upload(mEditTextFilename.getText().toString().trim(),downloadUrl.toString());
+                               String uploadId = mDatabaseRef.push().getKey();
+                               mDatabaseRef.child(uploadId).setValue(upload);*/
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ReportPotholeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            mProgressBar.setProgress((int) progress);
+                        }
+                    });
+        }
+
+       /* if (mVideoUri != null){
+            StorageReference reference = mStorageRefVideo.child(System.currentTimeMillis()+"."+getfileExt(mVideoUri));
+
+            reference.putFile(mVideoUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),"Video Successfully Uploaded",Toast.LENGTH_SHORT).show();
+                            Upload upload = new Upload(mEditTextFilename.getText().toString().trim(),
+                                    taskSnapshot.getUploadSessionUri().toString());
+                            String uploadId = mDatabaseRefVideo.push().getKey();
+                            mDatabaseRefVideo.child(uploadId).setValue(upload);
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }*/
+
+        else {
+            Toast.makeText(this,"No File Selected",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
 }
