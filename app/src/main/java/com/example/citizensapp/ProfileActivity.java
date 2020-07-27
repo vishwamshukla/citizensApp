@@ -138,7 +138,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Error, Try Again.", Toast.LENGTH_SHORT).show();
 
 //            startActivity(new Intent(ReceptionProfileActivity.this, ReceptionProfileActivity.class));
 //            finish();
