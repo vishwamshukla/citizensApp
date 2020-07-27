@@ -17,7 +17,7 @@
             android:title="Report potholes using a trip"/>
 
         <item android:id="@+id/chats"
-            android:icon="@drawable/ic_search_black_24dp"
+            android:icon="@drawable/ic_round_message_24"
             android:title="Chats"/>
 
         <item android:id="@+id/history"
