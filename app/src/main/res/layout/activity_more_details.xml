@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:layout_marginTop="10dp"
-        android:background="#000"
+        android:background="@color/colorPrimary"
         android:transitionName="button_tran"
         android:textColor="#fff"/>
 </LinearLayout>

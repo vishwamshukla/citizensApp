@@ -151,6 +151,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:maxLines="1"
                             android:drawableLeft="@drawable/ic_round_category_24"/>
 
                     </com.google.android.material.textfield.TextInputLayout>

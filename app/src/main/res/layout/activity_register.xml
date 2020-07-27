@@ -120,9 +120,9 @@
         android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go"
+        android:text="Continue"
         android:layout_marginTop="10dp"
-        android:background="#000"
+        android:background="@color/colorPrimary"
         android:transitionName="button_tran"
         android:textColor="#fff"/>
     <Button
