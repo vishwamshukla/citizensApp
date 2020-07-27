@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -60,12 +61,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private CircleImageView profileImage;
     private TextView nametextview;
+    LinearLayoutManager mlinearLayoutManager;
+    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 //        currentUserID= mAuth.getCurrentUser().getUid();
+
+
 
         @SuppressLint("WrongViewCast") Toolbar my_toolbar = findViewById(R.id.actionBar);
         my_toolbar.setTitle("");
@@ -90,10 +95,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
+        mSharedPreferences = getSharedPreferences("sort", MODE_PRIVATE);
+        mlinearLayoutManager = new LinearLayoutManager(this);
+        mlinearLayoutManager.setReverseLayout(true);
+        mlinearLayoutManager.setStackFromEnd(true);
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(mlinearLayoutManager);
+
+
 
         mProgressCircle = findViewById(R.id.progress_circle);
 
@@ -200,6 +211,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.help:
                 Intent Getintent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://vishwamshukla.intelaedu.com/"));
                 startActivity(Getintent);
+                break;
+            case R.id.chats:
+                startActivity(new Intent(HomeActivity.this, ChatsActivity.class));
                 break;
         }
         return false;
