@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -37,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private CircleImageView profileImageView1;
     TextInputLayout name1, username1, email1, phone1;
+    TextView totalPotholeReported;
     Button update;
     RelativeLayout changeProfile;
     private Uri imageUri;
@@ -57,6 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+
+        totalPotholeReported = findViewById(R.id.total_pothole_reported);
 
         progressBar = findViewById(R.id.progress_bar);
 
@@ -241,6 +245,23 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void userInfoDisplay(final CircleImageView profileImageView1, final TextInputLayout name1, final TextInputLayout username1, final TextInputLayout email1, final TextInputLayout phone1) {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+        DatabaseReference CountRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID).child("potholeReports");
+
+        CountRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String count = String.valueOf(snapshot.getChildrenCount());
+                    totalPotholeReported.setText(count);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override

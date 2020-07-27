@@ -4,13 +4,13 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime;
     private String mKey;
     private String VideoDescription;
     private String VideoUri;
 
 
-    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment) {
+    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime) {
         this.mImageUrl = ImageUrl;
         this.mPotholeType = mPotholeType;
         this.mAddress = mAddress;
@@ -18,6 +18,11 @@ public class Upload {
         this.mDimension = mDimension;
         this.mComment = mComment;
         this.mKey = mKey;
+        this.mDate = mDate;
+        this.mDateFull = mDateFull;
+        this.mTime = mTime;
+
+
 
 
     }
@@ -74,6 +79,30 @@ public class Upload {
         this.mComment = mComment;
     }
 
+    public String getmDate() {
+        return mDate;
+    }
+
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    public String getmDateFull() {
+        return mDateFull;
+    }
+
+    public void setmDateFull(String mDateFull) {
+        this.mDateFull = mDateFull;
+    }
+
+    public String getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(String mTime) {
+        this.mTime = mTime;
+    }
+
     @Exclude
 
     public String getKey(){
@@ -83,6 +112,8 @@ public class Upload {
     public void setKey(String key) {
         mKey = key;
     }
+
+
 
 
 

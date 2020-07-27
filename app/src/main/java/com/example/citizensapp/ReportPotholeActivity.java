@@ -47,6 +47,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -292,15 +293,25 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     mProgressBar.setVisibility(View.INVISIBLE);
 
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+                                    Date date = new Date();
 
+                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date date1 = new Date();
+                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+                                    Date time = new Date();
                                     String mPotholeType = mEditTextPothole_Type.getText().toString();
                                     String mAddress = mEditTextAddress.getText().toString();
                                     String mLandmark = mEditTextLandmark.getText().toString();
                                     String mDimension = mEditTextDimensions.getText().toString().trim();
                                     String mComment = mEditTextComments.getText().toString();
+                                    String mDate = dateFormat.format(date).toString();
+                                    String mDateFull = datefull.format(date1).toString();
+                                    String mTime = timeformat.format(time).toString();
 
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment);
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);

@@ -54,7 +54,7 @@
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hadapsar">
+            android:text="...">
         </TextView>
 
         <!--TODO: link this with actual DB and remove the hardcoded text-->

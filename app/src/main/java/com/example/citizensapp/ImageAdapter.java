@@ -49,7 +49,8 @@ import java.util.List;
         public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
             Upload uploadCurrent = mUploads.get(position);
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
-            holder.textViewComment.setText(uploadCurrent.getmLandmark());
+            holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
+            holder.date.setText(uploadCurrent.getmDate());
             Picasso.get()
                     .load(uploadCurrent.getImageUrl())
                     .fit()
@@ -88,19 +89,22 @@ import java.util.List;
         public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
                 View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
             public TextView textViewPotholeType;
-            public TextView textViewComment;
+            public TextView textViewLandmark;
             public ImageView imageView;
             public ProgressBar mprogressBar;
             public TextView potholeStaus;
+            public TextView date;
+
 
             public ImageViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 textViewPotholeType = itemView.findViewById(R.id.text_view_pothole_type);
-                textViewComment = itemView.findViewById(R.id.text_view_comment);
+                textViewLandmark = itemView.findViewById(R.id.text_view_pothole_landmark);
                 imageView = itemView.findViewById(R.id.image_view_upload);
                 mprogressBar = itemView.findViewById(R.id.progress_bar_pothole);
                 potholeStaus = itemView.findViewById(R.id.text_view_pothole_status);
+                date = itemView.findViewById(R.id.text_view_pothole_date);
 
                 itemView.setOnClickListener(this);
                 itemView.setOnCreateContextMenuListener(this);
