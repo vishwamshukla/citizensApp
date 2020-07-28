@@ -244,39 +244,57 @@
                             android:drawableLeft="@drawable/ic_round_format_shapes_24"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:background="@null"
+                        android:elevation="0dp"
+                        android:layout_below="@id/pothole_dimension_textview"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_mic" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_marginTop="15dp"
+                    <EditText
                         android:id="@+id/potholes_comments_textview"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/btn_record"
+                        android:layout_below="@id/pothole_dimension_textview"
                         android:hint="Comments (Optional)"
-                        android:layout_below="@id/pothole_dimension_textview">
+                        android:layout_marginTop="10dp"></EditText>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:drawablePadding="15dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="10dp"
-                            android:drawableLeft="@drawable/ic_round_message_24"/>
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:id="@+id/potholes_comments_textview"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="Comments (Optional)"-->
+<!--                        android:layout_toRightOf="@id/btn_record"-->
+<!--                        android:layout_below="@id/pothole_dimension_textview">-->
 
-                    </com.google.android.material.textfield.TextInputLayout>
+<!--                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                            android:drawablePadding="15dp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:padding="10dp" />-->
 
-                    <Button
-                        android:textSize="15sp"
-                        android:id="@+id/video_view_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:layout_below="@id/potholes_comments_textview"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:text="Do you want to take video of the pothole?"
-                        android:textAllCaps="false"/>
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
+<!--                    <Button-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:id="@+id/video_view_button"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="monospace"-->
+<!--                        android:layout_below="@id/potholes_comments_textview"-->
+<!--                        style="?android:attr/borderlessButtonStyle"-->
+<!--                        android:text="Do you want to take video of the pothole?"-->
+<!--                        android:textAllCaps="false"/>-->
 
+d
                     <com.google.android.material.card.MaterialCardView
                         android:layout_marginTop="15dp"
-                        android:layout_below="@id/video_view_button"
+                        android:layout_below="@id/potholes_comments_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/colorPrimary"
