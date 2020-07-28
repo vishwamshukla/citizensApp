@@ -208,6 +208,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about_us:
                 startActivity(new Intent(HomeActivity.this, AboutUs.class));
                 break;
+            case R.id.map_card_view:
+                startActivity(new Intent(HomeActivity.this, MapActivity.class));
+                break;
             case R.id.help:
                 Intent Getintent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://vishwamshukla.intelaedu.com/"));
                 startActivity(Getintent);
