@@ -84,8 +84,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, ReportPotholeActivity.class));
-                Snackbar.make(view, "Report a pothole", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Report a pothole", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
