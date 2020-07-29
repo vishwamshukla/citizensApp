@@ -63,6 +63,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/phone3"
                     android:hint="Phone number"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
