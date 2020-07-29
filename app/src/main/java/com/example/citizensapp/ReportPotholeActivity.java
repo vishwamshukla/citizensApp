@@ -116,7 +116,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
     private Uri mImageUri;
 
     private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef,mDatabaseRef1;
 
     private StorageTask mUploadTask;
 
@@ -197,8 +197,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Reported Potholes");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
-
-
+        mDatabaseRef1 = FirebaseDatabase.getInstance().getReference("Individual Reports");
 
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -313,7 +312,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST  && resultCode == RESULT_OK
                 && data != null && data.getData() != null){
             mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(mImageView);
+            Picasso.get().load(mImageUri).fit().into(mImageView);
         }     else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
             File f = new File(currentPhotoPath);
             mImageView.setImageURI(Uri.fromFile(f));
@@ -468,6 +467,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
+                                    mDatabaseRef1.child(uploadId).setValue(upload);
 
                                     Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
