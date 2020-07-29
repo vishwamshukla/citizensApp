@@ -1,16 +1,9 @@
 package com.example.citizensapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -18,12 +11,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.net.Uri;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +38,16 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener, NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String EXTRA_URL = "image url";
+    public static final String EXTRA_POTHOLE_TYPE = "pothole type";
+    public static final String EXTRA_LANDMARK = "landmark";
+    public static final String EXTRA_ADDRESS = "address";
+    public static final String EXTRA_DIMENSION = "dimension";
+    public static final String EXTRA_COMMENT = "comment";
+
+
 
     private ActionBarDrawerToggle nToggle;
     NavigationView navigationView;
@@ -52,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressBar mProgressCircle;
 
     private FirebaseStorage mStorage;
-    private DatabaseReference mDatabaseRef;
+    private DatabaseReference mDatabaseRef,civilDatabaseRef;
     private ValueEventListener mDBListener;
     private List<Upload> mUploads;
 
@@ -164,6 +171,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
+        civilDatabaseRef = FirebaseDatabase.getInstance().getReference("Individual Reports");
 
         mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
 
@@ -182,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError error) {
                 Toast.makeText(HomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
@@ -199,7 +207,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
@@ -222,8 +230,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+
+    @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Report No "+ position , Toast.LENGTH_SHORT).show();
+
+        Intent detailIntent = new Intent(this,DetailsPothole.class);
+        Upload clickeditem = mUploads.get(position);
+
+        detailIntent.putExtra(EXTRA_URL, clickeditem.getImageUrl());
+        detailIntent.putExtra(EXTRA_POTHOLE_TYPE, clickeditem.getmPotholeType());
+        detailIntent.putExtra(EXTRA_ADDRESS, clickeditem.getmAddress());
+        detailIntent.putExtra(EXTRA_LANDMARK, clickeditem.getmLandmark());
+        detailIntent.putExtra(EXTRA_DIMENSION, clickeditem.getmDimension());
+        detailIntent.putExtra(EXTRA_COMMENT, clickeditem.getmComment());
+
+        startActivity(detailIntent);
+
     }
 
     public void onDeleteClick(int position) {
@@ -235,6 +257,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
+                civilDatabaseRef.child(selectedKey).removeValue();
                 Toast.makeText(HomeActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
             }
         });

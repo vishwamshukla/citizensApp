@@ -1,18 +1,16 @@
 package com.example.citizensapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -192,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             uploadTask.continueWithTask(new Continuation() {
                 @Override
-                public Object then(@NonNull Task task) throws Exception
+                public Object then(Task task) throws Exception
                 {
                     if (!task.isSuccessful())
                     {
@@ -204,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
             })
                     .addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
-                        public void onComplete(@NonNull Task<Uri> task)
+                        public void onComplete(Task<Uri> task)
                         {
                             if (task.isSuccessful())
                             {
@@ -249,7 +247,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         CountRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String count = String.valueOf(snapshot.getChildrenCount());
                     totalPotholeReported.setText(count);
@@ -258,7 +256,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError error) {
 
             }
         });

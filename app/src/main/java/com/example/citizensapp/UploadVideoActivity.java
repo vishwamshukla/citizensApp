@@ -120,7 +120,7 @@ public class UploadVideoActivity extends AppCompatActivity {
 
             Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                public Task<Uri> then(Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
@@ -129,7 +129,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             })
                     .addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
+                        public void onComplete(Task<Uri> task) {
 
                             if (task.isSuccessful()) {
                                 Uri downloadUrl = task.getResult();

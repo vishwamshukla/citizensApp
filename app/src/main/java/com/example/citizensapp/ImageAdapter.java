@@ -2,7 +2,6 @@ package com.example.citizensapp;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,9 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.recyclerview.widget.RecyclerView;
 
-import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,8 +21,17 @@ import java.util.List;
  public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
         private Context mContext;
         private List<Upload> mUploads;
-        private HomeActivity mListener;
+        private OnItemClickListener mListener;
         public int prog = 0;
+
+        public interface OnItemClickListener{
+            void onItemClick(int position);
+            void onDeleteClick(int position);
+        }
+
+        public void setOnItemClickListener(OnItemClickListener listener){
+            mListener = listener;
+        }
 
         public enum Progress {
             Reported,
@@ -38,15 +45,14 @@ import java.util.List;
             mUploads = uploads;
         }
 
-        @NonNull
         @Override
-        public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
             return new ImageViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+        public void onBindViewHolder(ImageViewHolder holder, int position) {
             Upload uploadCurrent = mUploads.get(position);
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
@@ -58,6 +64,7 @@ import java.util.List;
                     .into(holder.imageView);
             //TODO: change "Processing" with the actual status of that pothole form database.
             setProgressBar(Progress.Processing, holder.mprogressBar, holder.potholeStaus);
+            //holder.textViewAddress1.setText(uploadCurrent.getmAddress());
         }
 
         public void setProgressBar(Progress progress, ProgressBar mprogressBar, TextView potholeStaus){
@@ -86,17 +93,18 @@ import java.util.List;
         public int getItemCount() {
             return mUploads.size();
         }
-        public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+        public class ImageViewHolder extends RecyclerView.ViewHolder implements
                 View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
             public TextView textViewPotholeType;
             public TextView textViewLandmark;
-            public ImageView imageView;
+            public TextView textViewPotholeType1,textViewLandmark1,textViewComment1,textViewDimension1,textViewAddress1;
+            public ImageView imageView,imageView1;
             public ProgressBar mprogressBar;
             public TextView potholeStaus;
             public TextView date;
 
 
-            public ImageViewHolder(@NonNull View itemView) {
+            public ImageViewHolder(View itemView) {
                 super(itemView);
 
                 textViewPotholeType = itemView.findViewById(R.id.text_view_pothole_type);
@@ -105,8 +113,25 @@ import java.util.List;
                 mprogressBar = itemView.findViewById(R.id.progress_bar_pothole);
                 potholeStaus = itemView.findViewById(R.id.text_view_pothole_status);
                 date = itemView.findViewById(R.id.text_view_pothole_date);
+                textViewPotholeType1 = itemView.findViewById(R.id.pothole_type_textView);
+                imageView1 = itemView.findViewById(R.id.pothole_image_view);
+                textViewLandmark1 = itemView.findViewById(R.id.pothole_landmark_textview);
+                textViewComment1 = itemView.findViewById(R.id.potholes_comments_textview);
+                textViewDimension1 = itemView.findViewById(R.id.pothole_dimension_textview);
+                textViewAddress1 = itemView.findViewById(R.id.pothole_address_textView);
 
-                itemView.setOnClickListener(this);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mListener != null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION){
+                                mListener.onItemClick(position);
+                            }
+                        }
+                    }
+                });
                 itemView.setOnCreateContextMenuListener(this);
             }
 
@@ -123,16 +148,6 @@ import java.util.List;
                 return false;
             }
 
-            @Override
-            public void onClick(View view) {
-                if (mListener != null){
-                    int position = getAdapterPosition();
-                    if (position!= RecyclerView.NO_POSITION){
-                        mListener.onItemClick(position);
-                    }
-                }
-
-            }
 
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
@@ -140,14 +155,6 @@ import java.util.List;
 
                 delete.setOnMenuItemClickListener(this);
             }
-        }
-
-        public interface OnItemClickListener{
-            void onItemClick(int position);
-            void onDeleteClick(int position);
-        }
-        public void setOnItemClickListener(HomeActivity listener) {
-            mListener = listener;
         }
 
     }

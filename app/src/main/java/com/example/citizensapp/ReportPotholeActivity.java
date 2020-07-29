@@ -1,29 +1,16 @@
 package com.example.citizensapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -34,67 +21,54 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import com.ibm.cloud.sdk.core.http.HttpMediaType;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.http.ServiceCall;
 import com.ibm.cloud.sdk.core.security.IamAuthenticator;
-import com.ibm.watson.assistant.v2.model.DialogNodeOutputOptionsElement;
-import com.ibm.watson.assistant.v2.model.RuntimeResponseGeneric;
+import com.ibm.watson.assistant.v2.Assistant;
+import com.ibm.watson.assistant.v2.model.SessionResponse;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
 import com.ibm.watson.developer_cloud.android.library.audio.StreamPlayer;
 import com.ibm.watson.developer_cloud.android.library.audio.utils.ContentType;
-import com.ibm.watson.assistant.v2.Assistant;
-import com.ibm.watson.assistant.v2.model.CreateSessionOptions;
-import com.ibm.watson.assistant.v2.model.MessageInput;
-import com.ibm.watson.assistant.v2.model.MessageOptions;
-import com.ibm.watson.assistant.v2.model.MessageResponse;
-import com.ibm.watson.assistant.v2.model.SessionResponse;
 import com.ibm.watson.speech_to_text.v1.SpeechToText;
 import com.ibm.watson.speech_to_text.v1.model.RecognizeOptions;
 import com.ibm.watson.speech_to_text.v1.model.SpeechRecognitionResults;
 import com.ibm.watson.speech_to_text.v1.websocket.BaseRecognizeCallback;
 import com.ibm.watson.text_to_speech.v1.TextToSpeech;
-import com.ibm.watson.text_to_speech.v1.model.SynthesizeOptions;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ReportPotholeActivity extends AppCompatActivity {
 //    private RecyclerView recyclerView;
@@ -127,8 +101,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST_CODE = 102;
 
     private ImageView backButton;
-    private Button mButtonUpload;
-    private VideoView videoView;
+    private Button mButtonUpload, videoUploadnew;
     private TextInputLayout mEditTextPothole_Type, mEditTextAddress, mEditTextLandmark, mEditTextDimensions, mEditTextComments;
     private ImageView mImageView;
     private TextView button_remove_image;
@@ -143,19 +116,12 @@ public class ReportPotholeActivity extends AppCompatActivity {
     private Uri mImageUri;
 
     private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef, mDatabaseRef1;
+    private DatabaseReference mDatabaseRef;
 
     private StorageTask mUploadTask;
 
     private FirebaseAuth mAuth;
     String currentUserID;
-
-    Uri videoUri;
-    MediaController mediaController;
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
-    Member member;
-    UploadTask uploadTask;
 
 
 
@@ -200,18 +166,15 @@ public class ReportPotholeActivity extends AppCompatActivity {
         });
 
         //createServices();
-//        videoView = findViewById(R.id.videoview_main);
-//        mediaController = new MediaController(this);
-//        member = new Member();
-//        storageReference = FirebaseStorage.getInstance().getReference("videos");
-//        videoView.setMediaController(mediaController);
-//        videoView.start();
-//
-//
-//        videoView.setOnClickListener(new View.OnClickListener() {
+
+
+
+//        videoUploadnew = findViewById(R.id.video_view_button);
+//        videoUploadnew.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                SelectVideo();
+//                uploadFile1();
+//                startActivity(new Intent(ReportPotholeActivity.this, UploadVideoActivity.class));
 //            }
 //        });
 
@@ -234,7 +197,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Reported Potholes");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
-       // mDatabaseRef1 = FirebaseDatabase.getInstance().getReference("potholeReports");
 
 
 
@@ -248,8 +210,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 }
                 else {
                     uploadFile();
-                    //UploadView();
-
 
                 }
             }
@@ -354,13 +314,11 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 && data != null && data.getData() != null){
             mImageUri = data.getData();
             Picasso.get().load(mImageUri).into(mImageView);
-            }
-            else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
+        }     else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK){
             File f = new File(currentPhotoPath);
             mImageView.setImageURI(Uri.fromFile(f));
             mImageUri = Uri.fromFile(f);
         }
-
 
         switch (requestCode){
 
@@ -370,17 +328,19 @@ public class ReportPotholeActivity extends AppCompatActivity {
                     inputMessage.setText(result.get(0));
                 }
                 break;
-//            case PICK_VIDEO_REQUEST:
-//                if(resultCode == RESULT_OK
-//                        && data != null && data.getData() != null){
-//                    videoUri = data.getData();
-//                    videoView.setVideoURI(videoUri);
-//                }
-//                break;
         }
 
 
         }
+
+
+        /*if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+
+            mVideoUri = data.getData();
+
+            mVideoView.setVideoURI(mVideoUri);
+        }*/
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -508,7 +468,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
-                                   // mDatabaseRef1.child(uploadId).setValue(upload);
 
                                     Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
@@ -568,6 +527,146 @@ public class ReportPotholeActivity extends AppCompatActivity {
             Toast.makeText(this,"No File Selected",Toast.LENGTH_SHORT).show();
         }
     }
+    private void uploadFile1(){
+        if (mImageUri != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));
+            mUploadTask = fileReference.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mProgressBar.setProgress(0);
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(final Uri uri) {
+                                    mProgressBar.setVisibility(View.INVISIBLE);
+
+                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+                                    Date date = new Date();
+
+                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+                                    Date date1 = new Date();
+                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+                                    Date time = new Date();
+                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+                                    String mComment = mEditTextComments.getEditText().getText().toString();
+                                    String mDate = dateFormat.format(date).toString();
+                                    String mDateFull = datefull.format(date1).toString();
+                                    String mTime = timeformat.format(time).toString();
+
+//                                    mDatabaseRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                            if(snapshot.exists()){
+//                                                if (snapshot.child("videourl").exists()){
+//                                                    String mVideo = String.valueOf(snapshot.child("videourl").getValue());
+//                                                    DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+//                                                    Date date = new Date();
+//
+//                                                    DateFormat datefull = new SimpleDateFormat("dd/MM/yyyy");
+//                                                    Date date1 = new Date();
+//                                                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+//                                                    Date time = new Date();
+//                                                    String mPotholeType = mEditTextPothole_Type.getEditText().getText().toString();
+//                                                    String mAddress = mEditTextAddress.getEditText().getText().toString();
+//                                                    String mLandmark = mEditTextLandmark.getEditText().getText().toString();
+//                                                    String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
+//                                                    String mComment = mEditTextComments.getEditText().getText().toString();
+//                                                    String mDate = dateFormat.format(date).toString();
+//                                                    String mDateFull = datefull.format(date1).toString();
+//                                                    String mTime = timeformat.format(time).toString();
+//
+//                                                   // DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
+//
+//                                                    HashMap<String, Object> userMap = new HashMap<>();
+//                                                    userMap.put("ImageUrl", uri.toString());
+//                                                    userMap.put("mPotholeType", mPotholeType);
+//                                                    userMap.put("mAddress", mAddress);
+//                                                    userMap.put("mLandmark", mLandmark);
+//                                                    userMap.put("mDimension", mDimension);
+//                                                    userMap.put("mComment", mComment);
+//                                                    userMap.put("mDate", mDate);
+//                                                    userMap.put("mDateFull", mDateFull);
+//                                                    userMap.put("mTime", mTime);
+//                                                    userMap.put("mVideo", mVideo);
+//
+//                                                    mDatabaseRef.child(currentUserID).updateChildren(userMap);
+//
+//                                                }
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                        }
+//                                    });
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
+                                    String uploadId = mDatabaseRef.push().getKey();
+                                    assert uploadId != null;
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+
+                                }
+                            });
+                            /*Toast.makeText(Image_video_upload.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                               Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                               while (!urlTask.isSuccessful()) ;
+                               Uri downloadUrl = urlTask.getResult();
+                               Upload upload = new Upload(mEditTextFilename.getText().toString().trim(),downloadUrl.toString());
+                               String uploadId = mDatabaseRef.push().getKey();
+                               mDatabaseRef.child(uploadId).setValue(upload);*/
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ReportPotholeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                            mProgressBar.setProgress((int) progress);
+                        }
+                    });
+        }
+
+       /* if (mVideoUri != null){
+            StorageReference reference = mStorageRefVideo.child(System.currentTimeMillis()+"."+getfileExt(mVideoUri));
+
+            reference.putFile(mVideoUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getApplicationContext(),"Video Successfully Uploaded",Toast.LENGTH_SHORT).show();
+                            Upload upload = new Upload(mEditTextFilename.getText().toString().trim(),
+                                    taskSnapshot.getUploadSessionUri().toString());
+                            String uploadId = mDatabaseRefVideo.push().getKey();
+                            mDatabaseRefVideo.child(uploadId).setValue(upload);
+                        }
+                    })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }*/
+
+        else {
+            Toast.makeText(this,"No File Selected",Toast.LENGTH_SHORT).show();
+        }
+    }
+
     protected void makeRequest() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.RECORD_AUDIO},
@@ -698,48 +797,6 @@ public class ReportPotholeActivity extends AppCompatActivity {
             startActivityForResult(intent, 10);
         } else {
             Toast.makeText(this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private String getfileExt(Uri uri){
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    private void  UploadView() {
-
-        if (videoUri != null) {
-            final StorageReference reference = storageReference.child(System.currentTimeMillis() + "." + getfileExt(videoUri));
-
-            uploadTask = reference.putFile(videoUri);
-
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return reference.getDownloadUrl();
-                }
-            })
-                    .addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-
-                            if (task.isSuccessful()) {
-                                Uri downloadUrl = task.getResult();
-
-                                member.setVideourl(downloadUrl.toString());
-                                String i = databaseReference.push().getKey();
-                                mDatabaseRef.child(i).setValue(member);
-                            } else
-                                Toast.makeText(ReportPotholeActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                        }
-
-                    });
-        }
-        else {
-            Toast.makeText(this, "O FileSelected", Toast.LENGTH_SHORT).show();
         }
     }
 
