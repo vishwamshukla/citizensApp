@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ReportPotholeActivity">
 
-
     <RelativeLayout
         android:id="@+id/rlayout"
         android:layout_width="match_parent"
@@ -52,10 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/pothole_image_textview"
@@ -71,8 +71,7 @@
                         android:id="@+id/pothole_image_layout"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_below="@id/pothole_image_textview">
+                        android:layout_marginTop="15dp">
 
                         <View
                             android:layout_width="match_parent"
@@ -133,18 +132,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="15dp"
-                        android:layout_below="@id/pothole_image_layout"
-                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
                         android:text="Remove Image"
                         android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Severity of Pothole"/>
+
+                    <SeekBar
+                        android:max="10"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/pothole_severity_seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="15dp"
                         android:id="@+id/pothole_type_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Type of Pothole"
-                        android:layout_below="@id/pothole_remove_image_button">
+                        android:hint="Type of Pothole">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:drawablePadding="15dp"
@@ -161,8 +174,7 @@
                         android:id="@+id/pothole_landmark_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Landmark"
-                        android:layout_below="@id/pothole_type_textView">
+                        android:hint="Landmark">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:drawablePadding="15dp"
@@ -178,8 +190,7 @@
                         android:id="@+id/pothole_address_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Address"
-                        android:layout_below="@id/pothole_landmark_textview">
+                        android:hint="Address">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:drawablePadding="15dp"
@@ -194,7 +205,6 @@
                         android:id="@+id/pothole_location_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/pothole_address_textView"
                         android:layout_marginTop="15dp"
                         android:text="Location"
                         android:textColor="@color/colorPrimaryDark"
@@ -202,7 +212,6 @@
                         android:textStyle="bold" />
 
                     <androidx.cardview.widget.CardView
-                        android:layout_below="@id/pothole_location_textView"
                         android:id="@+id/map_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
@@ -233,36 +242,39 @@
                         android:id="@+id/pothole_dimension_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Dimensions (Optional)"
-                        android:layout_below="@id/map_card_view">
+                        android:hint="Dimensions (Optional)">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:drawablePadding="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:drawableLeft="@drawable/ic_round_format_shapes_24"/>
+                            android:drawableStart="@drawable/ic_round_format_shapes_24"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/btn_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:background="@null"
-                        android:elevation="0dp"
-                        android:layout_below="@id/pothole_dimension_textview"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_mic" />
 
-                    <EditText
-                        android:id="@+id/potholes_comments_textview"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toRightOf="@id/btn_record"
-                        android:layout_below="@id/pothole_dimension_textview"
-                        android:hint="Comments (Optional)"
-                        android:layout_marginTop="10dp" />
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:background="@null"
+                            android:elevation="0dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_mic" />
+
+                        <EditText
+                            android:id="@+id/potholes_comments_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@id/btn_record"
+                            android:layout_below="@id/pothole_dimension_textview"
+                            android:hint="Comments (Optional)"
+                            android:layout_marginTop="10dp" />
 <!--                    <VideoView-->
 <!--                        android:id="@+id/videoview_main"-->
 <!--                        android:layout_width="match_parent"-->
@@ -272,9 +284,10 @@
 <!--                        android:layout_marginTop="50dp">-->
 <!--                    </VideoView>-->
 
+                    </LinearLayout>
+
                     <com.google.android.material.card.MaterialCardView
                         android:layout_marginTop="15dp"
-                        android:layout_below="@id/potholes_comments_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/colorPrimary"
@@ -293,7 +306,7 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </ScrollView>
 
@@ -303,8 +316,8 @@
             android:id="@+id/rlayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/cv"
-            android:layout_alignRight="@+id/cv"
+            android:layout_alignStart="@+id/cv"
+            android:layout_alignEnd="@+id/cv"
             android:layout_alignBottom="@+id/cv"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="35dp"
@@ -314,7 +327,9 @@
 
 
         </RelativeLayout>
+
     </RelativeLayout>
+
     <ProgressBar
         android:layout_centerInParent="true"
         android:layout_marginBottom="40dp"
