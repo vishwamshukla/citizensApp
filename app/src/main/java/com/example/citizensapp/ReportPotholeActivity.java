@@ -22,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -70,13 +72,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import org.w3c.dom.Text;
+
 public class ReportPotholeActivity extends AppCompatActivity {
 //    private RecyclerView recyclerView;
 //    private ChatAdapter mAdapter;
     private ArrayList messageArrayList;
-    private EditText inputMessage;
+    private TextInputLayout inputMessage;
     private ImageButton btnSend;
-    private ImageButton btnRecord;
+    private ImageView btnRecord;
     StreamPlayer streamPlayer = new StreamPlayer();
     private boolean initialRequest;
     private boolean permissionToRecordAccepted = false;
@@ -122,6 +126,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     String currentUserID;
+    TextView severity_textView;
 
 
 
@@ -244,6 +249,32 @@ public class ReportPotholeActivity extends AppCompatActivity {
                 ReportPotholeActivity.this.finish();
             }
         });
+
+        severity_textView = findViewById(R.id.severity_textView);
+
+        SeekBar severity_seekBar = findViewById(R.id.pothole_severity_seekBar);
+        severity_seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+//                Toast.makeText(getApplicationContext(), seekBar.getProgress(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+//                // TODO Auto-generated method stub
+                severity_textView.setText(String.valueOf(progress));
+//                PRICEtextProgress = (TextView)findViewById(R.id.PRICEtextViewProgressID);
+//                PRICEtextProgress.setText("Price:: Rs "+progress);
+//                seekBar.setMax(100);
+            }
+        });
     }
 
     private void SelectVideo(){
@@ -324,7 +355,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
             case 10:
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    inputMessage.setText(result.get(0));
+                    inputMessage.getEditText().setText(result.get(0));
                 }
                 break;
         }
@@ -410,10 +441,11 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mAddress = mEditTextAddress.getEditText().getText().toString();
                                     String mLandmark = mEditTextLandmark.getEditText().getText().toString();
                                     String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
-                                    String mComment = inputMessage.getText().toString();
+                                    String mComment = inputMessage.getEditText().getText().toString();
                                     String mDate = dateFormat.format(date).toString();
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
+                                    String mSeverity = severity_textView.getText().toString();
 
 //                                    mDatabaseRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
 //                                        @Override
@@ -463,7 +495,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 //                                        }
 //                                    });
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
@@ -557,6 +589,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mDate = dateFormat.format(date).toString();
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
+                                    String mSeverity = severity_textView.getText().toString();
 
 //                                    mDatabaseRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
 //                                        @Override
@@ -606,7 +639,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 //                                        }
 //                                    });
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime);
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
@@ -740,7 +773,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                inputMessage.setText(text);
+                inputMessage.getEditText().setText(text);
             }
         });
     }
