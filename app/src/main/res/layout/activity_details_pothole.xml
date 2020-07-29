@@ -232,13 +232,13 @@
                     android:layout_marginBottom="20dp">
 
                     <Button
-                        android:textSize="15sp"
-                        android:id="@+id/p_button_continue"
+                        android:textSize="17sp"
+                        android:id="@+id/p_button_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="monospace"
                         style="?android:attr/borderlessButtonStyle"
-                        android:text="Delete"
+                        android:text="Back"
                         android:textAllCaps="false"/>
 
                 </com.google.android.material.card.MaterialCardView>

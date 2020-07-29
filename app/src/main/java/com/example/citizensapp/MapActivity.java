@@ -1,7 +1,6 @@
 package com.example.citizensapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -68,7 +67,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode){
             case REQUEST_CODE:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){

@@ -103,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                public void onComplete(Task<AuthResult> task) {
                                     if (task.isSuccessful()){
                                         startActivity(new Intent(RegisterActivity.this, MoreDetailsActivity.class));
                                         Toast.makeText(RegisterActivity.this, "Account Created...", Toast.LENGTH_SHORT).show();

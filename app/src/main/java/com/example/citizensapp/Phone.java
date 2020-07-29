@@ -178,7 +178,7 @@ public class Phone extends AppCompatActivity implements View.OnClickListener {
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     startActivity(new Intent(Phone.this, HomeActivity.class));
                     FirebaseUser user = task.getResult().getUser();
