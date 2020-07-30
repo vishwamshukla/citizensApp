@@ -4,13 +4,14 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mSeverity, mPhone;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mSeverity, mName, mEmail, mPhone, mUserId;
     private String mKey;
     private String VideoDescription;
     private String VideoUri;
 
 
-    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mSeverity, String mPhone) {
+    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mSeverity
+    , String mName, String mEmail, String mPhone, String mUserId) {
         this.mImageUrl = ImageUrl;
         this.mPotholeType = mPotholeType;
         this.mAddress = mAddress;
@@ -22,7 +23,10 @@ public class Upload {
         this.mDateFull = mDateFull;
         this.mTime = mTime;
         this.mSeverity = mSeverity;
+        this.mName = mName;
+        this.mEmail = mEmail;
         this.mPhone = mPhone;
+        this.mUserId = mUserId;
 
 
 
@@ -81,16 +85,6 @@ public class Upload {
         this.mComment = mComment;
     }
 
-
-    public String getmPhone() {
-        return mPhone;
-    }
-
-    public void setmPhone(String mPhone) {
-        this.mPhone = mPhone;
-    }
-
-
     public String getmDate() {
         return mDate;
     }
@@ -121,6 +115,39 @@ public class Upload {
 
     public void setmSeverity(String mSeverity) {
         this.mSeverity = mSeverity;
+    }
+
+
+    public String getmName() {
+        return mName;
+    }
+
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
+    public String getmEmail() {
+        return mEmail;
+    }
+
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
+    }
+
+    public String getmPhone() {
+        return mPhone;
+    }
+
+    public void setmPhone(String mPhone) {
+        this.mPhone = mPhone;
+    }
+
+    public String getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
     }
 
     @Exclude

@@ -324,13 +324,16 @@
                         android:id="@+id/pothole_phone_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone Number">
+                        app:counterEnabled="true"
+                        app:counterMaxLength="10"
+                        android:hint="Is this the right number to contact you?">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:drawablePadding="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+
                             android:drawableStart="@drawable/ic_baseline_phone_callback_24"
                             android:inputType="phone"/>
 
