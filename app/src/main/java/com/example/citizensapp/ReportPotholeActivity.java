@@ -106,7 +106,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
     private ImageView backButton;
     private Button mButtonUpload, videoUploadnew;
-    private TextInputLayout mEditTextPothole_Type, mEditTextAddress, mEditTextLandmark, mEditTextDimensions, mEditTextComments;
+    private TextInputLayout mEditTextPothole_Type, mEditTextAddress, mEditTextLandmark, mEditTextDimensions, mEditTextComments, mEditTextPhone;
     private ImageView mImageView;
     private TextView button_remove_image;
     Integer REQUEST_CAMERA = 0;
@@ -196,6 +196,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
        // mEditTextComments = findViewById(R.id.potholes_comments_textview);
         mEditTextDimensions = findViewById(R.id.pothole_dimension_textview);
         mEditTextLandmark = findViewById(R.id.pothole_landmark_textview);
+        mEditTextPhone = findViewById(R.id.pothole_phone_textview);
         mAuth = FirebaseAuth.getInstance();
 
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -442,6 +443,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mLandmark = mEditTextLandmark.getEditText().getText().toString();
                                     String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
                                     String mComment = inputMessage.getEditText().getText().toString();
+                                    String mPhone = mEditTextPhone.getEditText().getText().toString();
                                     String mDate = dateFormat.format(date).toString();
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
@@ -495,7 +497,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 //                                        }
 //                                    });
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity);
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity, mPhone);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
@@ -586,6 +588,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mLandmark = mEditTextLandmark.getEditText().getText().toString();
                                     String mDimension = mEditTextDimensions.getEditText().getText().toString().trim();
                                     String mComment = mEditTextComments.getEditText().getText().toString();
+                                    String mPhone = mEditTextPhone.getEditText().getText().toString();
                                     String mDate = dateFormat.format(date).toString();
                                     String mDateFull = datefull.format(date1).toString();
                                     String mTime = timeformat.format(time).toString();
@@ -639,7 +642,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 //                                        }
 //                                    });
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity);
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity, mPhone);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(uploadId).setValue(upload);
