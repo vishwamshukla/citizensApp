@@ -273,6 +273,23 @@
                         android:drawableLeft="@drawable/ic_baseline_phone_callback_24"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/profile_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Status"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:drawablePadding="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:inputType="text"
+                        android:text="Hi there!, I am using Pothole+."
+                        android:drawableLeft="@drawable/ic_baseline_person_add_24"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_marginTop="10dp"

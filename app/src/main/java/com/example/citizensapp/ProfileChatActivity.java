@@ -131,7 +131,7 @@ public class ProfileChatActivity extends AppCompatActivity {
 
                                     else if(request_type.equals("received")){
                                         mCurrent_state="req_received";
-                                        mProfileSendReqButton.setText("Accept Friend Request");
+                                        mProfileSendReqButton.setText("Accept Request");
                                         mProfileDeclineReqButton.setVisibility(View.VISIBLE);
                                         mProfileDeclineReqButton.setEnabled(true);
                                     }
@@ -151,7 +151,7 @@ public class ProfileChatActivity extends AppCompatActivity {
 
                                             if(dataSnapshot.hasChild(user_id)){
                                                 mCurrent_state="friends";
-                                                mProfileSendReqButton.setText("Unfriend This Person");
+                                                mProfileSendReqButton.setText("Remove this connection");
                                             }
                                             mProgressDialog.dismiss();
                                         }
@@ -168,7 +168,7 @@ public class ProfileChatActivity extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-                                Toast.makeText(ProfileChatActivity.this, "Error fetching Friend request data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Error fetching connection request data", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -229,12 +229,12 @@ public class ProfileChatActivity extends AppCompatActivity {
 
                                 mProfileSendReqButton.setEnabled(true);
                                 mCurrent_state= "req_sent";
-                                mProfileSendReqButton.setText("Cancel Friend Request");
+                                mProfileSendReqButton.setText("Cancel Request");
 
                             }
                             else{
                                 mProfileSendReqButton.setEnabled(true);
-                                Toast.makeText(ProfileChatActivity.this, "Some error in sending friend Request", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Some error in sending connection Request", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -259,12 +259,12 @@ public class ProfileChatActivity extends AppCompatActivity {
                                 mCurrent_state = "not_friends";
                                 mProfileSendReqButton.setText("Send Friend Request");
                                 mProfileSendReqButton.setEnabled(true);
-                                Toast.makeText(ProfileChatActivity.this, "Friend Request Cancelled Successfully...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Connection Request Cancelled Successfully...", Toast.LENGTH_SHORT).show();
                             }
                             else{
 
                                 mProfileSendReqButton.setEnabled(true);
-                                Toast.makeText(ProfileChatActivity.this, "Cannot cancel friend request...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Cannot cancel connection request...", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -333,11 +333,11 @@ public class ProfileChatActivity extends AppCompatActivity {
                                 mCurrent_state = "not_friends";
                                 mProfileSendReqButton.setText("Send Friend Request");
                                 mProfileSendReqButton.setEnabled(true);
-                                Toast.makeText(ProfileChatActivity.this, "Successfully Unfriended...", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Successfully removed the connection...", Toast.LENGTH_SHORT).show();
                             }
                             else{
                                 mProfileSendReqButton.setEnabled(true);
-                                Toast.makeText(ProfileChatActivity.this, "Cannot Unfriend..Contact Kshitiz..", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProfileChatActivity.this, "Error while removing connection", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -366,9 +366,9 @@ public class ProfileChatActivity extends AppCompatActivity {
                         if(databaseError == null){
 
                             mCurrent_state = "not_friends";
-                            mProfileSendReqButton.setText("Send Friend Request");
+                            mProfileSendReqButton.setText("Send Connection Request");
                             mProfileSendReqButton.setEnabled(true);
-                            Toast.makeText(ProfileChatActivity.this, "Friend Request Declined Successfully...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileChatActivity.this, "Connection Request Declined Successfully...", Toast.LENGTH_SHORT).show();
 
                             mProfileDeclineReqButton.setEnabled(false);
                             mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
@@ -376,7 +376,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                         else{
 
                             mProfileSendReqButton.setEnabled(true);
-                            Toast.makeText(ProfileChatActivity.this, "Cannot decline friend request...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileChatActivity.this, "Cannot decline connection request...", Toast.LENGTH_SHORT).show();
 
                         }
                     }

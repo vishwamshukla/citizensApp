@@ -137,7 +137,7 @@ public class ChatsFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         final String userName = dataSnapshot.child("name").getValue().toString();
-                        String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
+                        String userThumb = dataSnapshot.child("image").getValue().toString();
 
                         if(dataSnapshot.hasChild("online")){
 

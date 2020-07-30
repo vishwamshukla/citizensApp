@@ -132,7 +132,7 @@ public class MainChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String onlineValue=dataSnapshot.child("online").getValue().toString();
-                String imageValue = dataSnapshot.child("thumb_image").getValue().toString();
+                String imageValue = dataSnapshot.child("image").getValue().toString();
 
                 //Picasso.with(ChatActivity.this).load(imageValue).placeholder(R.drawable.user_img).into(mUserImage);
                 Picasso.get().load(imageValue).into(mUserImage);
@@ -172,10 +172,10 @@ public class MainChatActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             if(databaseError == null){
-                                Toast.makeText(getApplicationContext(), "Successfully Added chats feature", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "Successfully Added chats feature", Toast.LENGTH_SHORT).show();
                             }
                             else
-                                Toast.makeText(getApplicationContext(), "Cannot Add chats feature", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -226,7 +226,7 @@ public class MainChatActivity extends AppCompatActivity {
                                 Log.e("CHAT_ACTIVITY","Cannot add message to database");
                             }
                             else{
-                                Toast.makeText(MainChatActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainChatActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
                                 mMessageView.setText("");
                             }
 
@@ -441,13 +441,13 @@ public class MainChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //mDatabaseReference.child(mCurrentUserId).child("online").setValue("true");
+//        mDatabaseReference.child(mCurrentUserId).child("online").setValue("true");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // mDatabaseReference.child(mCurrentUserId).child("online").setValue(ServerValue.TIMESTAMP);
+//         mDatabaseReference.child(mCurrentUserId).child("online").setValue(ServerValue.TIMESTAMP);
 
     }
 }

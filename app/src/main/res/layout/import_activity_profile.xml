@@ -50,7 +50,7 @@
             android:textSize="17dp"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:text="Total Friends" />
+            android:text="Total Connections" />
 
         <Button
             android:id="@+id/profileSendReqButton"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/holo_red_dark"
-            android:text="Send Friend Request"
+            android:text="Send Request"
             android:layout_marginTop="10dp"
             android:textColor="#FFFFFF" />
         <Button
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/holo_red_dark"
-            android:text="Decline Friend Request"
+            android:text="Decline Request"
             android:layout_marginTop="10dp"
             android:textColor="#FFFFFF" />
 

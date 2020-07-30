@@ -33,7 +33,7 @@ public class ChatsActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new RequestsFragment(), "Requests");
-        adapter.addFragment(new ChatsFragment(), "Chats");
+        adapter.addFragment(new ChatsFragment(), "Messages");
         adapter.addFragment(new ConnectionsFragment(), "Connections");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -57,7 +57,7 @@ public class ChatsActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.chat_settings:
-                startActivity(new Intent(ChatsActivity.this, SettingsActivity.class));
+                startActivity(new Intent(ChatsActivity.this, ProfileActivity.class));
                 return true;
             case R.id.civilAgencies_list:
                 startActivity(new Intent(ChatsActivity.this, CivilAgenciesActivity.class));

@@ -83,7 +83,7 @@ public class ConnectionsFragment extends Fragment {
                         //---IT WORKS WHENEVER CHILD OF mMessageDatabase IS CHANGED---
 
                         final String userName=dataSnapshot.child("name").getValue().toString();
-                        String userthumbImage=dataSnapshot.child("thumb_image").getValue().toString();
+                        String userthumbImage=dataSnapshot.child("image").getValue().toString();
                         if(dataSnapshot.hasChild("online")){
                             String userOnline = dataSnapshot.child("online").getValue().toString();
                             friendViewHolder.setOnline(userOnline);
