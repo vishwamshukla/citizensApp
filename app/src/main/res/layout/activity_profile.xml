@@ -249,6 +249,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:inputType="textEmailAddress"
                         android:drawableLeft="@drawable/ic_baseline_email_24"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -258,6 +259,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="10"
                     android:layout_marginBottom="10dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -265,6 +268,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
+                        android:maxLength="10"
+                        android:inputType="phone"
                         android:drawableLeft="@drawable/ic_baseline_phone_callback_24"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
