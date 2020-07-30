@@ -26,7 +26,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ElectedRepresentativesActivity"></activity>
+        <activity android:name=".StatusActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".MainChatActivity"
+            android:theme="@style/AppTheme3"
+            android:parentActivityName=".ChatsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ProfileChatActivity"
+            android:theme="@style/AppTheme2">
+            <intent-filter>
+                <action android:name="com.example.singhkshitiz.letschat_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ElectedRepresentativesActivity" />
         <activity android:name=".CivilAgenciesActivity" />
         <activity
             android:name=".DetailsPothole"
@@ -36,8 +51,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChatsActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
@@ -70,6 +84,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -116,5 +136,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
     </application>
+
+
 
 </manifest>

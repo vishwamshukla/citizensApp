@@ -56,6 +56,9 @@ public class ChatsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.chat_settings:
+                startActivity(new Intent(ChatsActivity.this, SettingsActivity.class));
+                return true;
             case R.id.civilAgencies_list:
                 startActivity(new Intent(ChatsActivity.this, CivilAgenciesActivity.class));
                 return true;

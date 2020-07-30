@@ -10,12 +10,6 @@
         layout="@layout/action_bar"
         android:id="@+id/action_bar"/>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Civil agencies"
-        tools:layout_editor_absoluteX="126dp"
-        tools:layout_editor_absoluteY="157dp" />
+    <include layout="@layout/import_actvity_user"></include>
 
 </LinearLayout>
