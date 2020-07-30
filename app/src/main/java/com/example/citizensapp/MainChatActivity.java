@@ -441,13 +441,13 @@ public class MainChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        mDatabaseReference.child(mCurrentUserId).child("online").setValue("true");
+        mDatabaseReference.child(mCurrentUserId).child("online").setValue("true");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//         mDatabaseReference.child(mCurrentUserId).child("online").setValue(ServerValue.TIMESTAMP);
+         mDatabaseReference.child(mCurrentUserId).child("online").setValue(ServerValue.TIMESTAMP);
 
     }
 }
