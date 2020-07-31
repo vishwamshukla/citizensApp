@@ -2,6 +2,7 @@ package com.example.citizensapp;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -57,7 +60,25 @@ import java.util.List;
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
             holder.date.setText(uploadCurrent.getmDate());
-            holder.severity.setText(uploadCurrent.getmSeverity());
+            switch (Integer.parseInt(uploadCurrent.getmSeverity())){
+                case 1:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level1));
+                    break;
+                case 2:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level2));
+                    break;
+                case 3:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level3));
+                    break;
+                case 4:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level4));
+                    break;
+                case 5:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level5));
+                    break;
+                default:
+                    break;
+            }
             Picasso.get()
                     .load(uploadCurrent.getImageUrl())
                     .fit()
@@ -103,7 +124,7 @@ import java.util.List;
             public ProgressBar mprogressBar;
             public TextView potholeStaus;
             public TextView date;
-            public TextView severity;
+            public CardView severity;
 
 
             public ImageViewHolder(View itemView) {
@@ -121,6 +142,7 @@ import java.util.List;
                 textViewComment1 = itemView.findViewById(R.id.potholes_comments_textview);
                 textViewDimension1 = itemView.findViewById(R.id.pothole_dimension_textview);
                 textViewAddress1 = itemView.findViewById(R.id.pothole_address_textView);
+                severity = itemView.findViewById(R.id.image_cardView);
 
 
                 itemView.setOnClickListener(new View.OnClickListener() {
