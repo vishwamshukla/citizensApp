@@ -76,6 +76,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -212,7 +213,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference("Reported Potholes");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports");
-        mDatabaseRef1 = FirebaseDatabase.getInstance().getReference("Individual Reports");
+        mDatabaseRef1 = FirebaseDatabase.getInstance().getReference("Reports");
 
         userInfoDisplay(phoneNumber);
 
@@ -481,13 +482,22 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mEmail = mAuth.getCurrentUser().getEmail().toString();
                                     String mUserId = mAuth.getCurrentUser().getUid().toString();
                                     String mPhone = phoneNumber.getEditText().getText().toString();
+                                    Calendar calendar = Calendar.getInstance();
+                                    SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM");
+                                    String saveCurrentDate = currentDate.format(calendar.getTime());
 
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity,  mName, mEmail, mPhone, mUserId);
+                                    SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+                                    String saveCurrentTime = currentTime.format(calendar.getTime());
+
+                                    String mTimeKey = mTime + "-"+saveCurrentDate;
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
-                                    mDatabaseRef.child(uploadId).setValue(upload);
-                                    mDatabaseRef1.child(uploadId).setValue(upload);
+                                    mDatabaseRef.child(mTimeKey).setValue(upload);
+                                    mDatabaseRef1.child(mTimeKey).setValue(upload);
+
 
                                     Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
