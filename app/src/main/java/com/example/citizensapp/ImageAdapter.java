@@ -60,6 +60,7 @@ import java.util.List;
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
             holder.date.setText(uploadCurrent.getmDate());
+            holder.potholeStatus.setText(uploadCurrent.getStatus());
             switch (Integer.parseInt(uploadCurrent.getmSeverity())){
                 case 1:
                     holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level1));
@@ -85,7 +86,7 @@ import java.util.List;
                     .centerInside()
                     .into(holder.imageView);
             //TODO: change "Processing" with the actual status of that pothole form database.
-            setProgressBar(Progress.Completed, holder.mprogressBar, holder.potholeStaus);
+            setProgressBar(Progress.Completed, holder.mprogressBar, holder.potholeStatus);
             //holder.textViewAddress1.setText(uploadCurrent.getmAddress());
         }
 
@@ -122,9 +123,9 @@ import java.util.List;
             public TextView textViewPotholeType1,textViewLandmark1,textViewComment1,textViewDimension1,textViewAddress1;
             public ImageView imageView,imageView1;
             public ProgressBar mprogressBar;
-            public TextView potholeStaus;
             public TextView date;
             public CardView severity;
+            public TextView potholeStatus;
 
 
             public ImageViewHolder(View itemView) {
@@ -134,7 +135,7 @@ import java.util.List;
                 textViewLandmark = itemView.findViewById(R.id.text_view_pothole_landmark);
                 imageView = itemView.findViewById(R.id.image_view_upload);
                 mprogressBar = itemView.findViewById(R.id.progress_bar_pothole);
-                potholeStaus = itemView.findViewById(R.id.text_view_pothole_status);
+                potholeStatus = itemView.findViewById(R.id.text_view_pothole_status);
                 date = itemView.findViewById(R.id.text_view_pothole_date);
                 textViewPotholeType1 = itemView.findViewById(R.id.pothole_type_textView);
                 imageView1 = itemView.findViewById(R.id.pothole_image_view);

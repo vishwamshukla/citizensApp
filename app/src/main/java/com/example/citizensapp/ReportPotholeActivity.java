@@ -41,8 +41,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -78,6 +80,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.w3c.dom.Text;
@@ -482,6 +485,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
                                     String mEmail = mAuth.getCurrentUser().getEmail().toString();
                                     String mUserId = mAuth.getCurrentUser().getUid().toString();
                                     String mPhone = phoneNumber.getEditText().getText().toString();
+                                    String mStatus = "Reported";
                                     Calendar calendar = Calendar.getInstance();
                                     SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM");
                                     String saveCurrentDate = currentDate.format(calendar.getTime());
@@ -492,7 +496,7 @@ public class ReportPotholeActivity extends AppCompatActivity {
 
                                     String mTimeKey = mTime + "-"+saveCurrentDate;
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey);
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey, mStatus);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(mTimeKey).setValue(upload);
