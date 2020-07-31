@@ -62,6 +62,7 @@ public class CivilAgenciesActivity extends AppCompatActivity {
                 viewHolder.setName(users.getName());
                 viewHolder.setStatus(users.getStatus());
                 viewHolder.setImage(users.getImage(),getApplicationContext());
+                viewHolder.setUserType(users.getUsertype(),getApplicationContext());
                 final String user_id=getRef(position).getKey();
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +89,10 @@ public class CivilAgenciesActivity extends AppCompatActivity {
         public void setName(String name) {
             TextView userNameView=(TextView)mView.findViewById(R.id.textViewSingleListName);
             userNameView.setText(name);
+        }
+        public void setUserType(String userType, Context applicationContext){
+            TextView usertype=(TextView)mView.findViewById(R.id.usertype);
+            usertype.setText(userType);
         }
 
 

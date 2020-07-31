@@ -97,6 +97,7 @@ public class MoreDetailsActivity extends AppCompatActivity {
         userMap.put("image","default");
         userMap.put("thumb_image","default");
         userMap.put("online","true");
+        userMap.put("usertype","Citizen");
         ref.child(currentUserID).updateChildren(userMap);
         UsersRef1.child(currentUserID).updateChildren(userMap);
 
