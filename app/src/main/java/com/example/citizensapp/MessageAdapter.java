@@ -138,7 +138,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString();
-                String image = dataSnapshot.child("thumb_image").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
 
                 holder.displayName.setText(name);
 //                Picasso.with(holder.profileImage.getContext()).load(image).
