@@ -63,26 +63,26 @@ import java.util.List;
                     .centerInside()
                     .into(holder.imageView);
             //TODO: change "Processing" with the actual status of that pothole form database.
-            setProgressBar(Progress.Processing, holder.mprogressBar, holder.potholeStaus);
+            setProgressBar(Progress.Completed, holder.mprogressBar, holder.potholeStaus);
             //holder.textViewAddress1.setText(uploadCurrent.getmAddress());
         }
 
         public void setProgressBar(Progress progress, ProgressBar mprogressBar, TextView potholeStaus){
             switch (progress) {
                 case Reported:
-                    mprogressBar.setProgress(25);
+                    mprogressBar.setProgress(1);
                     mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFf44336));
                     break;
                 case Processing:
-                    mprogressBar.setProgress(50);
+                    mprogressBar.setProgress(2);
                     mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFff9800));
                     break;
                 case Midway:
-                    mprogressBar.setProgress(75);
+                    mprogressBar.setProgress(3);
                     mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFffeb3b));
                     break;
                 default:
-                    mprogressBar.setProgress(100);
+                    mprogressBar.setProgress(4);
                     mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFF4caf50));
                     break;
             }
