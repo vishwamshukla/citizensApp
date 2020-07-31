@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -260,28 +263,47 @@ public class ReportPotholeActivity extends AppCompatActivity {
         });
 
         severity_textView = findViewById(R.id.severity_textView);
-
-        SeekBar severity_seekBar = findViewById(R.id.pothole_severity_seekBar);
+        final SeekBar severity_seekBar = findViewById(R.id.pothole_severity_seekBar);
+        severity_seekBar.setProgress(1);
+        severity_textView.setText(String.valueOf(1));
+        severity_seekBar.getThumb().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        severity_seekBar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
         severity_seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
 //                Toast.makeText(getApplicationContext(), seekBar.getProgress(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-//                // TODO Auto-generated method stub
                 severity_textView.setText(String.valueOf(progress));
-//                PRICEtextProgress = (TextView)findViewById(R.id.PRICEtextViewProgressID);
-//                PRICEtextProgress.setText("Price:: Rs "+progress);
-//                seekBar.setMax(100);
+                switch (progress){
+                    case 0:
+                        severity_seekBar.setProgress(1);
+                        break;
+                    case 1:
+                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#00FF00"), PorterDuff.Mode.SRC_IN);
+                        break;
+                    case 2:
+                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#D6FF00"), PorterDuff.Mode.SRC_IN);
+                        break;
+                    case 3:
+                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                        break;
+                    case 4:
+                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFC100"), PorterDuff.Mode.SRC_IN);
+                        break;
+                    case 5:
+                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
