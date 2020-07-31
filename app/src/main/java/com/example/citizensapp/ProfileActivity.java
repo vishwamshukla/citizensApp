@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
         userMap.put("phone", phone1.getEditText().getText().toString());
         userMap.put("status", status1.getEditText().getText().toString());
         ref.child(currentUserID).updateChildren(userMap);
-        UsersRef.updateChildren(userMap);
+        UsersRef1.updateChildren(userMap);
 
         //startActivity(new Intent(ReceptionProfileActivity.this, ReceptionProfileActivity.class));
         Toast.makeText(ProfileActivity.this, "Profile saved", Toast.LENGTH_SHORT).show();
