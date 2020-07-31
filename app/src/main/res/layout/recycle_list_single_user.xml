@@ -36,7 +36,7 @@
                     android:id="@+id/circleImageViewUserImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/user_img" />
+                    android:src="@drawable/default_profile_image" />
 
             </androidx.cardview.widget.CardView>
 

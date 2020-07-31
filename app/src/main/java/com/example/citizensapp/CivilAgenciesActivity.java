@@ -24,6 +24,7 @@ public class CivilAgenciesActivity extends AppCompatActivity {
 
     private RecyclerView mUsersList;
     private DatabaseReference mUsersDatabaseReference;
+    private CircleImageView mprofileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,9 @@ public class CivilAgenciesActivity extends AppCompatActivity {
             CircleImageView userImageView = (CircleImageView)mView.findViewById(R.id.circleImageViewUserImage);
             //Log.e("thumb URL is--- ",thumb_image);
           //  Picasso.with(ctx).load(thumb_image).placeholder(R.drawable.user_img).into(userImageView);
-            Picasso.get().load(image).into(userImageView);
+            if (image != null){
+                Picasso.get().load(image).into(userImageView);
+            }
         }
     }
 

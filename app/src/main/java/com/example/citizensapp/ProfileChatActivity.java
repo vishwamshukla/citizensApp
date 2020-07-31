@@ -1,6 +1,7 @@
 package com.example.citizensapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,6 +30,7 @@ public class ProfileChatActivity extends AppCompatActivity {
     private ImageView mProfileImage;
     private TextView mProfileName,mProfileStatus,mprofileFriendCount;
     private Button mProfileSendReqButton,mProfileDeclineReqButton;
+    private CardView mProfileDeclineReqButtonView;
 
     ProgressDialog mProgressDialog;
     private String mCurrent_state;
@@ -66,6 +68,7 @@ public class ProfileChatActivity extends AppCompatActivity {
         mprofileFriendCount=(TextView)findViewById(R.id.profileUserFriends);
         mProfileSendReqButton=(Button)findViewById(R.id.profileSendReqButton);
         mProfileDeclineReqButton=(Button)findViewById(R.id.profileDeclineReqButton);
+        mProfileDeclineReqButtonView=(CardView)findViewById(R.id.chat_profile_activity_button2);
 
         //----IT WILL BECOME VISIBLE ONLY WHEN WE GET THE FRIEND REQUEST FROM THAT PERSON-----
         mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
@@ -108,7 +111,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         long len = dataSnapshot.getChildrenCount();
-                        mprofileFriendCount.setText("TOTAL FRIENDS : "+len);
+                        mprofileFriendCount.setText("Total Connections : "+len);
 
                         //----SEEING THE FRIEND STATE OF THE USER---
                         //----ADDING THE TWO BUTTON-----
@@ -124,7 +127,7 @@ public class ProfileChatActivity extends AppCompatActivity {
 
                                         mCurrent_state="req_sent";
                                         mProfileSendReqButton.setText("Cancel Friend Request");
-                                        mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
+                                        mProfileDeclineReqButtonView.setVisibility(View.GONE);
                                         mProfileDeclineReqButton.setEnabled(false);
 
                                     }
@@ -132,7 +135,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                                     else if(request_type.equals("received")){
                                         mCurrent_state="req_received";
                                         mProfileSendReqButton.setText("Accept Request");
-                                        mProfileDeclineReqButton.setVisibility(View.VISIBLE);
+                                        mProfileDeclineReqButtonView.setVisibility(View.VISIBLE);
                                         mProfileDeclineReqButton.setEnabled(true);
                                     }
 
@@ -146,7 +149,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                            mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
+                                            mProfileDeclineReqButtonView.setVisibility(View.GONE);
                                             mProfileDeclineReqButton.setEnabled(false);
 
                                             if(dataSnapshot.hasChild(user_id)){
@@ -304,7 +307,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                                 mCurrent_state = "friends";
                                 mProfileSendReqButton.setText("Unfriend this person");
                                 mProfileDeclineReqButton.setEnabled(false);
-                                mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
+                                mProfileDeclineReqButtonView.setVisibility(View.GONE);
 
                             }
                             else{
@@ -371,7 +374,7 @@ public class ProfileChatActivity extends AppCompatActivity {
                             Toast.makeText(ProfileChatActivity.this, "Connection Request Declined Successfully...", Toast.LENGTH_SHORT).show();
 
                             mProfileDeclineReqButton.setEnabled(false);
-                            mProfileDeclineReqButton.setVisibility(View.INVISIBLE);
+                            mProfileDeclineReqButtonView.setVisibility(View.GONE);
                         }
                         else{
 

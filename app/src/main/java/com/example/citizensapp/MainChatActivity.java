@@ -82,7 +82,6 @@ public class MainChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chat);
 
-        mChatAddButton = (ImageButton)findViewById(R.id.chatAddButton);
         mChatSendButton = (ImageButton)findViewById(R.id.chatSendButton);
         mMessageView = (EditText)findViewById(R.id.chatMessageView);
 
