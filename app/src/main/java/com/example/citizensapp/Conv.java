@@ -1,10 +1,4 @@
 package com.example.citizensapp;
-
-/**
- * Created by KSHITIZ on 3/29/2018.
- * ----FOR RETRIEVING "chats" SECTION OF DATABASE-----
- */
-
 public class Conv {
     public boolean seen;
     public long timeStamp;

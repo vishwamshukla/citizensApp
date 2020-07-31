@@ -10,11 +10,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 
-/**
- * Created by KSHITIZ on 3/22/2018.
- * -----WHENEVER NOTIFICATION IS RECEIEVED-----
- */
-
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
     //---opening the application on recieving notification---

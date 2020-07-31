@@ -23,12 +23,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by KSHITIZ on 3/29/2018.
- *
- * ------FOR REQUEST FRAGMENT------
- */
-
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestViewHolder>{
 
     private List<String> requestList;

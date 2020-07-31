@@ -1,10 +1,4 @@
 package com.example.citizensapp;
-
-/**
- * Created by KSHITIZ on 3/27/2018.
- * ----CREATED TO WORK WITH "messages" CHILD IN DATABASE----
- */
-
 public class Messages {
 
     private String message,type;

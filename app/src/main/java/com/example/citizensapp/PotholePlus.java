@@ -13,11 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
-
-/**
- * Created by HP on 3/21/2018.
- */
-
 public class PotholePlus extends Application {
 
     private DatabaseReference mUserDatabase;

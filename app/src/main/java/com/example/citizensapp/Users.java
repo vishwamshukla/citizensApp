@@ -1,10 +1,5 @@
 package com.example.citizensapp;
 
-/**
- * Created by KSHITIZ on 3/20/2018.
- * ------THIS CLASS IS FOR FETCHING A USER DATA-----
- */
-
 public class Users {
     public String name;
     public String status;

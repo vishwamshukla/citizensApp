@@ -1,10 +1,5 @@
 package com.example.citizensapp;
 
-/**
- * Created by KSHITIZ on 3/24/2018.
- * ---THIS CLASS IS CREATED FOR FRIENDS FRAGMENT---
- */
-
 public class Friends {
 
     public String date;

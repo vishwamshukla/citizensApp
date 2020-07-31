@@ -3,9 +3,6 @@ package com.example.citizensapp;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * Created by HP on 3/26/2018.
- */
 
 public class GetTimeAgo extends Application {
     /*
