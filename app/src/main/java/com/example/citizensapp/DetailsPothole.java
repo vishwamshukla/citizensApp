@@ -1,19 +1,25 @@
 package com.example.citizensapp;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -26,6 +32,7 @@ import static com.example.citizensapp.HomeActivity.EXTRA_DIMENSION;
 import static com.example.citizensapp.HomeActivity.EXTRA_LANDMARK;
 import static com.example.citizensapp.HomeActivity.EXTRA_POTHOLE_TYPE;
 import static com.example.citizensapp.HomeActivity.EXTRA_URL;
+import static com.example.citizensapp.HomeActivity.EXTRA_STATUS;
 
 public class DetailsPothole extends AppCompatActivity {
 
@@ -50,8 +57,7 @@ public class DetailsPothole extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetailsPothole.this,HomeActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(DetailsPothole.this,HomeActivity.class));
             }
         });
         Intent intent = getIntent();
@@ -61,6 +67,7 @@ public class DetailsPothole extends AppCompatActivity {
         String address = intent.getStringExtra(EXTRA_ADDRESS);
         String dimension = intent.getStringExtra(EXTRA_DIMENSION);
         String comment = intent.getStringExtra(EXTRA_COMMENT);
+        String status = intent.getStringExtra(EXTRA_STATUS);
 
         ImageView imageView = findViewById(R.id.pothole_image_view);
         TextView pothole_type_textView = findViewById(R.id.pothole_type_textView);
@@ -76,7 +83,33 @@ public class DetailsPothole extends AppCompatActivity {
         dimension_textView.setText(dimension);
         comment_textView.setText(comment);
 
+        TextView potholeStatus = findViewById(R.id.pothole_status_textView);
+        ProgressBar mprogressBar = findViewById(R.id.progress_bar_pothole);
 
+        setProgressBar(status == null ? "Reported" : status, mprogressBar, potholeStatus);
+
+    }
+
+    public void setProgressBar(String progress, ProgressBar mprogressBar, TextView potholeStatus){
+        switch (progress) {
+            case "Completed":
+                mprogressBar.setProgress(4);
+                mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFF4caf50));
+                break;
+            case "Midway":
+                mprogressBar.setProgress(3);
+                mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFffeb3b));
+                break;
+            case "Processing":
+                mprogressBar.setProgress(2);
+                mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFff9800));
+                break;
+            default:
+                mprogressBar.setProgress(1);
+                mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFf44336));
+                break;
+        }
+        potholeStatus.setText(progress);
     }
 
     private void onDeleteClick(int position) {

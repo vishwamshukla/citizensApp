@@ -83,7 +83,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String userName = dataSnapshot.child("name").getValue().toString();
-                String userThumbImage = dataSnapshot.child("thumb_image").getValue().toString();
+                String userThumbImage = dataSnapshot.child("image").getValue().toString();
                 String userStatus =dataSnapshot.child("status").getValue().toString();
 
                 holder.displayName.setText(userName);
