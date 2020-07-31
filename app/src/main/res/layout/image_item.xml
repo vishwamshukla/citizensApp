@@ -46,7 +46,6 @@
             android:text="Type not found">
         </TextView>
 
-        <!--TODO: link this with actual DB and remove the hardcoded text-->
         <TextView
             android:id="@+id/text_view_pothole_landmark"
             android:layout_below="@id/text_view_pothole_type"
@@ -57,14 +56,14 @@
             android:text="...">
         </TextView>
 
-        <!--TODO: link this with actual DB and remove the hardcoded text-->
+
         <TextView
             android:layout_margin="15dp"
             android:layout_alignParentEnd="true"
             android:id="@+id/text_view_pothole_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24 Jul"
+            android:text="..."
             android:textSize="12sp">
         </TextView>
 

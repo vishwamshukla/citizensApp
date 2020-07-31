@@ -57,6 +57,7 @@ import java.util.List;
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
             holder.date.setText(uploadCurrent.getmDate());
+            holder.severity.setText(uploadCurrent.getmSeverity());
             Picasso.get()
                     .load(uploadCurrent.getImageUrl())
                     .fit()
@@ -102,6 +103,7 @@ import java.util.List;
             public ProgressBar mprogressBar;
             public TextView potholeStaus;
             public TextView date;
+            public TextView severity;
 
 
             public ImageViewHolder(View itemView) {
