@@ -287,19 +287,19 @@ public class ReportPotholeActivity extends AppCompatActivity {
                         severity_seekBar.setProgress(1);
                         break;
                     case 1:
-                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#00FF00"), PorterDuff.Mode.SRC_IN);
+                        severity_seekBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.severity_level1), PorterDuff.Mode.SRC_IN);
                         break;
                     case 2:
-                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#D6FF00"), PorterDuff.Mode.SRC_IN);
+                        severity_seekBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.severity_level2), PorterDuff.Mode.SRC_IN);
                         break;
                     case 3:
-                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                        severity_seekBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.severity_level3), PorterDuff.Mode.SRC_IN);
                         break;
                     case 4:
-                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFC100"), PorterDuff.Mode.SRC_IN);
+                        severity_seekBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.severity_level4), PorterDuff.Mode.SRC_IN);
                         break;
                     case 5:
-                        severity_seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                        severity_seekBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.severity_level5), PorterDuff.Mode.SRC_IN);
                         break;
                     default:
                         break;
