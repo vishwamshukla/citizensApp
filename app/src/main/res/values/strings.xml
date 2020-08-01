@@ -71,4 +71,18 @@
     <string name="chats">Chats</string>
     <string name="history">History</string>
     <string name="insider_program">Insider Program</string>
+    <string name="contact_us">Contact us</string>
+    <string name="pothole_team">Pothole+ Team</string>
+    <string name="vishwam_shukla">Vishwam Shukla</string>
+    <string name="shuklavishwam_gmail_com">shuklavishwam@gmail.com</string>
+    <string name="report_status">Report Status:</string>
+    <string name="image">Image</string>
+    <string name="remove_image">Remove Image</string>
+    <string name="location">Location</string>
+    <string name="type">Type</string>
+    <string name="landmark">Landmark</string>
+    <string name="address">Address</string>
+    <string name="dimensions">Dimensions</string>
+    <string name="comments">Comments</string>
+    <string name="back">Back</string>
 </resources>
