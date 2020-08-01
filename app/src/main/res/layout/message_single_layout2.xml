@@ -8,19 +8,19 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_centerVertical="true"
         android:id="@+id/message_profile_layout"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/user_img"
-        android:layout_marginRight="5dp"/>
+        android:src="@drawable/user_img"/>
 
     <TextView
+        android:layout_marginStart="5dp"
         android:id="@+id/name_text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:inputType="textPersonName"
-        android:textSize="20dp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:text="Display Name"
         android:layout_alignParentTop="true"
@@ -30,7 +30,7 @@
         android:id="@+id/time_text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="10sp"
         android:text="time"
         android:layout_marginRight="5dp"
         android:layout_alignBaseline="@+id/name_text_layout"
@@ -38,14 +38,14 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
+        android:layout_marginStart="10dp"
         android:id="@+id/message_text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:text="TextView"
         android:layout_below="@+id/name_text_layout"
-        android:layout_alignStart="@+id/name_text_layout" />
+        android:layout_toEndOf="@+id/message_profile_layout" />
 
     <!--ImageView
         android:id="@+id/message_image_layout"
