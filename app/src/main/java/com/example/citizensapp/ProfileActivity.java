@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
 
     private CircleImageView profileImageView1;
-    TextInputLayout name1, username1, email1, phone1;
+    TextInputLayout name1, username1, email1, phone1, status1;
     TextView totalPotholeReported;
     Button update;
     RelativeLayout changeProfile;
@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     private StorageReference storageProfilePrictureRef;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef;
+    private DatabaseReference UsersRef, UsersRef1;
     private String checker = "";
     String currentUserID;
 
@@ -57,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+        UsersRef1 = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserID);
 
         totalPotholeReported = findViewById(R.id.total_pothole_reported);
 
@@ -68,10 +69,11 @@ public class ProfileActivity extends AppCompatActivity {
         username1 = findViewById(R.id.profile_username);
         email1 = findViewById(R.id.profile_email);
         phone1 = findViewById(R.id.profile_phone_number);
+        status1 = findViewById(R.id.profile_status);
 
         changeProfile = findViewById(R.id.profile_image_layout);
 
-        userInfoDisplay(profileImageView1, name1, username1, email1, phone1);
+        userInfoDisplay(profileImageView1, name1, username1, email1, phone1, status1);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -115,7 +117,9 @@ public class ProfileActivity extends AppCompatActivity {
         userMap.put("username", username1.getEditText().getText().toString());
         userMap.put("email", email1.getEditText().getText().toString());
         userMap.put("phone", phone1.getEditText().getText().toString());
+        userMap.put("status", status1.getEditText().getText().toString());
         ref.child(currentUserID).updateChildren(userMap);
+        UsersRef1.updateChildren(userMap);
 
         //startActivity(new Intent(ReceptionProfileActivity.this, ReceptionProfileActivity.class));
         Toast.makeText(ProfileActivity.this, "Profile saved", Toast.LENGTH_SHORT).show();
@@ -217,7 +221,9 @@ public class ProfileActivity extends AppCompatActivity {
                                 userMap.put("email", email1.getEditText().getText().toString());
                                 userMap.put("phone", phone1.getEditText().getText().toString());
                                 userMap. put("image", myUrl);
+                                userMap.put("status", status1.getEditText().getText().toString());
                                 ref.child(currentUserID).updateChildren(userMap);
+                                UsersRef1.updateChildren(userMap);
 
                                 //progressDialog.dismiss();
                                 progressBar.setVisibility(View.INVISIBLE);
@@ -241,7 +247,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void userInfoDisplay(final CircleImageView profileImageView1, final TextInputLayout name1, final TextInputLayout username1, final TextInputLayout email1, final TextInputLayout phone1) {
+    private void userInfoDisplay(final CircleImageView profileImageView1, final TextInputLayout name1, final TextInputLayout username1, final TextInputLayout email1, final TextInputLayout phone1, final TextInputLayout status1) {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
         DatabaseReference CountRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID).child("potholeReports");
 
@@ -287,6 +293,7 @@ public class ProfileActivity extends AppCompatActivity {
                     String username = String.valueOf(dataSnapshot.child("username").getValue());
                     String email = String.valueOf(dataSnapshot.child("email").getValue());
                     String phone = String.valueOf(dataSnapshot.child("phone").getValue());
+                    String status = String.valueOf(dataSnapshot.child("status").getValue());
 
 
                     Picasso.get().load(image).into(profileImageView1);
@@ -294,6 +301,7 @@ public class ProfileActivity extends AppCompatActivity {
                     username1.getEditText().setText(username);
                     email1.getEditText().setText(email);
                     phone1.getEditText().setText(phone);
+                    status1.getEditText().setText(status);
                 }
             }
 

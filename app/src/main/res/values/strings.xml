@@ -66,4 +66,9 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="map_key" translatable="false">AIzaSyCtZ3HAm8-sy0U15dXluGN0Fa84IZyXs4g</string>
+    <string name="map_view">Map view</string>
+    <string name="report_potholes_using_a_trip">Report potholes using a trip</string>
+    <string name="chats">Chats</string>
+    <string name="history">History</string>
+    <string name="insider_program">Insider Program</string>
 </resources>

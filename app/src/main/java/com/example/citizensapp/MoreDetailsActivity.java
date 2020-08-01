@@ -19,6 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 
 import java.util.HashMap;
 
@@ -28,7 +30,7 @@ public class MoreDetailsActivity extends AppCompatActivity {
     Button submitButton;
 
     FirebaseDatabase rootNode;
-    DatabaseReference reference, UsersRef;
+    DatabaseReference reference, UsersRef, UsersRef1;
     FirebaseAuth mAuth;
     String currentUserID;
     private ProgressBar progressBar;
@@ -43,6 +45,7 @@ public class MoreDetailsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens").child(currentUserID);
+        UsersRef1 = FirebaseDatabase.getInstance().getReference().child("users");
         name3 = findViewById(R.id.name3);
         username3= findViewById(R.id.username3);
 
@@ -83,12 +86,21 @@ public class MoreDetailsActivity extends AppCompatActivity {
             phone3.setError("Phone number is not valid");
         }
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("Citizens");
+        String token_id = FirebaseInstanceId.getInstance().getToken();
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("name", name);
         userMap.put("username", username);
         userMap.put("phone", phone);
         userMap.put("email", mAuth.getCurrentUser().getEmail().toString());
+        userMap.put("device_token",token_id);
+        userMap.put("status","Hi there, I am using Potholes+");
+        userMap.put("image","default");
+        userMap.put("thumb_image","default");
+        userMap.put("online","true");
+        userMap.put("usertype","Citizen");
         ref.child(currentUserID).updateChildren(userMap);
+        UsersRef1.child(currentUserID).updateChildren(userMap);
+
 
 
         Toast.makeText(MoreDetailsActivity.this, "Thank you", Toast.LENGTH_SHORT).show();

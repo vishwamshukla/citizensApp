@@ -2,6 +2,7 @@ package com.example.citizensapp;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -57,37 +60,55 @@ import java.util.List;
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
             holder.date.setText(uploadCurrent.getmDate());
+            switch (Integer.parseInt(uploadCurrent.getmSeverity())){
+                case 1:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level1));
+                    break;
+                case 2:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level2));
+                    break;
+                case 3:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level3));
+                    break;
+                case 4:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level4));
+                    break;
+                case 5:
+                    holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level5));
+                    break;
+                default:
+                    break;
+            }
             Picasso.get()
                     .load(uploadCurrent.getImageUrl())
                     .fit()
                     .centerInside()
                     .into(holder.imageView);
-            //TODO: change "Processing" with the actual status of that pothole form database.
-            setProgressBar(Progress.Processing, holder.mprogressBar, holder.potholeStaus);
-            //holder.textViewAddress1.setText(uploadCurrent.getmAddress());
+
+            setProgressBar(uploadCurrent.getStatus() == null ? "Reported" : uploadCurrent.getStatus(), holder.mprogressBar, holder.potholeStatus);
         }
 
-        public void setProgressBar(Progress progress, ProgressBar mprogressBar, TextView potholeStaus){
+        public void setProgressBar(String progress, ProgressBar mprogressBar, TextView potholeStatus){
             switch (progress) {
-                case Reported:
-                    mprogressBar.setProgress(25);
-                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFf44336));
-                    break;
-                case Processing:
-                    mprogressBar.setProgress(50);
-                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFff9800));
-                    break;
-                case Midway:
-                    mprogressBar.setProgress(75);
-                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFffeb3b));
-                    break;
-                default:
-                    mprogressBar.setProgress(100);
+                case "Completed":
+                    mprogressBar.setProgress(4);
                     mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFF4caf50));
                     break;
+                case "Midway":
+                    mprogressBar.setProgress(3);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFffeb3b));
+                    break;
+                case "Processing":
+                    mprogressBar.setProgress(2);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFff9800));
+                    break;
+                default:
+                    mprogressBar.setProgress(1);
+                    mprogressBar.setProgressTintList(ColorStateList.valueOf(0xFFf44336));
+                    break;
             }
-            potholeStaus.setText(progress.toString());
-     }
+            potholeStatus.setText(progress);
+        }
 
         @Override
         public int getItemCount() {
@@ -100,8 +121,9 @@ import java.util.List;
             public TextView textViewPotholeType1,textViewLandmark1,textViewComment1,textViewDimension1,textViewAddress1;
             public ImageView imageView,imageView1;
             public ProgressBar mprogressBar;
-            public TextView potholeStaus;
             public TextView date;
+            public CardView severity;
+            public TextView potholeStatus;
 
 
             public ImageViewHolder(View itemView) {
@@ -111,7 +133,7 @@ import java.util.List;
                 textViewLandmark = itemView.findViewById(R.id.text_view_pothole_landmark);
                 imageView = itemView.findViewById(R.id.image_view_upload);
                 mprogressBar = itemView.findViewById(R.id.progress_bar_pothole);
-                potholeStaus = itemView.findViewById(R.id.text_view_pothole_status);
+                potholeStatus = itemView.findViewById(R.id.text_view_pothole_status);
                 date = itemView.findViewById(R.id.text_view_pothole_date);
                 textViewPotholeType1 = itemView.findViewById(R.id.pothole_type_textView);
                 imageView1 = itemView.findViewById(R.id.pothole_image_view);
@@ -119,6 +141,7 @@ import java.util.List;
                 textViewComment1 = itemView.findViewById(R.id.potholes_comments_textview);
                 textViewDimension1 = itemView.findViewById(R.id.pothole_dimension_textview);
                 textViewAddress1 = itemView.findViewById(R.id.pothole_address_textView);
+                severity = itemView.findViewById(R.id.image_cardView);
 
 
                 itemView.setOnClickListener(new View.OnClickListener() {

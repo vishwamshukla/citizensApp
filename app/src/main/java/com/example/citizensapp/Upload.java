@@ -4,13 +4,13 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mLat, mLang;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mLat, mLang, mSeverity, mName, mEmail, mPhone, mUserId, mTimeKey, status;
     private String mKey;
     private String VideoDescription;
     private String VideoUri;
 
 
-    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mLat, String mLang) {
+    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mLat, String mLang, String mSeverity, String mName, String mEmail, String mPhone, String mUserId, String mTimeKey, String status) {
         this.mImageUrl = ImageUrl;
         this.mPotholeType = mPotholeType;
         this.mAddress = mAddress;
@@ -23,6 +23,13 @@ public class Upload {
         this.mTime = mTime;
         this.mLat = mLat;
         this.mLang = mLang;
+        this.mSeverity = mSeverity;
+        this.mName = mName;
+        this.mEmail = mEmail;
+        this.mPhone = mPhone;
+        this.mUserId = mUserId;
+        this.mTimeKey = mTimeKey;
+        this.status = status;
 
 
 
@@ -110,6 +117,18 @@ public class Upload {
     }
 
     public void setmLat(String mLat) { this.mLat = mLat;  }
+    public String getmSeverity() {
+        return mSeverity;
+    }
+
+    public void setmSeverity(String mSeverity) {
+        this.mSeverity = mSeverity;
+    }
+
+
+    public String getmName() {
+        return mName;
+    }
 
     public String getmLang() {
         return mLang;
@@ -117,6 +136,49 @@ public class Upload {
 
     public void setmLang(String mLang) {
         this.mLang = mLang;
+    }
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
+
+    public String getmEmail() {
+        return mEmail;
+    }
+
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
+    }
+
+    public String getmPhone() {
+        return mPhone;
+    }
+
+    public void setmPhone(String mPhone) {
+        this.mPhone = mPhone;
+    }
+
+    public String getmUserId() {
+        return mUserId;
+    }
+
+    public void setmUserId(String mUserId) {
+        this.mUserId = mUserId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getmTimeKey() {
+        return mTimeKey;
+    }
+
+    public void setmTimeKey(String mTimeKey) {
+        this.mTimeKey = mTimeKey;
     }
 
     @Exclude
