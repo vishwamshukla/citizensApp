@@ -261,7 +261,6 @@
                         android:hint="Dimensions (Optional)">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/dimension"
                             android:drawablePadding="15dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
