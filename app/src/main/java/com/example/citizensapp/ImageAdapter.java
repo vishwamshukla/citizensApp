@@ -53,7 +53,7 @@ import java.util.List;
             View v = LayoutInflater.from(mContext).inflate(R.layout.image_item, parent, false);
             return new ImageViewHolder(v);
         }
-
+//
         @Override
         public void onBindViewHolder(ImageViewHolder holder, int position) {
             Upload uploadCurrent = mUploads.get(position);
