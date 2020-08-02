@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/we_d_like_to_know_more_about_you"
+        android:text="We'd like to know more about you."
         android:transitionName="logo_text"
         android:textSize="30sp"
         android:textColor="#000"/>
@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/name3"
-                    android:hint="@string/name"
+                    android:hint="Name"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -44,26 +44,26 @@
                         android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/username3"
-                    android:hint="@string/username"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="13"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLength="13"
-                        android:inputType="text"/>
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/username3"-->
+<!--                    android:hint="Username"-->
+<!--                    app:counterEnabled="true"-->
+<!--                    app:counterMaxLength="13"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">-->
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:maxLength="13"-->
+<!--                        android:inputType="text"/>-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/phone3"
-                    android:hint="@string/phone_number"
+                    android:hint="Phone number"
                     app:counterEnabled="true"
                     app:counterMaxLength="10"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -80,7 +80,7 @@
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
+        android:text="Submit"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         android:transitionName="button_tran"

@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileImageView1 = (CircleImageView) findViewById(R.id.image_profile);
         update = findViewById(R.id.update_profile);
         name1 = findViewById(R.id.profile_name);
-        username1 = findViewById(R.id.profile_username);
+       // username1 = findViewById(R.id.profile_username);
         email1 = findViewById(R.id.profile_email);
         phone1 = findViewById(R.id.profile_phone_number);
         status1 = findViewById(R.id.profile_status);
@@ -114,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("name", name1.getEditText().getText().toString());
-        userMap.put("username", username1.getEditText().getText().toString());
+        //userMap.put("username", username1.getEditText().getText().toString());
         userMap.put("email", email1.getEditText().getText().toString());
         userMap.put("phone", phone1.getEditText().getText().toString());
         userMap.put("status", status1.getEditText().getText().toString());
@@ -149,7 +149,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void userInfoSaved()
     {
         String name = name1.getEditText().getText().toString();
-        String username = username1.getEditText().getText().toString();
+        //String username = username1.getEditText().getText().toString();
         String email = email1.getEditText().getText().toString();
         String phone = phone1.getEditText().getText().toString();
 
@@ -158,18 +158,18 @@ public class ProfileActivity extends AppCompatActivity {
         if(name.isEmpty()){
             name1.setError("Field can't be empty");
         }
-        else if(username.isEmpty()){
-            username1.setError("Field can't be empty");
-        }
+//        else if(username.isEmpty()){
+//            username1.setError("Field can't be empty");
+//        }
         else if(phone.isEmpty()){
             phone1.setError("Field can't be empty");
         }
-        else if (username.matches(noWhiteSpaces)){
-            username1.setError("White spaces are not allowed");
-        }
-        else if (username.length() > 15){
-            username1.setError("Username is too long");
-        }
+//        else if (username.matches(noWhiteSpaces)){
+//            username1.setError("White spaces are not allowed");
+//        }
+//        else if (username.length() > 15){
+//            username1.setError("Username is too long");
+//        }
         else if(phone.length() > 10 && phone.length() < 10){
             phone1.setError("Phone number is not valid");
         }
@@ -217,7 +217,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 HashMap<String, Object> userMap = new HashMap<>();
                                 userMap.put("name", name1.getEditText().getText().toString());
-                                userMap.put("username", username1.getEditText().getText().toString());
+                                //userMap.put("username", username1.getEditText().getText().toString());
                                 userMap.put("email", email1.getEditText().getText().toString());
                                 userMap.put("phone", phone1.getEditText().getText().toString());
                                 userMap. put("image", myUrl);
@@ -290,7 +290,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                     String image = String.valueOf(dataSnapshot.child("image").getValue());
                     String name = String.valueOf(dataSnapshot.child("name").getValue());
-                    String username = String.valueOf(dataSnapshot.child("username").getValue());
+                   // String username = String.valueOf(dataSnapshot.child("username").getValue());
                     String email = String.valueOf(dataSnapshot.child("email").getValue());
                     String phone = String.valueOf(dataSnapshot.child("phone").getValue());
                     String status = String.valueOf(dataSnapshot.child("status").getValue());
@@ -298,7 +298,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     Picasso.get().load(image).into(profileImageView1);
                     name1.getEditText().setText(name);
-                    username1.getEditText().setText(username);
+                   // username1.getEditText().setText(username);
                     email1.getEditText().setText(email);
                     phone1.getEditText().setText(phone);
                     status1.getEditText().setText(status);
