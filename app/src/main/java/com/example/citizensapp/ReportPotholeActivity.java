@@ -7,10 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SyncRequest;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -42,18 +42,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -100,8 +101,10 @@ import org.w3c.dom.Text;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ReportPotholeActivity extends AppCompatActivity implements OnMapReadyCallback {
+//    private RecyclerView recyclerView;
+//    private ChatAdapter mAdapter;
 
-    private static final int PLACE_PICKER_REQUEST = 11;
+    private static final int PLACE_PICKER_REQUEST =11;
     Button btpicker;
     String lat,lang;
     EditText dimension;
@@ -109,9 +112,6 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int LOCATION_REQUEST_CODE = 101;
-
-//    private RecyclerView recyclerView;
-//    private ChatAdapter mAdapter;
     private ArrayList messageArrayList;
     private TextInputLayout inputMessage;
     private ImageButton btnSend;
@@ -132,6 +132,7 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
     private SpeechToText speechService;
     private TextToSpeech textToSpeech;
 
+    private TextView cordinatesSaverTextView;
 
 
     private static final int PICK_VIDEO_REQUEST=1;
@@ -163,6 +164,8 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
     String currentUserID;
     TextView severity_textView;
 
+    String latitude = null;
+    String longitude = null;
 
 
     private void createServices() {
@@ -181,23 +184,26 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_pothole);
 
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
-        dimension=findViewById(R.id.dimension);
+//        dimension = findViewById(R.id.dimension);
+        //cordinatesSaverTextView = findViewById(R.id.cordinates_saver);
         btpicker = findViewById(R.id.map_location_picker);
         btpicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                PlacePicker.IntentBuilder builder =new PlacePicker.IntentBuilder();
                 try {
-                    startActivityForResult(builder.build(ReportPotholeActivity.this), PLACE_PICKER_REQUEST);
-                }catch (GooglePlayServicesRepairableException e){
+                    startActivityForResult(builder.build(ReportPotholeActivity.this),PLACE_PICKER_REQUEST);
+                }catch(GooglePlayServicesRepairableException e){
                     e.printStackTrace();
                 }catch (GooglePlayServicesNotAvailableException e){
                     e.printStackTrace();
                 }
             }
         });
+
 
         inputMessage = findViewById(R.id.potholes_comments_textview);
         btnRecord = findViewById(R.id.btn_record);
@@ -351,22 +357,51 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
             }
         });
     }
+
     private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null){
+                if (location != null){
                     currentLocation = location;
-                    Toast.makeText(getApplicationContext(),currentLocation.getLatitude()+""+currentLocation.getLongitude(),Toast.LENGTH_SHORT).show();
+                    lat = String.valueOf(currentLocation.getLatitude());
+                    lang = String.valueOf(currentLocation.getLongitude());
+//                    String msg = "Updated Successfully : " +
+//                            Double.toString(location.getLatitude())+";"+
+//                            Double.toString(location.getLongitude());
+                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+
+
+//                    DateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
+//                    Date time = new Date();
+//                    String mTime = timeformat.format(time).toString();
+//                    Calendar calendar = Calendar.getInstance();
+//                    SimpleDateFormat currentDate = new SimpleDateFormat("dd MMM");
+//                    String saveCurrentDate = currentDate.format(calendar.getTime());
+//
+//                    String mTimeKey = mTime + "-"+saveCurrentDate;
+//
+//                    Location_Helper helper = new Location_Helper(
+//                            location.getLongitude(),location.getLatitude()
+//                    );
+//                    mDatabaseRef.child(mTimeKey).setValue(helper);
+//                    mDatabaseRef1.child(mTimeKey).setValue(helper);
+//                    Toast.makeText(mContext, "Location Saved", Toast.LENGTH_SHORT).show();
+
+                   // LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
+
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
-                    supportMapFragment.getMapAsync(ReportPotholeActivity.this);
-                }
+                supportMapFragment.getMapAsync(ReportPotholeActivity.this);
+            }
+
             }
         });
     }
@@ -379,7 +414,6 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
         googleMap.addMarker(markerOptions);
     }
-
 
     private void SelectVideo(){
         Intent intent = new Intent();
@@ -397,7 +431,6 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
             }
         });
     }
-
 
     private void update_imageView_layout(Boolean isImageLoaded){
         LinearLayout hint_view = findViewById(R.id.upload_image_hint_view);
@@ -425,19 +458,18 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == CAMERA_PERM_CODE){
-            if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CAMERA_PERM_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Camera Permission needed", Toast.LENGTH_SHORT).show();
             }
         }
-        else if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                fetchLastLocation();
+            else if (requestCode == LOCATION_REQUEST_CODE) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fetchLastLocation();
+                }
             }
-        }
     }
 
     private void OpenImageFileChooser(){
@@ -470,10 +502,25 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
                 break;
             case PLACE_PICKER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    com.google.android.gms.location.places.Place place = PlacePicker.getPlace(data, this);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    lat = String.valueOf((((com.google.android.gms.location.places.Place) place).getLatLng().latitude));
-                    lang = String.valueOf((((com.google.android.gms.location.places.Place) place).getLatLng().longitude));
+
+                    Place place = PlacePicker.getPlace(data,this);
+//                    StringBuilder stringBuilderlat = new StringBuilder();
+//                    StringBuilder stringBuilderlong = new StringBuilder();
+                    latitude = String.valueOf(place.getLatLng().latitude);
+                    longitude = String.valueOf(place.getLatLng().longitude);
+
+//                    stringBuilderlat.append(latitude);
+//                    stringBuilderlong.append(longitude);
+//                    cordinatesSaverTextViewlat.setText(stringBuilderlat.toString());
+//
+//                    String mLat = cordinatesSaverTextView.getText().toString();
+
+
+
+                    //         com.google.android.gms.location.places.Place place = PlacePicker.getPlace(data, this);
+             //       StringBuilder stringBuilder = new StringBuilder();
+               //     lat = String.valueOf((((com.google.android.gms.location.places.Place) place).getLatLng().latitude));
+                 //   lang = String.valueOf((((com.google.android.gms.location.places.Place) place).getLatLng().longitude));
                     /*stringBuilder.append("LATITUDE : ");
                     stringBuilder.append(lat);
                     stringBuilder.append("\n");
@@ -481,11 +528,8 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
                     stringBuilder.append(lang);*/
                 }
                 break;
-
         }
-
-
-        }
+    }
 
 
         /*if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK
@@ -584,8 +628,26 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
                                     String saveCurrentTime = currentTime.format(calendar.getTime());
 
                                     String mTimeKey = mTime + "-"+saveCurrentDate;
+                                    //String mlatitude = lat.getBytes().toString();
+                                  //  String mlongitude = lang.getBytes().toString();
 
-                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey, mStatus, lat, lang);
+//                                    Double mlat = currentLocation.getLatitude();
+//                                    Double mlang = currentLocation.getLongitude();
+                                    Double mlat;
+                                    Double mlang;
+
+                                    if (latitude==null){
+                                        mlat = currentLocation.getLatitude();
+                                        mlang = currentLocation.getLongitude();
+                                    }
+                                    else {
+                                        mlat =  Double.parseDouble(latitude);
+                                        mlang = Double.parseDouble(longitude);
+                                    }
+
+
+                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime,
+                                            mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey, mStatus,mlat,mlang);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(mTimeKey).setValue(upload);
@@ -593,6 +655,8 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
 
 
                                     Toast.makeText(ReportPotholeActivity.this, "Thank you for reporting!", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(mContext, lat, Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(mContext, lang, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(ReportPotholeActivity.this, HomeActivity.class));
 
                                 }
@@ -734,7 +798,7 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
 ////                                        }
 ////                                    });
 //
-//                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity, mName, mEmail, mPhone, mUserId, lat, lang);
+//                                    Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime, mSeverity, mName, mEmail, mPhone, mUserId);
 //                                    String uploadId = mDatabaseRef.push().getKey();
 //                                    assert uploadId != null;
 //                                    mDatabaseRef.child(uploadId).setValue(upload);

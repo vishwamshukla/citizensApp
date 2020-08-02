@@ -4,13 +4,15 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mLat, mLang, mSeverity, mName, mEmail, mPhone, mUserId, mTimeKey, status;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mSeverity, mName, mEmail, mPhone, mUserId, mTimeKey, status;
+    Double mlat,mlang;
     private String mKey;
     private String VideoDescription;
     private String VideoUri;
 
 
-    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mLat, String mLang, String mSeverity, String mName, String mEmail, String mPhone, String mUserId, String mTimeKey, String status) {
+    public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mSeverity
+    , String mName, String mEmail, String mPhone, String mUserId, String mTimeKey, String status,Double mlat,Double mlang) {
         this.mImageUrl = ImageUrl;
         this.mPotholeType = mPotholeType;
         this.mAddress = mAddress;
@@ -21,8 +23,6 @@ public class Upload {
         this.mDate = mDate;
         this.mDateFull = mDateFull;
         this.mTime = mTime;
-        this.mLat = mLat;
-        this.mLang = mLang;
         this.mSeverity = mSeverity;
         this.mName = mName;
         this.mEmail = mEmail;
@@ -30,6 +30,8 @@ public class Upload {
         this.mUserId = mUserId;
         this.mTimeKey = mTimeKey;
         this.status = status;
+        this.mlat = mlat;
+        this.mlang = mlang;
 
 
 
@@ -112,11 +114,6 @@ public class Upload {
         this.mTime = mTime;
     }
 
-    public String getmLat() {
-        return mLat;
-    }
-
-    public void setmLat(String mLat) { this.mLat = mLat;  }
     public String getmSeverity() {
         return mSeverity;
     }
@@ -130,13 +127,6 @@ public class Upload {
         return mName;
     }
 
-    public String getmLang() {
-        return mLang;
-    }
-
-    public void setmLang(String mLang) {
-        this.mLang = mLang;
-    }
     public void setmName(String mName) {
         this.mName = mName;
     }
@@ -179,6 +169,22 @@ public class Upload {
 
     public void setmTimeKey(String mTimeKey) {
         this.mTimeKey = mTimeKey;
+    }
+
+    public Double getMlat() {
+        return mlat;
+    }
+
+    public void setMlat(Double mlat) {
+        this.mlat = mlat;
+    }
+
+    public Double getMlang() {
+        return mlang;
+    }
+
+    public void setMlang(Double mlang) {
+        this.mlang = mlang;
     }
 
     @Exclude

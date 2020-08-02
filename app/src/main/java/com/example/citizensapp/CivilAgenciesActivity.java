@@ -92,7 +92,7 @@ public class CivilAgenciesActivity extends AppCompatActivity {
             userNameView.setText(name);
         }
         public void setUserType(String userType, Context applicationContext){
-            TextView usertype=(TextView)mView.findViewById(R.id.usertype);
+            TextView usertype=(TextView)mView.findViewById(R.id.chat_item_text_view_user_type);
             usertype.setText(userType);
         }
 
