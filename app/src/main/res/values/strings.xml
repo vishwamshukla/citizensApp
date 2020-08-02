@@ -1,69 +1,69 @@
 <resources>
     <string name="app_name">Potholes+</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
-    <string name="title_activity_home2">Home2Activity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
+    <string name="title_activity_home2" translatable="false">Home2Activity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
 
-    <string name="home_second">Home Second</string>
+    <string name="home_second" translatable="false">Home Second</string>
 
 
-    <string name="label_google_sign_in">Firebase + Google Sign In</string>
-    <string name="label_facebook_login">Firebase + Facebook Login</string>
-    <string name="label_twitter_login">Firebase + Twitter Login</string>
-    <string name="label_emailpassword">Email/Password Authentication</string>
-    <string name="label_anonymous_auth">Anonymous Authentication</string>
-    <string name="label_phone_auth">Phone Authentication</string>
-    <string name="label_manage_user">Manage User</string>
+    <string name="label_google_sign_in" translatable="false">Firebase + Google Sign In</string>
+    <string name="label_facebook_login" translatable="false">Firebase + Facebook Login</string>
+    <string name="label_twitter_login" translatable="false">Firebase + Twitter Login</string>
+    <string name="label_emailpassword" translatable="false">Email/Password Authentication</string>
+    <string name="label_anonymous_auth" translatable="false">Anonymous Authentication</string>
+    <string name="label_phone_auth" translatable="false">Phone Authentication</string>
+    <string name="label_manage_user" translatable="false">Manage User</string>
 
-    <string name="sign_in">Sign In</string>
-    <string name="create_account">Create Account</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="loading">Loading…</string>
-    <string name="signed_out">Signed Out</string>
+    <string name="sign_in" translatable="false">Sign In</string>
+    <string name="create_account" translatable="false">Create Account</string>
+    <string name="sign_out" translatable="false">Sign Out</string>
+    <string name="disconnect" translatable="false">Disconnect</string>
+    <string name="loading" translatable="false">Loading…</string>
+    <string name="signed_out" translatable="false">Signed Out</string>
 
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Name</string>
-    <string name="hint_photo">Photo URL</string>
+    <string name="hint_photo" translatable="false">Photo URL</string>
 
     <string name="logout">Logout?</string>
-    <string name="anonymous_signin">Anonymous Sign In</string>
-    <string name="account_link">Account Linking</string>
-    <string name="account_link_btn">Link Account</string>
-    <string name="title_provider">User\'s provider</string>
-    <string name="title_profile">User\'s profile</string>
-    <string name="title_update_profile">Update user\'s profile</string>
-    <string name="title_update_email">Update user\'s email</string>
-    <string name="title_update_password">Update user\'s password</string>
-    <string name="title_send_password_reset">Send password reset</string>
-    <string name="title_delete_user">Delete a user</string>
-    <string name="updated">%s updated.</string>
-    <string name="verify">Verify</string>
+    <string name="anonymous_signin" translatable="false">Anonymous Sign In</string>
+    <string name="account_link" translatable="false">Account Linking</string>
+    <string name="account_link_btn" translatable="false">Link Account</string>
+    <string name="title_provider" translatable="false">User\'s provider</string>
+    <string name="title_profile" translatable="false">User\'s profile</string>
+    <string name="title_update_profile" translatable="false">Update user\'s profile</string>
+    <string name="title_update_email" translatable="false">Update user\'s email</string>
+    <string name="title_update_password" translatable="false">Update user\'s password</string>
+    <string name="title_send_password_reset" translatable="false">Send password reset</string>
+    <string name="title_delete_user" translatable="false">Delete a user</string>
+    <string name="updated" translatable="false">%s updated.</string>
+    <string name="verify" translatable="false">Verify</string>
 
-    <string name="start_phone_auth">Start</string>
-    <string name="verify_phone_auth">Verify</string>
-    <string name="resend_phone_auth">Resend</string>
+    <string name="start_phone_auth" translatable="false">Start</string>
+    <string name="verify_phone_auth" translatable="false">Verify</string>
+    <string name="resend_phone_auth" translatable="false">Resend</string>
     <string name="hint_phone_number">Phone Number</string>
-    <string name="hint_verification_code">Verification Code</string>
-    <string name="status_verification_succeeded">Verification succeeded</string>
-    <string name="status_sign_in_failed">Sign-in failed</string>
-    <string name="instant_validation">(instant validation)</string>
-    <string name="firebase_status_fmt">Firebase User: %s</string>
-    <string name="title_activity_chats2">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="hint_verification_code" translatable="false">Verification Code</string>
+    <string name="status_verification_succeeded" translatable="false">Verification succeeded</string>
+    <string name="status_sign_in_failed" translatable="false">Sign-in failed</string>
+    <string name="instant_validation" translatable="false">(instant validation)</string>
+    <string name="firebase_status_fmt" translatable="false">Firebase User: %s</string>
+    <string name="title_activity_chats2" translatable="false">MainActivity</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
+    <string name="title_notifications" translatable="false">Notifications</string>
 
     <string name="map_key" translatable="false">AIzaSyCtZ3HAm8-sy0U15dXluGN0Fa84IZyXs4g</string>
     <string name="map_view">Map view</string>
@@ -73,8 +73,8 @@
     <string name="insider_program">Insider Program</string>
     <string name="contact_us">Contact us</string>
     <string name="pothole_team">Pothole+ Team</string>
-    <string name="vishwam_shukla">Vishwam Shukla</string>
-    <string name="shuklavishwam_gmail_com">shuklavishwam@gmail.com</string>
+    <string name="vishwam_shukla" translatable="false">Vishwam Shukla</string>
+    <string name="shuklavishwam_gmail_com" translatable="false">shuklavishwam@gmail.com</string>
     <string name="report_status">Report Status:</string>
     <string name="image">Image</string>
     <string name="remove_image">Remove Image</string>
