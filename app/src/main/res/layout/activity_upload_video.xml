@@ -22,8 +22,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_below="@id/videoview"
         android:layout_centerHorizontal="true"
-        android:text="Upload Video">
+        android:text="@string/upload_video">
     </Button>
+
 
     <ProgressBar
         android:layout_centerInParent="true"

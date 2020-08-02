@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="monospace"
                         style="?android:attr/borderlessButtonStyle"
-                        android:text="@string/back"
+                        android:text="@string/done"
                         android:textAllCaps="false"/>
 
                 </com.google.android.material.card.MaterialCardView>

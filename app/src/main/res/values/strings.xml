@@ -37,7 +37,6 @@
     <string name="hint_name">Name</string>
     <string name="hint_photo" translatable="false">Photo URL</string>
 
-    <string name="logout">Logout?</string>
     <string name="anonymous_signin" translatable="false">Anonymous Sign In</string>
     <string name="account_link" translatable="false">Account Linking</string>
     <string name="account_link_btn" translatable="false">Link Account</string>
@@ -73,8 +72,6 @@
     <string name="insider_program">Insider Program</string>
     <string name="contact_us">Contact us</string>
     <string name="pothole_team">Pothole+ Team</string>
-    <string name="vishwam_shukla" translatable="false">Vishwam Shukla</string>
-    <string name="shuklavishwam_gmail_com" translatable="false">shuklavishwam@gmail.com</string>
     <string name="report_status">Report Status:</string>
     <string name="image">Image</string>
     <string name="remove_image">Remove Image</string>
@@ -85,4 +82,70 @@
     <string name="dimensions">Dimensions</string>
     <string name="comments">Comments</string>
     <string name="back">Back</string>
+    <string name="hello_there_welcome_back">Hello there, Welcome Back</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="new_user_sign_up">New User? Sign up</string>
+    <string name="don_t_worry">Don\'t worry!</string>
+    <string name="we_d_like_to_know_more_about_you">We\'d like to know more about you.</string>
+    <string name="name1">Name</string>
+    <string name="username1">Username</string>
+    <string name="phone_number">Phone number</string>
+    <string name="submit">Submit</string>
+    <string name="potholes_reported">Potholes Reported</string>
+    <string name="potholes_fixed">Potholes Fixed</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="email2">Email</string>
+    <string name="update_changes">Update changes</string>
+    <string name="welcome">Welcome</string>
+    <string name="register_to_make_india_great_again">Register to make India great again</string>
+    <string name="email3">Email</string>
+    <string name="password3">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="take_image_of_pothole">Take image of pothole</string>
+    <string name="upload_image">Upload Image:</string>
+    <string name="camera">Camera |</string>
+    <string name="remove_image1">Remove Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="severity_of_pothole">Severity of Pothole</string>
+    <string name="landmark1">Landmark</string>
+    <string name="address1">Address</string>
+    <string name="location1">Location</string>
+    <string name="tap_here_to_modify">Tap here to Modify</string>
+    <string name="dimensions_optional">Dimensions (Optional)</string>
+    <string name="comments_optional">Comments (Optional)</string>
+    <string name="is_this_the_right_number_to_contact_you">Is this the right number to contact you?</string>
+    <string name="we_are_always_with_you">We are always with you...</string>
+    <string name="submit1">Submit</string>
+    <string name="email4">Email</string>
+    <string name="potholes">Potholes+</string>
+    <string name="upload_video">Upload Video</string>
+    <string name="your_current_status">Your current Status</string>
+    <string name="display_name">Display Name</string>
+    <string name="send_request">Send Request</string>
+    <string name="decline_request">Decline Request</string>
+    <string name="please_enter_your_e_mail_to_continue">Please enter your E-mail to continue</string>
+    <string name="choose_from_below">Choose from below</string>
+    <string name="about_us">About us</string>
+    <string name="help">Help</string>
+    <string name="type_of_pothole">Type of Pothole</string>
+    <string name="we_care_beyond_health">We care beyond health</string>
+    <string name="chat_profile_settings">Chat Profile Settings</string>
+    <string name="civil_agencies">Civil Agencies</string>
+    <string name="communication">Communication</string>
+    <string name="elected_representatives">Elected Representatives</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
+    <string name="logout">Logout</string>
+    <string name="Connections">Connections</string>
+    <string name="Requests">Requests</string>
+    <string name="Messages">Messages</string>
+    <string name="total_connections">Total Connections:</string>
+    <string name="done">Done</string>
+    <string name="done8">Done</string>
+    <string name="done6">Done</string>
+
+
 </resources>

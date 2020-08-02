@@ -3,11 +3,11 @@
 
 
     <item android:id="@+id/chat_settings"
-        android:title="Chat Profile Settings"/>
+        android:title="@string/chat_profile_settings"/>
     <item android:id="@+id/civilAgencies_list"
-        android:title="Civil Agencies"/>
+        android:title="@string/civil_agencies"/>
 
     <item android:id="@+id/electedRepresentatives_list"
-        android:title="Elected Representatives"/>
+        android:title="@string/elected_representatives"/>
 
 </menu>
