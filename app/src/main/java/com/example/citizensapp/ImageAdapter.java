@@ -60,7 +60,8 @@ import java.util.List;
             holder.textViewPotholeType.setText(uploadCurrent.getmPotholeType());
             holder.textViewLandmark.setText(uploadCurrent.getmLandmark());
             holder.date.setText(uploadCurrent.getmDate());
-            switch (Integer.parseInt(uploadCurrent.getmSeverity())){
+            int severity = uploadCurrent.getmDate() != null ? Integer.parseInt(uploadCurrent.getmSeverity()) : 1;
+            switch (severity){
                 case 1:
                     holder.severity.setCardBackgroundColor(ContextCompat.getColor(mContext.getApplicationContext(), R.color.severity_level1));
                     break;
