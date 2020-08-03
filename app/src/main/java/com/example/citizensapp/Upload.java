@@ -4,7 +4,7 @@ import com.google.firebase.database.Exclude;
 
 public class Upload {
 
-    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mSeverity, mName, mEmail, mPhone, mUserId, mTimeKey, status;
+    private String mImageUrl, mPotholeType, mAddress,mLandmark,mDimension, mComment, mDate, mDateFull, mTime, videourl, mSeverity, mName, mEmail, mPhone, mUserId, mTimeKey, status, proof_image, proof_comment;
     Double mlat,mlang;
     private String mKey;
     private String VideoDescription;
@@ -12,7 +12,7 @@ public class Upload {
 
 
     public Upload(String ImageUrl, String mPotholeType, String mAddress, String mLandmark, String mDimension, String mComment, String mDate, String mDateFull, String mTime, String mSeverity
-    , String mName, String mEmail, String mPhone, String mUserId, String mTimeKey, String status,Double mlat,Double mlang) {
+    , String mName, String mEmail, String mPhone, String mUserId, String mTimeKey, String status,Double mlat,Double mlang, String proof_image, String proof_comment) {
         this.mImageUrl = ImageUrl;
         this.mPotholeType = mPotholeType;
         this.mAddress = mAddress;
@@ -32,6 +32,8 @@ public class Upload {
         this.status = status;
         this.mlat = mlat;
         this.mlang = mlang;
+        this.proof_image = proof_image;
+        this.proof_comment=proof_comment;
 
 
 
@@ -185,6 +187,22 @@ public class Upload {
 
     public void setMlang(Double mlang) {
         this.mlang = mlang;
+    }
+
+    public String getProof_image() {
+        return proof_image;
+    }
+
+    public void setProof_image(String proof_image) {
+        this.proof_image = proof_image;
+    }
+
+    public String getProof_comment() {
+        return proof_comment;
+    }
+
+    public void setProof_comment(String proof_comment) {
+        this.proof_comment = proof_comment;
     }
 
     @Exclude

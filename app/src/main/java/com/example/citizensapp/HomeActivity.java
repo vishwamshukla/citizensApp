@@ -48,6 +48,9 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
     public static final String EXTRA_COMMENT = "comment";
     public static final String EXTRA_STATUS = "status";
     public static final String EXTRA_TIMEKEY = "timeKey";
+    public static final String EXTRA_PROOF_IMAGE = "proof image";
+    public static final String EXTRA_PROOF_COMMENT = "proof comment";
+    public static final String EXTRA_POSITION = "position";
 
 
 
@@ -256,6 +259,8 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
         detailIntent.putExtra(EXTRA_COMMENT, clickeditem.getmComment());
         detailIntent.putExtra(EXTRA_STATUS, clickeditem.getStatus());
         detailIntent.putExtra(EXTRA_TIMEKEY, clickeditem.getmTimeKey());
+        detailIntent.putExtra(EXTRA_PROOF_IMAGE, clickeditem.getProof_image());
+        detailIntent.putExtra(EXTRA_PROOF_COMMENT, clickeditem.getProof_comment());
 
         startActivity(detailIntent);
 

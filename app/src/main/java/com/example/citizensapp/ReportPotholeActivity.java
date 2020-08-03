@@ -645,9 +645,12 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
                                         mlang = Double.parseDouble(longitude);
                                     }
 
+                                    //String proof_image = "NA";
+                                    String proof_comment = "NA";
+
 
                                     Upload upload = new Upload(uri.toString(), mPotholeType, mAddress, mLandmark, mDimension, mComment, mDate, mDateFull, mTime,
-                                            mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey, mStatus,mlat,mlang);
+                                            mSeverity,  mName, mEmail, mPhone, mUserId, mTimeKey, mStatus,mlat,mlang, uri.toString(),proof_comment);
                                     String uploadId = mDatabaseRef.push().getKey();
                                     assert uploadId != null;
                                     mDatabaseRef.child(mTimeKey).setValue(upload);

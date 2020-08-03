@@ -208,6 +208,62 @@
 
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/pothole_image_view_proof"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="center"
+                    android:visibility="gone"
+                    android:src="@drawable/gradient_1"/>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:drawableLeft="@drawable/ic_round_message_24"
+                        android:drawablePadding="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status Comments:"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:id="@+id/comment_status_proof"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/potholes_comments_textview_proof"
+                        android:layout_marginStart="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not assigned"
+                        android:visibility="gone"
+                        android:textSize="17sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/not_verified"
+                        android:visibility="gone"
+                        android:text="Not Verified"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/verified"
+                        android:visibility="gone"
+                        android:text="Verified"/>
+
+                </LinearLayout>
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
