@@ -1,8 +1,11 @@
 package com.example.citizensapp;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -208,6 +211,32 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
         return super.onOptionsItemSelected(item);
     }
 
+    public static boolean openOtherApp(Context context, String packageName) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent intent = manager.getLaunchIntentForPackage(packageName);
+            if (intent == null) {
+                //the app is not installed
+                try {
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setData(Uri.parse("market://details?id=" + packageName));
+                    context.startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    //throw new ActivityNotFoundException();
+                    return false;
+                }
+
+            }
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(intent);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            return false;
+        }
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -215,8 +244,8 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 break;
-            case R.id.history:
-                startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
+            case R.id.report_pothole_using_trip:
+                openOtherApp(getApplicationContext(), "com.example.electedperson");
                 break;
             case R.id.insider_program:
                 startActivity(new Intent(HomeActivity.this, RewardsActivity.class));

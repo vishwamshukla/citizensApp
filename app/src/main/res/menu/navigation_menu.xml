@@ -15,9 +15,6 @@
             android:icon="@drawable/ic_round_message_24"
             android:title="@string/chats"/>
 
-        <item android:id="@+id/history"
-            android:icon="@drawable/ic_baseline_history_24"
-            android:title="@string/history"/>
         <item android:id="@+id/insider_program"
             android:icon="@drawable/ic_baseline_fingerprint_24"
             android:title="@string/insider_program"/>
