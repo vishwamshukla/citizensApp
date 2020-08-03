@@ -615,7 +615,7 @@ public class ReportPotholeActivity extends AppCompatActivity implements OnMapRea
                                     String mTime = timeformat.format(time).toString();
                                     String mSeverity = severity_textView.getText().toString();
                                     String mName = "none";
-                                    String mEmail = "none";
+                                    String mEmail = mAuth.getCurrentUser().getEmail().toString();
                                     String mUserId = mAuth.getCurrentUser().getUid().toString();
                                     String mPhone = phoneNumber.getEditText().getText().toString();
                                     String mStatus = "Reported";

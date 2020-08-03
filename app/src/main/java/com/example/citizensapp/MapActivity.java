@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
+
+    DatabaseReference locationRef;
+    GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +56,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 //        });
 
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+        //fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //fetchLastLocation();
+
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+        supportMapFragment.getMapAsync(MapActivity.this);
+
+        locationRef = FirebaseDatabase.getInstance().getReference("Reports");
     }
 
 
-    private void fetchLastLocation() {
+    /*private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
@@ -75,25 +84,56 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 }
             }
         });
-    }
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+        mMap = googleMap;
+
+        locationRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                LatLng newLocation = new LatLng(
+                        dataSnapshot.child("mlat").getValue(Double.class),
+                        dataSnapshot.child("mlang").getValue(Double.class)
+                );
+                mMap.addMarker(new MarkerOptions()
+                        .position(newLocation)
+                        .title(dataSnapshot.getKey()));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }
+
+        /*LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("I am Here");
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,5));
-        googleMap.addMarker(markerOptions);
-    }
+        googleMap.addMarker(markerOptions);*/
 
-////    @Override
-////    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-////        switch (requestCode){
-////            case REQUEST_CODE:
-////                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-////                    fetchLastLocation();
-////                }
-////                break;
-////        }
-////    }
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case REQUEST_CODE:
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    fetchLastLocation();
+                }
+                break;
+        }
+    }*/
 }
