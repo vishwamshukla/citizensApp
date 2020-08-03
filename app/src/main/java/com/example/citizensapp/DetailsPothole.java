@@ -13,6 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,16 +31,18 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.example.citizensapp.HomeActivity.EXTRA_ADDRESS;
 import static com.example.citizensapp.HomeActivity.EXTRA_COMMENT;
 import static com.example.citizensapp.HomeActivity.EXTRA_DIMENSION;
 import static com.example.citizensapp.HomeActivity.EXTRA_LANDMARK;
 import static com.example.citizensapp.HomeActivity.EXTRA_POTHOLE_TYPE;
+import static com.example.citizensapp.HomeActivity.EXTRA_TIMEKEY;
 import static com.example.citizensapp.HomeActivity.EXTRA_URL;
 import static com.example.citizensapp.HomeActivity.EXTRA_STATUS;
 
-public class DetailsPothole extends AppCompatActivity {
+public class DetailsPothole extends AppCompatActivity implements OnMapReadyCallback {
 
     Button back_btn;
     private DatabaseReference mDatabaseRef;
@@ -43,11 +51,19 @@ public class DetailsPothole extends AppCompatActivity {
     String currentUserID;
     private List<Upload> mUploads;
 
+    GoogleMap mMap;
+    //Double dlatitude,dlongitude;
+
+    DatabaseReference locationRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_pothole);
+
+        AtomicReference<SupportMapFragment> supportMapFragment = new AtomicReference<>((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map));
+        supportMapFragment.get().getMapAsync(DetailsPothole.this);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
@@ -69,6 +85,10 @@ public class DetailsPothole extends AppCompatActivity {
         String comment = intent.getStringExtra(EXTRA_COMMENT);
         String status = intent.getStringExtra(EXTRA_STATUS);
 
+        final String timeKey = intent.getStringExtra(EXTRA_TIMEKEY);
+        locationRef = FirebaseDatabase.getInstance().getReference("Users").child("Citizens").child(currentUserID).child("potholeReports").child(timeKey);
+
+
         ImageView imageView = findViewById(R.id.pothole_image_view);
         TextView pothole_type_textView = findViewById(R.id.pothole_type_textView);
         TextView landmark_textView = findViewById(R.id.pothole_landmark_textview);
@@ -88,6 +108,27 @@ public class DetailsPothole extends AppCompatActivity {
 
         setProgressBar(status == null ? "Reported" : status, mprogressBar, potholeStatus);
 
+    }
+
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+        mMap=googleMap;
+        locationRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Double dlatitude = snapshot.child("mlat").getValue(Double.class);
+                Double dlongitude = snapshot.child("mlang").getValue(Double.class);
+
+                LatLng latLng = new LatLng(dlatitude,dlongitude);
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Pothole Here"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void setProgressBar(String progress, ProgressBar mprogressBar, TextView potholeStatus){

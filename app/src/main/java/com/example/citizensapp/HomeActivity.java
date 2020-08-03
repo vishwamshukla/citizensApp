@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
     public static final String EXTRA_DIMENSION = "dimension";
     public static final String EXTRA_COMMENT = "comment";
     public static final String EXTRA_STATUS = "status";
+    public static final String EXTRA_TIMEKEY = "timeKey";
 
 
 
@@ -245,6 +246,7 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
         detailIntent.putExtra(EXTRA_DIMENSION, clickeditem.getmDimension());
         detailIntent.putExtra(EXTRA_COMMENT, clickeditem.getmComment());
         detailIntent.putExtra(EXTRA_STATUS, clickeditem.getStatus());
+        detailIntent.putExtra(EXTRA_TIMEKEY, clickeditem.getmTimeKey());
 
         startActivity(detailIntent);
 
