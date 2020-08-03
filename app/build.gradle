@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'io.fabric'
+
 repositories {
     maven {
         url  "https://dl.bintray.com/ibm-cloud-sdks/ibm-cloud-sdk-repo"
@@ -7,7 +10,7 @@ repositories {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 26
     buildToolsVersion "29.0.3"
     defaultConfig.applicationId = "com.example.citizensapp"
    // sourceSets {
@@ -15,16 +18,17 @@ android {
 
         defaultConfig {
             applicationId "com.example.citizensapp"
-            minSdkVersion 22
-            targetSdkVersion 30
+            minSdkVersion 23
+            targetSdkVersion 26
             versionCode 1
             versionName "1.0"
-
+            multiDexEnabled true
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         }
 
         buildTypes {
             release {
+                applicationIdSuffix ".release"
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             }
@@ -96,5 +100,55 @@ android {
         implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
 
         implementation 'com.itextpdf:itextg:5.5.10'
+
+        implementation 'org.tensorflow:tensorflow-android:+'
+        implementation 'ch.hsr:geohash:1.3.0'
+
+        implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+        implementation 'com.amazonaws:aws-android-sdk-s3:2.6+'
+        implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
+        implementation('com.amazonaws:aws-android-sdk-auth-google:2.6.+@aar') { transitive = true }
+
+        //Azure dependencies
+        implementation 'com.microsoft.azure:azure-mobile-android:3.4.0@aar'
+        implementation 'com.microsoft.azure.android:azure-storage-android:0.8.0@aar'
+
+        //required for marker clustering
+        implementation 'com.google.maps.android:android-maps-utils:0.5+'
+
+        //PreferenceCompat dependencies
+        // https://mvnrepository.com/artifact/com.android.support/preference-v7
+        implementation group: 'com.android.support', name: 'preference-v7', version: '26.1.0'
+        implementation 'com.google.maps:google-maps-services:0.2.9'
+        //Room dependencies
+        implementation 'android.arch.persistence.room:runtime:1.0.0'
+        annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+        androidTestImplementation 'android.arch.persistence.room:testing:1.0.0'
+        //Lifecycle dependencies
+        implementation 'android.arch.lifecycle:extensions:1.1.0'
+        annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
+        implementation 'com.google.code.gson:gson:2.8.4'
+//        implementation 'com.android.support:appcompat-v7:26.1.0'
+//        implementation 'com.android.support:design:26.1.0'
+//        implementation 'com.android.support:support-v4:26.1.0'
+
+        implementation 'pub.devrel:easypermissions:0.2.1'
+        implementation 'com.google.android.gms:play-services-maps:12.0.1'
+        implementation 'com.google.firebase:firebase-storage:12.0.1'
+        implementation 'com.google.firebase:firebase-auth:12.0.1'
+        implementation 'com.google.firebase:firebase-database:12.0.1'
+        implementation 'com.google.firebase:firebase-core:12.0.1'
+        implementation 'com.google.firebase:firebase-messaging:12.0.1'
+        implementation 'com.google.firebase:firebase-crash:12.0.1'
+        implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
+        implementation 'org.apache.commons:commons-math3:3.6.1'
+        implementation 'com.android.support:multidex:1.0.0'
+        testCompile 'junit:junit:4.12'
+        implementation 'com.android.volley:volley:1.1.0'
 
     }

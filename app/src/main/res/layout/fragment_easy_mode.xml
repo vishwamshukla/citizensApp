@@ -1,0 +1,53 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/easyframe"
+    android:backgroundTint="?attr/colorPrimary"
+    tools:context="com.example.citizensapp.Fragments.EasyModeFragment">
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chronometer"
+        android:textSize="112sp"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="84dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_trip_button"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_play_arrow_white_24dp"
+        app:fabSize="normal"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:id="@+id/stop_trip_button"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_stop_white_24dp"
+        app:fabSize="normal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/easytext"
+        android:textSize="15dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_gravity="center"
+        android:layout_marginBottom="72dp"
+        android:textColor="#fff"
+        android:fontFamily="sans-serif-condensed"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:visibility="invisible"
+        android:textAllCaps="false" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

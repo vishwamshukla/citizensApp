@@ -1,0 +1,462 @@
+package com.example.citizensapp.Activities;
+
+
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.StatFs;
+import android.provider.Settings;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
+
+
+
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.citizensapp.BuildConfig;
+import com.example.citizensapp.Core.ApplicationClass;
+import com.example.citizensapp.Core.TransitionAlarm;
+import com.example.citizensapp.Core.TripViewModel;
+import com.example.citizensapp.Fragments.EasyModeFragment;
+import com.example.citizensapp.Fragments.OverviewFragment;
+import com.example.citizensapp.Fragments.TriplistFragment;
+import com.example.citizensapp.PagerAdapter;
+import com.example.citizensapp.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.ActivityRecognitionClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+
+
+import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity
+        implements TabLayout.OnTabSelectedListener,
+        TriplistFragment.OnFragmentInteractionListener,
+        EasyModeFragment.OnFragmentInteractionListener,
+        OverviewFragment.OnFragmentInteractionListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener{
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 389;
+    private static final int REQUEST_CHECK_SETTINGS = 23;
+
+    private Intent loggerIntent;
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    private SharedPreferences dbPreferences;
+
+    private FirebaseAuth mAuth;
+    private Toolbar toolbar;
+    ApplicationClass app;
+    private GoogleApiClient apiClient;
+    private final int INTERVAL_MILLISECONDS = 3000;
+    private final String TAG = getClass().getSimpleName();
+    private ActivityRecognitionClient activityRecognitionClient;
+    private Handler handler;
+    private Context context;
+    private boolean inCar;
+    private SharedPreferences onboardingPreferences;
+    private SharedPreferences settingsPreferences;
+    private SharedPreferences.Editor settingsPreferencesEditor;
+
+    private TripViewModel tripViewModel;
+
+    @Override
+    public void onBackPressed() {
+        Intent goHome = new Intent(Intent.ACTION_MAIN);
+        goHome.addCategory(Intent.CATEGORY_HOME);
+        goHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(goHome);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = this;
+
+
+//        TensorFlowInferenceInterface tensorFlowInferenceInterface = new TensorFlowInferenceInterface(getAssets(), "tensorflow_accelerometer_model.pb");
+//        ApplicationClass.getInstance().setTensorFlowInferenceInterface(tensorFlowInferenceInterface);
+        // Log.d(TAG, "Inside onCreate");
+        app = ApplicationClass.getInstance();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        setContentView(R.layout.activity_main);
+
+        inCar = getIntent().getBooleanExtra("inCar", false);
+        // Log.i("inCar MainActivity old", inCar + "");
+        //Adding toolbar to the activity
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Road Quality Audit");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        settingsRequest();
+        checkPermissions();
+
+        //Initializing the tablayout
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
+        //Adding the tabs using addTab() method
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_action_home));
+        // tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_list));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_map_black_24dp));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), inCar);
+
+        viewPager.setAdapter(adapter);
+
+        //Adding onTabSelectedListener to swipe views
+        tabLayout.setOnTabSelectedListener(this);
+
+        viewPager.addOnPageChangeListener(
+                new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+        );
+
+        SharedPreferences prefs = getSharedPreferences("uploads", MODE_PRIVATE);
+        if (!prefs.contains("file_delete"))
+            prefs.edit().putBoolean("file_delete", false);
+
+        // checking current storage and notifying user if app is likely to cause problems
+        long bytesAvailable = getAvailableInternalMemorySize();
+        if (bytesAvailable < 786432000) {
+            Snackbar.make(findViewById(R.id.main_activity_container), "The app may face problems because of low storage space on your phone.", Snackbar.LENGTH_LONG).setAction("Settings", new OnStorageLowListener()).show();
+            // Log.d(TAG, "Creating snackbar");
+        }
+        // Log.d(TAG, String.valueOf(bytesAvailable));
+        //setting TransitionAlarm
+        setAlarm(5000);
+    }
+
+    public static long getAvailableInternalMemorySize() {
+        File path = Environment.getDataDirectory();
+        StatFs stat = new StatFs(path.getPath());
+        long blockSize = stat.getBlockSizeLong();
+        long availableBlocks = stat.getAvailableBlocksLong();
+        return availableBlocks * blockSize;
+    }
+
+    private void setAlarm(long timeinMillis) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, TransitionAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC, timeinMillis, timeinMillis, pendingIntent);
+    }
+
+    private void settingsRequest(){
+        @SuppressLint("RestrictedApi")
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(mLocationRequest);
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                // All location settings are satisfied. The client can initialize
+                // location requests now.
+            }
+        });
+
+        task.addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                int statusCode = ((ApiException) e).getStatusCode();
+                switch (statusCode) {
+                    case CommonStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed
+                        // by showing the user a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            ResolvableApiException resolvable = (ResolvableApiException) e;
+                            resolvable.startResolutionForResult(MainActivity.this,
+                                    REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException sendEx) {
+                            // Ignore the error.
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way
+                        // to fix the settings so we won't show the dialog.
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (!checkPermissions()) {
+            requestPermissions();
+        } else {
+            getLastLocation();
+        }
+        settingsRequest();
+
+    }
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            app.setCurrentLocation(task.getResult());
+                            if(task.getResult().getAccuracy() < 25 && app.isTripEnded()) {
+                                //showSnackbar("Location detected");
+                                // Log.d(TAG, "Location Detected");
+                            }
+                        } else {
+                            // Log.w(TAG, "getLastLocation:exception", task.getException());
+
+                            showSnackbar(getString(R.string.no_location_detected));
+                        }
+                    }
+                });
+    }
+
+    private void showSnackbar(final String text) {
+        View container = findViewById(R.id.main_activity_container);
+        if (container != null) {
+            Snackbar.make(container, text, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    private void showSnackbar(final int mainTextStringId, final int actionStringId,
+                              View.OnClickListener listener) {
+        Snackbar.make(findViewById(android.R.id.content),
+                getString(mainTextStringId),
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(actionStringId), listener).show();
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_PERMISSIONS_REQUEST_CODE);
+    }
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            // Log.i(TAG, "Displaying permission rationale to provide additional context.");
+
+            showSnackbar(R.string.permission_rationale, android.R.string.ok,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Request permission
+                            startLocationPermissionRequest();
+                        }
+                    });
+
+        } else {
+            // Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            startLocationPermissionRequest();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        // Log.i(TAG, "onRequestPermissionResult");
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length <= 0) {
+                // If user interaction was interrupted, the permission request is cancelled and you
+                // receive empty arrays.
+                // Log.i(TAG, "User interaction was cancelled.");
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+                getLastLocation();
+                //buildDialog();
+            } else {
+                // Permission denied.
+
+                // Notify the user via a SnackBar that they have rejected a core permission for the
+                // app, which makes the Activity useless. In a real app, core permissions would
+                // typically be best requested during a welcome-screen flow.
+
+                // Additionally, it is important to remember that a permission might have been
+                // rejected without asking the user for permission (device policy or "Never ask
+                // again" prompts). Therefore, a user interface affordance is typically implemented
+                // when permissions are denied. Otherwise, your app could appear unresponsive to
+                // touches or interactions which have required permissions.
+                showSnackbar(R.string.permission_denied_explanation, R.string.settings,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // Build intent that displays the App settings screen.
+                                Intent intent = new Intent();
+                                intent.setAction(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null);
+                                intent.setData(uri);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        settingsPreferences = getSharedPreferences("uploads",MODE_PRIVATE);
+        settingsPreferencesEditor = settingsPreferences.edit();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        Intent intent = new Intent();
+        if (id == R.id.actions_login) {
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+        if (id == R.id.in_menu_checkbox) {
+            if (item.isChecked()) {
+                // disable auto-upload
+                settingsPreferencesEditor.putBoolean(getString(R.string.auto_upload_setting), false).commit();
+                item.setChecked(false);
+            }
+            else {
+                // enable auto-upload
+                settingsPreferencesEditor.putBoolean(getString(R.string.auto_upload_setting), true).commit();
+                item.setChecked(true);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        //called when app connects to Play Services
+        /*Intent intent = new Intent(this, ActivityRecognizedService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(apiClient, INTERVAL_MILLISECONDS,
+                pendingIntent);*/
+            }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private class OnStorageLowListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            startActivityForResult(new Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS), 0);
+        }
+    }
+
+    /*
+    public void startActivityService() {
+        // fire only when trip started = false
+        if (!tripStarted) {
+            Intent intent = new Intent(this, ActivityRecognizedService.class);
+            PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 5000, pendingIntent);
+        }
+    }
+    */
+
+}
+
+
+

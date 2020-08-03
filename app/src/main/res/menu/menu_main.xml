@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/actions_invite"
+        android:title="Invite friends"
+        android:orderInCategory="000"
+        />
+    <item
+        android:id="@+id/actions_about"
+        android:title="@string/menu_about"
+        android:orderInCategory="100">
+    </item>
+    <item
+        android:id="@+id/actions_credits"
+        android:title="@string/menu_credits"
+        android:orderInCategory="200"
+        ></item>
+    <item
+        android:id="@+id/actions_partners"
+        android:title="@string/menu_partners"
+        android:orderInCategory="300"
+        ></item>
+    <item
+        android:id="@+id/actions_login"
+        android:title="Sign out"
+        android:orderInCategory="400"
+        ></item>
+    <item
+        android:id="@+id/in_menu_checkbox"
+        android:title="Auto upload"
+        android:orderInCategory="50"
+        android:checkable="true"
+        android:checked="true"
+        android:visible="false"/>
+</menu>

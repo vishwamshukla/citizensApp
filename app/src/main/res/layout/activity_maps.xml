@@ -1,0 +1,226 @@
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/maps_linear_layout">
+
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:id="@+id/indeterminateBar"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:indeterminateBehavior="repeat"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="7"
+        android:columnCount="2"
+        android:id="@+id/map_result_grid"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Definite potholes detected"
+            android:layout_row="0"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:id="@+id/definitepotholecount"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="0"
+            android:layout_column="1"/>
+
+
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Time wasted in traffic"
+            android:layout_row="1"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/traffic_time"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="1"
+            android:layout_column="1"/>
+
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Date"
+            android:layout_row="2"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/tripdate"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="2"
+            android:layout_column="1"/>
+
+
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Probable potholes detected"
+            android:layout_row="3"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/probablepotholecount"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="3"
+            android:layout_column="1"/>
+
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Duration"
+            android:layout_row="4"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/duration"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="4"
+            android:layout_column="1"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Distance"
+            android:layout_row="5"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:id="@+id/distance"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="5"
+            android:layout_column="1"/>
+
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:text="GPS inaccurate for"
+            android:layout_row="6"
+            android:layout_column="0"/>
+
+        <TextView
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:id="@+id/accuracy_low_time"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:layout_row="6"
+            android:layout_column="1" />
+
+    </GridLayout>
+
+    <TextView
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/how_accurate_text"
+        android:text="How accurate is our pothole prediction?"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingLeft="@dimen/activity_horizontal_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:gravity="center">
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/accuracy_seek"
+            android:numStars="5" />
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/trip_map"
+        android:name="com.example.citizensapp.Activities.MapsActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment" />
+
+
+</LinearLayout>

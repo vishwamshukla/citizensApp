@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.citizensapp.Activities.PlaceholderActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -210,6 +211,10 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            case R.id.report_pothole_using_trip:
+                startActivity(new Intent(HomeActivity.this, PlaceholderActivity.class));
+                break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
