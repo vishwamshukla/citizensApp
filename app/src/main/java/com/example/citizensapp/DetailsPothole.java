@@ -65,6 +65,13 @@ public class DetailsPothole extends AppCompatActivity implements OnMapReadyCallb
         AtomicReference<SupportMapFragment> supportMapFragment = new AtomicReference<>((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map));
         supportMapFragment.get().getMapAsync(DetailsPothole.this);
 
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         mStorage = FirebaseStorage.getInstance();

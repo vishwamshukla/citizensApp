@@ -18,9 +18,9 @@
         <item android:id="@+id/history"
             android:icon="@drawable/ic_baseline_history_24"
             android:title="@string/history"/>
-        <item android:id="@+id/rewards"
-            android:icon="@drawable/ic_round_card_giftcard_24"
-            android:title="Rewards"/>
+        <item android:id="@+id/insider_program"
+            android:icon="@drawable/ic_baseline_fingerprint_24"
+            android:title="@string/insider_program"/>
 
         <item android:id="@+id/logout"
             android:icon="@drawable/logout"
@@ -35,6 +35,9 @@
             <item android:id="@+id/about_us"
                 android:icon="@drawable/ic_android_black_24dp"
                 android:title="@string/about_us"/>
+            <item android:id="@+id/other_complaints"
+                android:icon="@drawable/ic_round_warning_24"
+                android:title="Other Complaints ?"/>
         </menu>
     </item>
 </menu>

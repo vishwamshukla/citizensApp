@@ -198,13 +198,6 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
             }
         });
 
-        findViewById(R.id.other_complaint_fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, OtherComplaintsActivity.class));
-            }
-        });
-
     }
 
     @Override
@@ -225,7 +218,7 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
             case R.id.history:
                 startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
                 break;
-            case R.id.rewards:
+            case R.id.insider_program:
                 startActivity(new Intent(HomeActivity.this, RewardsActivity.class));
                 break;
             case R.id.about_us:
@@ -240,6 +233,9 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
                 break;
             case R.id.chats:
                 startActivity(new Intent(HomeActivity.this, ChatsActivity.class));
+                break;
+            case R.id.other_complaints:
+                startActivity(new Intent(HomeActivity.this, OtherComplaintsActivity.class));
                 break;
         }
         return false;

@@ -234,18 +234,27 @@
                         android:layout_marginTop="15dp"
                         app:cardCornerRadius="10dp">
 
-                        <fragment
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/google_map"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"/>
+                            android:layout_height="match_parent">
 
-                        <Button
-                            android:id="@+id/map_location_picker"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tap_here_to_modify"
-                            android:layout_gravity="bottom" />
+                            <fragment
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/google_map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+                            <Button
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentEnd="true"
+                                android:alpha="0.5"
+                                android:id="@+id/map_location_picker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tap_here_to_modify"
+                                android:layout_gravity="bottom" />
+
+                        </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
 
