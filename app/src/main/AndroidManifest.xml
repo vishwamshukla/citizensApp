@@ -27,9 +27,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pdfActivity">
-
-        </activity>
+        <activity android:name=".RewardsActivity"></activity>
+        <activity android:name=".CompletedDetailsPotholeActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".OtherComplaintsActivity" />
+        <activity android:name=".pdfActivity" />
 
         <service android:name=".FirebaseMessagingService">
             <intent-filter>
@@ -150,7 +152,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"
-                tools:replace="android:resource"></meta-data>
+                tools:replace="android:resource" />
         </provider>
     </application>
 

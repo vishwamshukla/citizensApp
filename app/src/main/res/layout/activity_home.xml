@@ -44,6 +44,16 @@
             android:layout_margin="20dp"
             android:elevation="7dp"/>
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/other_complaint_fab"
+            android:layout_margin="15dp"
+            android:padding="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="other complaint"/>
+
     </RelativeLayout>
 
 

@@ -197,6 +197,13 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
             }
         });
 
+        findViewById(R.id.other_complaint_fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, OtherComplaintsActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -213,6 +220,12 @@ public class HomeActivity extends AppCompatActivity implements ImageAdapter.OnIt
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                break;
+            case R.id.history:
+                startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
+                break;
+            case R.id.rewards:
+                startActivity(new Intent(HomeActivity.this, RewardsActivity.class));
                 break;
             case R.id.about_us:
                 startActivity(new Intent(HomeActivity.this, AboutUs.class));
